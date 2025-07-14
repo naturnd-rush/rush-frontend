@@ -1,5 +1,56 @@
 import { Link } from "@tanstack/react-router";
 import { styled } from "@linaria/react";
+import {
+  FaInstagram,
+  FaRegMap,
+  FaRegQuestionCircle,
+  FaRegShareSquare,
+} from "react-icons/fa";
+import {
+  FaRegMessage,
+} from "react-icons/fa6";
+import Button from "@/components/button";
+
+/** Mocked up data */
+const Pages = [
+  {
+    title: 'Home',
+    target: '/',
+    icon: <FaRegMap />,
+    color: undefined,
+    bold: false
+  },
+  {
+    title: 'About',
+    target: '/about',
+    icon: <FaRegQuestionCircle />,
+    color: undefined,
+    bold: false
+  },
+  {
+    title: 'Feedback',
+    target: 'https://forms.gle/rB1WaaLcUmEjxmMr8',
+    icon: <FaRegMessage />,
+    color: 'rgb(221, 107, 32)',
+    bold: true,
+    external: true
+  },
+  {
+    title: 'Instagram',
+    target: 'https://www.instagram.com/nature_rnd/',
+    icon: <FaInstagram />,
+    color: 'rgb(49, 151, 149)',
+    bold: false,
+    external: true
+  },
+  {
+    title: 'Share',
+    target: '/share',
+    icon: <FaRegShareSquare />,
+    color: undefined,
+    bold: false
+  },
+]
 
 const Nav = styled.nav`
   // NavBarTheme
@@ -35,6 +86,18 @@ const Spacer = styled.div`
 `
 
 export default function NavBar() {
+  const NavLinks = Pages.map((page) =>
+    <Link
+      to={page.target}
+      target={page.external ? '_blank' : '_self' }
+      className="[&.active]:font-bold"
+      key={page.title}
+    >
+      <Button bold={page.bold} color={page.color} icon={page.icon}>
+        {page.title}
+      </Button>
+    </Link>
+  )
 
   return (
     <Nav>
@@ -45,12 +108,7 @@ export default function NavBar() {
         </SiteTitle>
       </Link>
       <Spacer />
-      <Link to="/" className="[&.active]:font-bold">
-        Home
-      </Link>{' '}
-      <Link to="/about" className="[&.active]:font-bold">
-        About
-      </Link>
+      { NavLinks }
     </Nav>
   )
 }
