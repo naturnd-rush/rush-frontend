@@ -1,5 +1,6 @@
 import { styled } from '@linaria/react'
 import { Link } from '@tanstack/react-router'
+import type { Topic } from '../types/topic'
 
 const BackgroundImage = styled.img`
   // from baseStyle
@@ -60,13 +61,6 @@ const Subtitle = styled.p`
   flex: 0;
   margin: 0;
 `
-
-export type Topic = {
-  id: string;
-  image: string;
-  title: string;
-  subtitle: string;
-}
 
 export default function TopicCard({ topic }: { topic: Topic }) {
 
