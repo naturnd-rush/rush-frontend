@@ -1,6 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useQuery, gql } from '@apollo/client'
-import TopicCard, { type Topic } from '@/features/topic/components/topic-card'
+
+import type { Topic } from '@/features/topic/types/topic'
+import TopicCard from '@/features/topic/components/topic-card'
+import TopicContainer from '@/features/topic/components/topic-container'
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -24,30 +27,29 @@ const GET_TOPICS = gql`
 
 function DisplayTopics() {
   const { loading, error, data } = useQuery(GET_TOPICS);
-  const topicData: Topic = {
-    id: "",
-    title: "",
-    image: "",
-    subtitle: "",
-  }
 
-  if (loading) { topicData.title = "Loading..." }
-  else if (error) { topicData.title = `Error: ${error.message}`}
-  else {
-    topicData.title = data.allQuestions[0].title
-    topicData.id = data.allQuestions[0].id
-    topicData.image = MOCK_TOPIC_DATA.image
-    topicData.subtitle = MOCK_TOPIC_DATA.subtitle
-  }
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error.message}</p>
+  const topics = data.allQuestions.map(
+    (topic: Omit<Topic, 'image' | 'subtitle'>) => {
+      return <TopicCard key={topic.id} topic={{
+        ...topic,
+        image: MOCK_TOPIC_DATA.image,
+        subtitle: MOCK_TOPIC_DATA.subtitle,
+      }} />
+    }
+  )
 
-  return topicData
+  return topics
 }
 
 function Index() {
   return (
     <div className="p-2">
       <h3>Welcome Home!</h3>
-      <TopicCard topic={DisplayTopics()} />
+      <TopicContainer>
+        <DisplayTopics />
+      </TopicContainer>
     </div>
   )
 }
