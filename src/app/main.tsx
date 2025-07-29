@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import GraphQLProvider from '@/lib/GraphQLProvider'
 import RouterProvider from '@/lib/RouterProvider'
+import './reset.css'
 import './index.css'
 
 // Render the app
