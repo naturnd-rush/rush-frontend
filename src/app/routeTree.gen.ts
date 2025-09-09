@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TestRouteImport } from './routes/test'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppTopicIdRouteImport } from './routes/app/$topicId'
 
+const TestRoute = TestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -38,12 +44,14 @@ const AppTopicIdRoute = AppTopicIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/test': typeof TestRoute
   '/app/$topicId': typeof AppTopicIdRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/test': typeof TestRoute
   '/app/$topicId': typeof AppTopicIdRoute
   '/app': typeof AppIndexRoute
 }
@@ -51,26 +59,35 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/test': typeof TestRoute
   '/app/$topicId': typeof AppTopicIdRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/app/$topicId' | '/app'
+  fullPaths: '/' | '/about' | '/test' | '/app/$topicId' | '/app'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/app/$topicId' | '/app'
-  id: '__root__' | '/' | '/about' | '/app/$topicId' | '/app/'
+  to: '/' | '/about' | '/test' | '/app/$topicId' | '/app'
+  id: '__root__' | '/' | '/about' | '/test' | '/app/$topicId' | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  TestRoute: typeof TestRoute
   AppTopicIdRoute: typeof AppTopicIdRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  TestRoute: TestRoute,
   AppTopicIdRoute: AppTopicIdRoute,
   AppIndexRoute: AppIndexRoute,
 }

@@ -1,6 +1,6 @@
-import type { PropsWithChildren } from "react";
+import type { CSSProperties, PropsWithChildren } from "react";
 import { latLng, type MapOptions } from 'leaflet';
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 
 export const DEFAULT_CENTER = latLng([48.46557, -123.314736]);
@@ -14,21 +14,20 @@ const initialMapOptions: MapOptions = {
   maxZoom: 20,
 }
 
-export default function MapView({ children }: PropsWithChildren<MapOptions>) {
+type MapViewOptions = MapOptions & {
+  style?: CSSProperties
+}
+
+export default function MapView({ children, style }: PropsWithChildren<MapViewOptions>) {
   return (
     <MapContainer
       {...initialMapOptions}
-      style={{ flex: 1 }}
+      style={style}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[48.46557, -123.314736]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
       { children }
     </MapContainer>
   )
