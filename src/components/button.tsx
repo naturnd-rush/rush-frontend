@@ -3,6 +3,7 @@ import type { PropsWithChildren, ReactNode } from "react";
 
 type _ButtonProps = {
   bold: boolean;
+  padding?: string;
 }
 
 const _Button = styled.button<_ButtonProps>`
@@ -18,7 +19,7 @@ const _Button = styled.button<_ButtonProps>`
   // size
   height: var(--button-size);
   min-width: var(--button-size);
-  padding-inline: var(--button-text-size);
+  padding-inline: ${props => props.padding ? props.padding : 'var(--button-text-size)'};
 
   // styling
   background: transparent;
@@ -39,11 +40,11 @@ const _Button = styled.button<_ButtonProps>`
   stroke-width: ${props => (props.bold ? '16px' : '0px')};
 `;
 
-const ButtonIcon = styled.span`
+const ButtonIcon = styled.span<{iconOnly?: boolean}>`
   display: inline-flex;
   align-self: center;
   flex-shrink: 0;
-  margin-inline-end: 0.5rem;
+  margin-inline-end: ${props => props.iconOnly ? 0 : '0.5rem' };
   stroke-width: inherit;
 
   svg {
@@ -55,12 +56,14 @@ type ButtonProps = {
   bold?: boolean
   color?: string
   icon?: ReactNode
+  onClick?: () => void
+  padding?: string
 }
 
-export default function Button({ children, color, icon, bold = false }: PropsWithChildren<ButtonProps>) {
+export default function Button({ children, color, icon, bold = false, onClick, padding }: PropsWithChildren<ButtonProps>) {
   return (
-    <_Button bold={bold} color={color}>
-      { icon ? <ButtonIcon>{ icon }</ButtonIcon> : null}
+    <_Button bold={bold} color={color} onClick={onClick} padding={padding}>
+      { icon ? <ButtonIcon iconOnly={ children === undefined }>{ icon }</ButtonIcon> : null}
       { children }
     </_Button>
   )

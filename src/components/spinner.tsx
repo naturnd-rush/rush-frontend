@@ -1,10 +1,10 @@
 import { styled } from "@linaria/react";
 
-const StyledSpinner = styled.span`
-  width: 1rem;
-  height: 1rem;
-  border: 2px solid #FFF;
-  border-bottom-color: #FF3D00;
+const StyledSpinner = styled.span<{size?: string}>`
+  width: ${props => props.size ?? '1rem'};
+  height: ${props => props.size ?? '1rem'};
+  border: 3px solid #FFF;
+  border-bottom-color: rgb(49, 130, 206);
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
@@ -16,6 +16,6 @@ const StyledSpinner = styled.span`
   }
 `
 
-export default function Spinner() {
-  return <StyledSpinner />
+export default function Spinner({ size }: { size?: string }) {
+  return <StyledSpinner size={size} />
 }
