@@ -7,8 +7,9 @@ const LegendContainer = styled.section`
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  min-width: 24rem;
+  width: 24rem;
   overflow-y: hidden;
+  pointer-events: all;
 `
 
 const LegendHeader = styled.h2`
@@ -27,7 +28,7 @@ const LegendHintText = styled.h3`
   font-size: .75rem;
   font-weight: 400;
   line-height: 250%;
-  margin-right: 14px;
+  margin-right: 16px;
   text-align: right;
 `
 

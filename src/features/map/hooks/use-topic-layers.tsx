@@ -1,7 +1,7 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import { GeoJSON } from 'react-leaflet';
-import type { LayerOnTopic } from "../types/layers";
-import { bindFeaturePopup, pointToLayer } from "../utils/leaflet-functions";
+//import { GeoJSON } from 'react-leaflet';
+import type { Layer, LayerOnTopic } from "../types/layers";
+//import { bindFeaturePopup, pointToLayer } from "../utils/leaflet-functions";
 
 const GET_TOPIC_LAYERS = gql`
   query TopicLayersQuery($id: UUID!) {
@@ -12,7 +12,25 @@ const GET_TOPIC_LAYERS = gql`
         description
         id
         name
-        serializedLeafletJson
+        styles {
+          drawFill
+          drawMarker
+          drawStroke
+          fillColor
+          fillOpacity
+          id
+          markerBackgroundColor
+          markerIcon
+          markerIconOpacity
+          name
+          strokeColor
+          strokeDashArray
+          strokeDashOffset
+          strokeLineCap
+          strokeLineJoin
+          strokeOpacity
+          strokeWeight
+        }
       }
       layerGroup {
         groupDescription
@@ -23,8 +41,8 @@ const GET_TOPIC_LAYERS = gql`
   }
 }
 `
-type LAYER = { title: string, data: React.ReactElement }
-type QUERY_RESULTS = { loading: boolean, error?: ApolloError, layers?: LAYER[] }
+
+type QUERY_RESULTS = { loading: boolean, error?: ApolloError, layers?: Layer[] }
 export function useTopicLayers(id: string): QUERY_RESULTS {
   const { loading, error, data } = useQuery(
     GET_TOPIC_LAYERS,
@@ -38,19 +56,20 @@ export function useTopicLayers(id: string): QUERY_RESULTS {
       const layer = layerOnTopic.layer
       
       // TODO: Fix double-escaped JSON on backend.
-      const fixedJSON = layer.serializedLeafletJson.replace(/\\\\\"/g, '\\\"')
-      const layerJSON = JSON.parse(fixedJSON)
+      //const fixedJSON = layer.serializedLeafletJson.replace(/\\\\\"/g, '\\\"')
+      //const layerJSON = JSON.parse(fixedJSON)
 
       return {
-        title: layer.name,
-        data: (
-          <GeoJSON
-            data={layerJSON.featureCollection}
-            style={(f) => f?.properties.__polygonStyleProps}
-            pointToLayer={pointToLayer}
-            onEachFeature={bindFeaturePopup}
-          />
-        )
+        ...layer
+
+        //data: (
+        //  <GeoJSON
+        //    data={layerJSON.featureCollection}
+        //    style={(f) => f?.properties.__polygonStyleProps}
+        //    pointToLayer={pointToLayer}
+        //    onEachFeature={bindFeaturePopup}
+        //  />
+        //)
       }
     }
   )
