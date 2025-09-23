@@ -12,24 +12,28 @@ const GET_TOPIC_LAYERS = gql`
         description
         id
         name
-        styles {
-          drawFill
-          drawMarker
-          drawStroke
-          fillColor
-          fillOpacity
-          id
-          markerBackgroundColor
-          markerIcon
-          markerIconOpacity
-          name
-          strokeColor
-          strokeDashArray
-          strokeDashOffset
-          strokeLineCap
-          strokeLineJoin
-          strokeOpacity
-          strokeWeight
+        stylesOnLayer {
+          legendDescription
+          legendOrder
+          style {
+            drawFill
+            drawMarker
+            drawStroke
+            fillColor
+            fillOpacity
+            id
+            markerBackgroundColor
+            markerIcon
+            markerIconOpacity
+            name
+            strokeColor
+            strokeDashArray
+            strokeDashOffset
+            strokeLineCap
+            strokeLineJoin
+            strokeOpacity
+            strokeWeight
+          }
         }
       }
       layerGroup {

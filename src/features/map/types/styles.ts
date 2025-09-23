@@ -18,4 +18,10 @@ type Style = {
   strokeWeight?: string,
 }
 
-export type { Style }
+type StyleOnLayer = {
+  legendDescription: string,
+  legendOrder: number,
+  style: Style,
+}
+
+export type { Style, StyleOnLayer }

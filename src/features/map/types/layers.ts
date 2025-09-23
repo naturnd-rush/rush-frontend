@@ -1,11 +1,11 @@
-import type { Style } from "./styles"
+import type { StyleOnLayer } from "./styles"
 
 type Layer = {
   description: string,
   id: string,
   name: string,
   serializedLeafletJson: string,
-  styles: Style[],
+  stylesOnLayer: StyleOnLayer[],
 }
 
 type LayerDetails = Omit<Layer, 'serializedLeafletJson'>

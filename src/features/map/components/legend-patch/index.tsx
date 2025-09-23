@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react"
-import type { Style } from "../types/styles"
+import type { Style } from "../../types/styles"
 
 const PATCH_WIDTH_PX = 45
 const PATCH_HEIGHT_PX = 27
@@ -76,6 +76,7 @@ const PatchMarkerContainer = styled.div`
 
 type PatchMarkerProps = {
   bgColor?: string,
+  overlap?: boolean,
 }
 const PatchMarkerChip = styled.div<PatchMarkerProps>`
   background-color: ${props => (props.bgColor ?? '#BBB')};
@@ -83,7 +84,7 @@ const PatchMarkerChip = styled.div<PatchMarkerProps>`
   width: ${PATCH_HEIGHT_PX + 2 + 'px'}; // Circle with diameter = height
   border-radius: 100%;
   padding: 2px;
-  margin-inline-start: -0.5rem;
+  margin-inline-start: ${props => (props.overlap ? '-0.5rem' : '0')};
   border: 2px solid white;
 `
 
@@ -96,8 +97,9 @@ function PatchMarker(props: LegendPatchProps) {
 
   return (
     <PatchMarkerContainer>
-      {styles.map((style) => <PatchMarkerChip
+      {styles.map((style, index) => <PatchMarkerChip
           bgColor={style.markerBackgroundColor}
+          overlap={index > 0}
           key={style.id}
         ><img src={'http://192.168.4.86:8080/media/' + style.markerIcon} /></PatchMarkerChip>
       )}
