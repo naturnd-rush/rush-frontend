@@ -60,18 +60,25 @@ const PatchBreakdownRow = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+  align-items: center;
 `
 
 const PatchBreakdownRowLabel = styled.p`
   color: rgb(26, 32, 44);
+  font-size: 0.75rem;
 `
 
 // Functional Sub-components
+type LegendItemControlProps = {
+  active: boolean,
+  loading: boolean,
+  onToggleLayer: () => void,
+}
 
-const LegendItemControl = ({loading}: {loading: boolean}) => {
-  return loading
+const LegendItemControl = (props: LegendItemControlProps) => {
+  return props.loading
     ? <div style={{ paddingInline: '0.4375rem' }}><Spinner size='1.25rem' /></div>
-    : <Switch />
+    : <Switch checked={props.active} onChange={props.onToggleLayer} />
 }
 
 const DetailsPatch = ({styleOnLayer}: {styleOnLayer: StyleOnLayer}) => {
@@ -88,7 +95,7 @@ function LegendItemDetails({ children, layerStyles }: PropsWithChildren<{layerSt
   const patchBreakdown = layerStyles.length >= 2
     ? (
       <PatchBreakdownContainer>
-        { layerStyles.map((layerStyle) => <DetailsPatch styleOnLayer={layerStyle} />) }
+        { layerStyles.map((layerStyle) => <DetailsPatch styleOnLayer={layerStyle} key={layerStyle.style.id} />) }
       </PatchBreakdownContainer>
     ) : null
 
@@ -103,8 +110,10 @@ function LegendItemDetails({ children, layerStyles }: PropsWithChildren<{layerSt
 // LegendItem Component
 
 export type LegendItemProps = {
-  loading: boolean,
   layer: LayerDetails,
+  loading: boolean,
+  onToggleLayer: () => void,
+  active: boolean,
 }
 
 export default function LegendItem(props: LegendItemProps) {
@@ -115,9 +124,13 @@ export default function LegendItem(props: LegendItemProps) {
     .sort((a, b) => a.legendOrder - b.legendOrder)
 
   return (
-    <>
+    <div>
       <LegendItemContainer>
-        <LegendItemControl loading={props.loading} />
+        <LegendItemControl
+          active={props.active}
+          loading={props.loading}
+          onToggleLayer={props.onToggleLayer}
+        />
         <LegendItemLabel>{props.layer.name}</LegendItemLabel>
         <Spacer />
         <LegendPatch styles={layerStyles.map((s) => s.style)} />
@@ -134,6 +147,6 @@ export default function LegendItem(props: LegendItemProps) {
         ? <LegendItemDetails layerStyles={layerStyles}>{parse(props.layer.description)}</LegendItemDetails>
         : null
       }
-    </>
+    </div>
   )
 }

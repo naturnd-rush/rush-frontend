@@ -1,38 +1,44 @@
-import { gql, useQuery } from "@apollo/client";
-import { GeoJSON } from 'react-leaflet';
+import { ApolloError, gql, useQuery } from "@apollo/client";
 import type { Layer } from "../types/layers";
-import { bindFeaturePopup, pointToLayer } from "../utils/leaflet-functions";
 
 const GET_ALL_LAYERS = gql`
-  query GetLayers {
-    allLayers {
-      description
-      id
-      name
-      serializedLeafletJson
+  query AllLayersQuery() {
+  allLayers {
+    description
+    id
+    name
+    stylesOnLayer {
+      legendDescription
+      legendOrder
+      style {
+        drawFill
+        drawMarker
+        drawStroke
+        fillColor
+        fillOpacity
+        id
+        markerBackgroundColor
+        markerIcon
+        markerIconOpacity
+        name
+        strokeColor
+        strokeDashArray
+        strokeDashOffset
+        strokeLineCap
+        strokeLineJoin
+        strokeOpacity
+        strokeWeight
+      }
     }
   }
+}
 `
 
-export function useAllLayers() {
+type QUERY_RESULTS = { loading: boolean, error?: ApolloError, layers?: Layer[] }
+export function useTopicLayers(): QUERY_RESULTS {
   const { loading, error, data } = useQuery(GET_ALL_LAYERS);
   
-  const layers = data.allLayers.map(
-    (layer: Layer) => {
-      // TODO: Fix double-escaped JSON on backend.
-      const fixedJSON = layer.serializedLeafletJson.replace(/\\\\\"/g, '\\\"')
-      const layerJSON = JSON.parse(fixedJSON)
+  if (loading || error) return { loading, error, layers: undefined }
 
-      return (
-        <GeoJSON
-          data={layerJSON.featureCollection}
-          style={(f) => f?.properties.__polygonStyleProps}
-          pointToLayer={pointToLayer}
-          onEachFeature={bindFeaturePopup}
-        />
-      )
-    }
-  )
-
-  return { loading, error, layers }
+  return { loading, error, layers: data }
 }

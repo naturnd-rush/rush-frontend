@@ -1,4 +1,4 @@
-import { styled } from "@linaria/react";
+import { styled, type CSSProperties } from "@linaria/react";
 
 const StyledSpinner = styled.span<{size?: string}>`
   width: ${props => props.size ?? '1rem'};
@@ -16,6 +16,12 @@ const StyledSpinner = styled.span<{size?: string}>`
   }
 `
 
-export default function Spinner({ size }: { size?: string }) {
-  return <StyledSpinner size={size} />
+type SpinnerProps = {
+  size?: string,
+  style?: CSSProperties,
+  className?: string,
+}
+
+export default function Spinner(props:SpinnerProps) {
+  return <StyledSpinner {...props} />
 }

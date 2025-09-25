@@ -1,14 +1,21 @@
 import type { StyleOnLayer } from "./styles"
 
-type Layer = {
+type LayerDetails = {
   description: string,
   id: string,
   name: string,
-  serializedLeafletJson: string,
   stylesOnLayer: StyleOnLayer[],
 }
 
-type LayerDetails = Omit<Layer, 'serializedLeafletJson'>
+type LayerGeoJSON = {
+  geoJSON: React.ReactElement
+}
+
+type LayerQueryResult = LayerDetails & {
+  serializedLeafletJson: string,
+}
+
+type Layer = LayerDetails & LayerGeoJSON
 
 type LayerGroup = {
   id: string,
@@ -22,4 +29,11 @@ type LayerOnTopic = {
   layerGroup: LayerGroup,
 }
 
-export type { Layer, LayerDetails, LayerGroup, LayerOnTopic }
+export type {
+  Layer,
+  LayerDetails,
+  LayerGeoJSON,
+  LayerGroup,
+  LayerOnTopic,
+  LayerQueryResult
+}

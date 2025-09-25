@@ -12,6 +12,7 @@ const initialMapOptions: MapOptions = {
   scrollWheelZoom: true,
   closePopupOnClick: false,
   maxZoom: 20,
+  zoomControl: false,
 }
 
 type MapViewOptions = MapOptions & {
