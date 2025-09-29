@@ -1,14 +1,14 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import parse from 'html-react-parser';
 import type { TopicContent } from "../types/topic";
 
 const GET_TOPIC = gql`
   query TopicLayersQuery($id: UUID!) {
     question(id: $id) {
       id
+      image
       title
+      subtitle
       tabs {
-        content
         id
         title
       }
@@ -30,7 +30,7 @@ export function useTopic(id: string): QueryResults {
     tabs: data.question.tabs.map((tab) => ({
       title: tab.title,
       id: tab.id,
-      content: parse(tab.content.toString())
+      content: ''
     }))
   }
 

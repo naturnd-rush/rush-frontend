@@ -35,7 +35,7 @@ const GET_ALL_LAYERS = gql`
 `
 
 type QUERY_RESULTS = { loading: boolean, error?: ApolloError, layers?: Layer[] }
-export function useTopicLayers(): QUERY_RESULTS {
+export function useAllLayers(): QUERY_RESULTS {
   const { loading, error, data } = useQuery(GET_ALL_LAYERS);
   
   if (loading || error) return { loading, error, layers: undefined }

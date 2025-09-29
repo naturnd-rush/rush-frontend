@@ -62,9 +62,9 @@ const Subtitle = styled.p`
   margin: 0;
 `
 
-export default function TopicCard({ topic }: { topic: Topic }) {
+export default function TopicCard({ topic }: { topic: Topic & { tabs: {id:string}[] } }) {
 
-  const topicRoute = `/app/${topic.id}`
+  const topicRoute = `/app/${topic.id}/${topic.tabs[0].id}`
 
   return (
     <Link to={topicRoute}>

@@ -1,26 +1,24 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useTopicLayers } from '@/features/map/hooks/use-topic-layers'
-import MapView from '@/features/map/components/map-view'
-import MapControlOverlay from '@/features/map/components/map-control-overlay'
-import Legend from '@/features/map/components/legend'
-import Content from '@/features/content/components/content-panel'
-import { useTopic } from '@/features/topic/hooks/use-topic'
 import LayerController from '@/features/map/components/layer-controller'
+import Legend from '@/features/map/components/legend'
+import MapControlOverlay from '@/features/map/components/map-control-overlay'
+import MapView from '@/features/map/components/map-view'
+import { useTopicLayers } from '@/features/map/hooks/use-topic-layers'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const topicId = Route.useParams().topicId
+  const { topicId } = Route.useParams()
+  
+  // Map Layer API Call
   const { loading, error, layers } = useTopicLayers(topicId)
   const leafletLayers = layers
     ? layers.map((layer) => <LayerController layerId={layer.id} key={layer.id} />)
     : null
-  
-  // TODO: handle and display loading and error states.
 
-  const topic = useTopic(topicId)
+  // TODO: handle and display loading and error states.
 
   return (
     <MapControlOverlay>
@@ -36,8 +34,13 @@ function RouteComponent() {
       }}>
         <Legend loading={loading}>{error?.message}</Legend>
       </div>
-      <div style={{ gridArea: 'content', zIndex: 9999, padding: '1rem', pointerEvents: 'none' }}>
-        <Content title={topic?.topic?.title ?? 'Topic'} tabs={topic?.topic?.tabs ?? [] } />
+      <div style={{
+        gridArea: 'content',
+        zIndex: 9999,
+        padding: '1rem',
+        pointerEvents: 'none'
+      }}>
+        <Outlet />
       </div>
     </MapControlOverlay>
   )

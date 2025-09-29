@@ -5,6 +5,7 @@ import { bindFeaturePopup, pointToLayer } from "../utils/leaflet-functions";
 const GET_LAYER_GEOJSON = gql`
   query LayerQuery($id: UUID!) {
   layer(id: $id) {
+    id
     serializedLeafletJson
   }
 }

@@ -1,5 +1,7 @@
 import { styled } from "@linaria/react";
 import type { HTMLAttributes, PropsWithChildren } from "react";
+import Spinner from "./spinner";
+import Scrollable from "./scrollable";
 
 const StyledPanel = styled.section`
   background-color: white;
@@ -23,15 +25,36 @@ const PanelTitle = styled.h2`
   text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 `
 
+const PanelLoading = styled.div`
+  align-self: center;
+  margin: 1rem;
+`
+
 type PanelProps = PropsWithChildren<
   HTMLAttributes<HTMLElement>
-  & { title: string }
+  & { title?: string }
 >
 export default function Panel({children, title, ...props}: PanelProps) {
   return (
     <StyledPanel {...props}>
-      <PanelTitle>{title}</PanelTitle>
+      { title
+        ? <PanelTitle>{title}</PanelTitle>
+        : null
+      }
       { children }
     </StyledPanel>
   )
+}
+
+type PanelContentProps = PropsWithChildren<
+  HTMLAttributes<HTMLElement>
+  & { loading?: boolean }
+>
+export function PanelContent({loading, children, ...props}: PropsWithChildren<PanelContentProps>) {
+  return loading
+    ? <PanelLoading><Spinner size='2rem' /></PanelLoading>
+    : <Scrollable {...props} style={{
+      marginRight: '-0.75rem',
+      paddingRight: '0.5rem',
+    }}>{children}</Scrollable>
 }

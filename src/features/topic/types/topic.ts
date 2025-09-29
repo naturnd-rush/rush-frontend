@@ -4,8 +4,8 @@ type Topic = {
   title: string;
   subtitle: string;
 }
-
+type TabQueryResult = { title: string, id: string, content: string }
 type Tab = { title: string, id: string, content: string | React.ReactElement | React.ReactElement[] }
 type TopicContent = { title: string, tabs: Tab[] }
 
-export type { Topic, Tab, TopicContent }
+export type { Topic, Tab, TabQueryResult, TopicContent }
