@@ -1,6 +1,6 @@
 import { styled } from '@linaria/react'
 import { Link } from '@tanstack/react-router'
-import type { Topic } from '../types/topic'
+import type { TopicWithTabIds } from '../types/topic'
 
 const BackgroundImage = styled.img`
   // from baseStyle
@@ -62,9 +62,9 @@ const Subtitle = styled.p`
   margin: 0;
 `
 
-export default function TopicCard({ topic }: { topic: Topic }) {
+export default function TopicCard({ topic }: { topic: TopicWithTabIds }) {
 
-  const topicRoute = `/app/${topic.id}`
+  const topicRoute = `/app/${topic.id}/${topic.tabs[0].id}`
 
   return (
     <Link to={topicRoute}>
