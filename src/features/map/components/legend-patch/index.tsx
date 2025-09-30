@@ -88,6 +88,16 @@ const PatchMarkerChip = styled.div<PatchMarkerProps>`
   border: 2px solid white;
 `
 
+function expandMarkerURL(markerIconPath?: string) {
+  return markerIconPath
+    ? [
+        import.meta.env.VITE_BACKEND_BASE_URL,
+        import.meta.env.VITE_MEDIA_PATH,
+        markerIconPath,
+      ].join('/')
+    : undefined
+}
+
 function PatchMarker(props: LegendPatchProps) {
   // Check there are styles passed
   if (!props.styles?.length) return null;
@@ -95,13 +105,14 @@ function PatchMarker(props: LegendPatchProps) {
   // Maximum number of styles in PatchMarker is 3
   const styles = props.styles.slice(0,3)
 
+
   return (
     <PatchMarkerContainer>
       {styles.map((style, index) => <PatchMarkerChip
           bgColor={style.markerBackgroundColor}
           overlap={index > 0}
           key={style.id}
-        ><img src={'http://192.168.4.86:8080/media/' + style.markerIcon} /></PatchMarkerChip>
+        ><img src={expandMarkerURL(style.markerIcon)} /></PatchMarkerChip>
       )}
     </PatchMarkerContainer>
   )
