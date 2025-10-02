@@ -66,8 +66,10 @@ const Subtitle = styled.p`
 
 export default function TopicCard({ topic }: { topic: TopicWithTabIds }) {
 
-  const topicRoute = topic?.tabs && topic.tabs.length > 0
-    ? `/app/${topic.id}/${topic.tabs[0].id}`
+  const topicRoute = topic?.id
+    ? topic.tabs && topic.tabs.length > 0
+      ? `/app/${topic.id}/${topic.tabs[0].id}`
+      : `/app/${topic.id}`
     : '.'
 
   return (
