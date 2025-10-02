@@ -2,6 +2,7 @@ import { styled } from '@linaria/react'
 import { Link } from '@tanstack/react-router'
 import type { TopicWithTabIds } from '../types/topic'
 import { fallbackImage } from '@/utils/fallback-image'
+import fallbackImageUrl from '@/assets/topic-placeholder.png'
 
 const BackgroundImage = styled.img`
   // from baseStyle
@@ -74,7 +75,7 @@ export default function TopicCard({ topic }: { topic: TopicWithTabIds }) {
       <Card>
         <BackgroundImage
           src={topic.image}
-          onError={fallbackImage(require('@/assets/topic-placeholder.png'))}
+          onError={fallbackImage(fallbackImageUrl)}
         />
         <Content>
           <Title>{topic.title}</Title>
