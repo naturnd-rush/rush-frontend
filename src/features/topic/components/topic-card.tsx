@@ -1,6 +1,8 @@
 import { styled } from '@linaria/react'
 import { Link } from '@tanstack/react-router'
 import type { TopicWithTabIds } from '../types/topic'
+import { fallbackImage } from '@/utils/fallback-image'
+import fallbackImageUrl from '@/assets/topic-placeholder.png'
 
 const BackgroundImage = styled.img`
   // from baseStyle
@@ -64,12 +66,19 @@ const Subtitle = styled.p`
 
 export default function TopicCard({ topic }: { topic: TopicWithTabIds }) {
 
-  const topicRoute = `/app/${topic.id}/${topic.tabs[0].id}`
+  const topicRoute = topic?.id
+    ? topic.tabs && topic.tabs.length > 0
+      ? `/app/${topic.id}/${topic.tabs[0].id}`
+      : `/app/${topic.id}`
+    : '.'
 
   return (
     <Link to={topicRoute}>
       <Card>
-        <BackgroundImage src={topic.image}/>
+        <BackgroundImage
+          src={topic.image}
+          onError={fallbackImage(fallbackImageUrl)}
+        />
         <Content>
           <Title>{topic.title}</Title>
           <Subtitle>{topic.subtitle}</Subtitle>
