@@ -57,10 +57,10 @@ const Nav = styled.nav`
   background-color: #FFF;
   display: flex;
   align-items: center;
-  height: 2.5rem;
+  height: var(--nav-height);
   // App
-  position: sticky;
-  top: 0px;
+  //position: sticky;
+  //top: 0px;
   z-index: 10;
   box-shadow: 0px 0px 8px 2px #888;
 
