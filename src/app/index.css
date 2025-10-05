@@ -18,6 +18,7 @@
   overflow: hidden;
 
   --nav-height: 2.5rem;
+  --panel-border-radius: 1rem;
 }
 
 a {

@@ -15,6 +15,7 @@ const StyledSwitch = styled.input`
   vertical-align: text-bottom;
   margin: auto;
   color: inherit;
+  cursor: pointer;
 
   &:before {
     content: "";
