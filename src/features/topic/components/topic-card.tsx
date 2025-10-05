@@ -14,7 +14,6 @@ const BackgroundImage = styled.img`
   //overflow: hidden;
   // from variant expanded
   position: absolute;
-  z-index: -1;
   `
 
 const Card = styled.div`
@@ -26,6 +25,10 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 0 0 24px -16px rgba(255, 255, 255, 0.6);
+
+  // starts new DOM context so background image doesn't scroll separately
+  position: relative;
   `
 
 const Content = styled.div`
@@ -33,13 +36,19 @@ const Content = styled.div`
   border-radius: inherit;
   overflow: hidden;
   padding: 1rem;
-  background: linear-gradient(rgba(33,33,33,0.1) 0, rgba(33,33,33,0.3) 180px, rgba(33,33,33,.8) 320px, rgba(33,33,33,1)) 100%;
+  background: linear-gradient(
+    rgba(33,33,33,0.1) 0,
+    rgba(33,33,33,0.3) 180px,
+    rgba(33,33,33,.8) 320px,
+    rgba(33,33,33,1)
+    ) 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
   gap: 8px;
   height: 100%;
+  z-index: 2;
   `
 
 const doubleDropShadow = {
