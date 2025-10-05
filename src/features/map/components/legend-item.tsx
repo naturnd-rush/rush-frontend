@@ -131,9 +131,16 @@ export default function LegendItem(props: LegendItemProps) {
           loading={props.loading}
           onToggleLayer={props.onToggleLayer}
         />
-        <LegendItemLabel>{props.layer.name}</LegendItemLabel>
+        <LegendItemLabel
+          onClick={ isOpen ? onClose : onOpen }
+        >
+          {props.layer.name}
+        </LegendItemLabel>
         <Spacer />
-        <LegendPatch styles={layerStyles.map((s) => s.style)} />
+        <LegendPatch
+          styles={layerStyles.map((s) => s.style)}
+          onClick={ isOpen ? onClose : onOpen }
+        />
         <Button
           icon={ isOpen
             ? <IoMdCloseCircleOutline size='20px' />
