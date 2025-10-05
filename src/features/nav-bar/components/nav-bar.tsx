@@ -15,7 +15,7 @@ import Button from "@/components/button";
 const Pages = [
   {
     title: 'Home',
-    target: '/',
+    target: '/app',
     icon: <FaRegMap />,
     color: undefined,
     bold: false
@@ -74,7 +74,7 @@ const SiteTitle = styled.div`
 
   // use short title below breakpoint
   .short { display: none }
-  @media (max-width: 768px) {
+  @media (max-width: 950px) {
     .short { display: inline-block; }
     .full { display: none; }
   }

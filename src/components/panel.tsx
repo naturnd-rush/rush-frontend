@@ -5,7 +5,7 @@ import Scrollable from "./scrollable";
 
 const StyledPanel = styled.section`
   background-color: white;
-  border-radius: 16px;
+  border-radius: var(--panel-border-radius);
   display: flex;
   flex-direction: column;
   max-height: 100%;

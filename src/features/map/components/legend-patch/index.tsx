@@ -12,7 +12,7 @@ export type LegendPatchProps = {
   styles: Style[],
 }
 
-export default function LegendPatch(props: LegendPatchProps) {
+export default function LegendPatch(props: LegendPatchProps & {onClick?: () => void}) {
   const patches: React.ReactElement[] = []
 
   // separate styles by patch type
@@ -23,7 +23,7 @@ export default function LegendPatch(props: LegendPatchProps) {
   patches.push(<PatchMarker styles={markerStyles} key='markers' />)
 
   return (
-    <PatchContainer>
+    <PatchContainer onClick={props.onClick}>
       {patches}
     </PatchContainer>
   )
