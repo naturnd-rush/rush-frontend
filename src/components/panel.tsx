@@ -2,6 +2,8 @@ import { styled } from "@linaria/react";
 import type { HTMLAttributes, PropsWithChildren } from "react";
 import Spinner from "./spinner";
 import Scrollable from "./scrollable";
+import Button from "./button";
+import { FaX } from "react-icons/fa6";
 
 const StyledPanel = styled.section`
   background-color: white;
@@ -12,6 +14,7 @@ const StyledPanel = styled.section`
   padding: 1rem;
   pointer-events: all;
   position: relative;
+  min-width: 24rem;
   width: 24rem;
 `
 
@@ -46,6 +49,8 @@ export default function Panel({children, title, ...props}: PanelProps) {
   )
 }
 
+// Content
+
 type PanelContentProps = PropsWithChildren<
   HTMLAttributes<HTMLElement>
   & { loading?: boolean }
@@ -57,4 +62,23 @@ export function PanelContent({loading, children, ...props}: PropsWithChildren<Pa
       marginRight: '-0.75rem',
       paddingRight: '0.5rem',
     }}>{children}</Scrollable>
+}
+
+// Close Button
+
+const PanelCloseButtonContainer = styled.div`
+  position: absolute;
+  right: 0rem;
+  top: 0.5rem;
+`
+
+type PanelCloseButtonProps = {
+  onClick?: () => void
+}
+export function PanelCloseButton({ onClick }: PanelCloseButtonProps) {
+  return (
+    <PanelCloseButtonContainer>
+      <Button icon={<FaX />} onClick={onClick} />
+    </PanelCloseButtonContainer>
+  )
 }

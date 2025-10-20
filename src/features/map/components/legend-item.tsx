@@ -137,10 +137,13 @@ export default function LegendItem(props: LegendItemProps) {
           {props.layer.name}
         </LegendItemLabel>
         <Spacer />
-        <LegendPatch
-          styles={layerStyles.map((s) => s.style)}
-          onClick={ isOpen ? onClose : onOpen }
-        />
+        { layerStyles.length > 0 
+            ? (
+              <LegendPatch
+                styles={layerStyles.map((s) => s.style)}
+                onClick={ isOpen ? onClose : onOpen }
+              />
+            ) : null }
         <Button
           icon={ isOpen
             ? <IoMdCloseCircleOutline size='20px' />

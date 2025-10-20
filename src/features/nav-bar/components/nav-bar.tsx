@@ -10,6 +10,7 @@ import {
   FaRegMessage,
 } from "react-icons/fa6";
 import Button from "@/components/button";
+import copyUrlToClipboard from "@/utils/copy-url-to-clipboard";
 
 /** Mocked up data */
 const Pages = [
@@ -45,7 +46,7 @@ const Pages = [
   },
   {
     title: 'Share',
-    target: '/share',
+    onClick: copyUrlToClipboard,
     icon: <FaRegShareSquare />,
     color: undefined,
     bold: false
@@ -86,18 +87,26 @@ const Spacer = styled.div`
 `
 
 export default function NavBar() {
-  const NavLinks = Pages.map((page) =>
-    <Link
-      to={page.target}
-      target={page.external ? '_blank' : '_self' }
-      className="[&.active]:font-bold"
-      key={page.title}
-    >
-      <Button bold={page.bold} color={page.color} icon={page.icon}>
-        {page.title}
+  const NavLinks = Pages.map((page) => {
+    const { title, target, external, ...buttonProps } = page
+    const button = (
+      <Button {...buttonProps} >
+        {title}
       </Button>
-    </Link>
-  )
+    )
+
+    return target
+      ? (
+        <Link
+          to={target}
+          target={external ? '_blank' : '_self' }
+          className="[&.active]:font-bold"
+          key={title}
+        >
+          { button }
+        </Link>
+      ) : button
+  })
 
   return (
     <Nav>
