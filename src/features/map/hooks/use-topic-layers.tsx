@@ -2,8 +2,8 @@ import { ApolloError, gql, useQuery } from "@apollo/client";
 import type { LayerDetails, LayerOnTopic } from "../types/layers";
 
 const GET_TOPIC_LAYERS = gql`
-  query TopicLayersQuery($id: UUID!) {
-  question(id: $id) {
+  query TopicLayersQuery($slug: String!) {
+  questionBySlug(slug: $slug) {
     id
     layersOnQuestion {
       activeByDefault
@@ -11,29 +11,6 @@ const GET_TOPIC_LAYERS = gql`
         description
         id
         name
-        stylesOnLayer {
-          legendDescription
-          legendOrder
-          style {
-            drawFill
-            drawMarker
-            drawStroke
-            fillColor
-            fillOpacity
-            id
-            markerBackgroundColor
-            markerIcon
-            markerIconOpacity
-            name
-            strokeColor
-            strokeDashArray
-            strokeDashOffset
-            strokeLineCap
-            strokeLineJoin
-            strokeOpacity
-            strokeWeight
-          }
-        }
       }
       layerGroup {
         groupDescription
@@ -46,15 +23,15 @@ const GET_TOPIC_LAYERS = gql`
 `
 
 type QUERY_RESULTS = { loading: boolean, error?: ApolloError, layers?: LayerDetails[] }
-export function useTopicLayers(id: string): QUERY_RESULTS {
+export function useTopicLayers(slug: string): QUERY_RESULTS {
   const { loading, error, data } = useQuery(
     GET_TOPIC_LAYERS,
-    { variables: { id: id }}
+    { variables: { slug: slug }}
   );
   
   if (loading || error) return { loading, error, layers: undefined }
 
-  const layers = data.question.layersOnQuestion.map(
+  const layers = data.questionBySlug.layersOnQuestion.map(
     (layerOnTopic: LayerOnTopic) => layerOnTopic.layer
   )
 

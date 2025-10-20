@@ -5,6 +5,7 @@ const GET_TOPICS = gql`
   query GetQuestions {
     allQuestions {
       id
+      slug
       image
       subtitle
       title

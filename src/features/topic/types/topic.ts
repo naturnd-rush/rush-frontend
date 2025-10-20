@@ -1,5 +1,6 @@
 type Topic = {
   id: string;
+  slug: string;
   image: string;
   title: string;
   subtitle: string;

@@ -4,7 +4,7 @@ import TopicCard from "./topic-card"
 export default function TopicController() {
   const { loading, error, topics } = useAllTopics()
   const topicCards = topics?.map((topic) => {
-    return <TopicCard key={topic.id} topic={topic} />
+    return <TopicCard key={topic.slug} topic={topic} />
   })
 
   return (
