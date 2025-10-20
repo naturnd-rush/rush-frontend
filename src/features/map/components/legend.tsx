@@ -43,12 +43,13 @@ export default function Legend({
   loading = false,
 }: PropsWithChildren<LegendOpts>) {
   const { down } = useTheme().breakpoints
-  const isMobile = useMediaQuery(down('lg'))
+  const isMobileOrLaptop = useMediaQuery(down('lg'))
+  const isMobile = useMediaQuery(down('sm'))
 
   const [ isOpen, setIsOpen ] = useState(false)
   const toggleIsOpen = () => setIsOpen(!isOpen)
   // set state on viewport change that crosses mobile breakpoint
-  useEffect(() => { setIsOpen(!isMobile) }, [ isMobile ])
+  useEffect(() => { setIsOpen(!isMobileOrLaptop) }, [ isMobileOrLaptop ])
 
   const mobileLegendButton = !isOpen
     ? <LegendButton onClick={toggleIsOpen} />
@@ -56,9 +57,15 @@ export default function Legend({
   
   return (
     <>
-      <Panel title='Legend' style={
-        isOpen ? {} : {display:'none'}
-      }>
+      <Panel title='Legend' style={{
+        display: isOpen ? undefined : 'none',
+        position: isMobileOrLaptop ? 'absolute' : 'relative',
+        width: isMobile ? 'calc(100% - 8px)' : undefined,
+        maxHeight: isMobileOrLaptop ? 'calc(100% - 48px)' : undefined,
+        top: isMobileOrLaptop ? '44px' : undefined,
+        right: isMobileOrLaptop ? '4px' : undefined,
+        alignSelf: isMobileOrLaptop ? 'flex-end' : 'stretch'
+      }}>
         { showHint && 
           <LegendHintText>
             Click here for information about each layer ⤵

@@ -17,7 +17,7 @@ export default function Content({
   children, title, tabs, loading, activeTabLabel
 }: PropsWithChildren<TopicContent & LoadingProps & {activeTabLabel?: string}>) {
   return (
-    <Panel title={title}>
+    <Panel id='content-panel' title={title} style={{ minHeight: '40%' }}>
       <Link to='/app'>
         <PanelCloseButton />
       </Link>

@@ -1,20 +1,41 @@
-import { styled } from "@linaria/react";
 import type { PropsWithChildren } from "react";
+import { styled } from "@linaria/react";
+import { useMediaQuery } from "styled-breakpoints/use-media-query";
+import { useTheme } from "@/theme";
 
-const ControlGrid = styled.div`
+export const MapControl = styled.div`
+  z-index: 9999;
+  pointer-events: none;
+  flex: 0 1;
+`
+
+type ControlOverlayProps = {
+  isMobile?: boolean
+}
+const ControlOverlay = styled.div<ControlOverlayProps>`
   flex: 1;
-  display: grid;
-  grid-template-columns: [map-start] 1fr 1fr 1fr [map-end];
-  grid-template-rows: 100%;
-  grid-template-areas: 
-    "content . legend";
   height: calc(100% - 40px);
+  max-height: calc(100% - 40px);
+  display: flex;
+  flex-direction: ${(props) => props.isMobile ? 'column-reverse' : 'row'};
+  align-items: stretch;
+
+  ${MapControl} {
+    padding: 1rem ${(props) => props.isMobile ? '0.25rem' : '1rem'};
+  }
+
+  #content-panel {
+    width: ${(props) => props.isMobile ? 'min(36rem, 100%)' : 'unset'}
+  }
 `
 
 export default function MapControlOverlay({ children }: PropsWithChildren) {
+  const { down } = useTheme().breakpoints
+  const isMobileOrTablet = useMediaQuery(down('lg'))
+
   return (
-    <ControlGrid>
+    <ControlOverlay isMobile={isMobileOrTablet}>
       { children }
-    </ControlGrid>
+    </ControlOverlay>
   )
 }

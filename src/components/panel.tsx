@@ -14,6 +14,7 @@ const StyledPanel = styled.section`
   padding: 1rem;
   pointer-events: all;
   position: relative;
+  min-width: 24rem;
   width: 24rem;
 `
 
