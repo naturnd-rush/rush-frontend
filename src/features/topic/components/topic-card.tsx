@@ -77,8 +77,8 @@ export default function TopicCard({ topic }: { topic: TopicWithTabIds }) {
 
   const topicRoute = topic?.id
     ? topic.tabs && topic.tabs.length > 0
-      ? `/app/${topic.id}/${topic.tabs[0].id}`
-      : `/app/${topic.id}`
+      ? `/app/${topic.slug}/${topic.tabs[0].id}`
+      : `/app/${topic.slug}`
     : '.'
 
   return (

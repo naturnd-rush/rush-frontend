@@ -90,7 +90,7 @@ export default function NavBar() {
   const NavLinks = Pages.map((page) => {
     const { title, target, external, ...buttonProps } = page
     const button = (
-      <Button {...buttonProps} >
+      <Button key={title} {...buttonProps} >
         {title}
       </Button>
     )

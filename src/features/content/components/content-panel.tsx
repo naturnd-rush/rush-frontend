@@ -22,7 +22,9 @@ export default function Content({
         <PanelCloseButton />
       </Link>
 
-      <Dropdown activeLabel={activeTabLabel} items={tabs.map((tab) => {return { link: tab.id, label: tab.title}})} />
+      <Dropdown activeLabel={activeTabLabel} items={
+        tabs.map((tab) => {return { link: tab.id, label: tab.title}})
+      } />
       <PanelContent loading={loading}>
         <ContentText>
           { children }
