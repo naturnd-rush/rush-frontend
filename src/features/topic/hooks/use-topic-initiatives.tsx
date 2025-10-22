@@ -37,7 +37,11 @@ export function useTopicInitiatives(slug: string): QueryResults {
         import.meta.env.VITE_MEDIA_PATH,
         initiative.image,
       ].join('/'),
-    tags: initiative.tags.map((tag) => ({...tag, color: 'red', bgColor: 'lightgray'})),
+    tags: initiative.tags.map((tag) => ({
+      ...tag,
+      color: tag.color ?? 'white',
+      bgColor: tag.bgColor ?? 'rgb(56, 161, 105)',
+    })),
     content: typeof initiative.content === 'string'
       ? parse(initiative.content)
       : initiative.content

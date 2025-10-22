@@ -42,11 +42,14 @@ const Heading = styled.h4<Flippable>`
 const InitiativeTags = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.25rem;
   margin-inline: 1.25rem;
   margin-bottom: 0.5rem;
+  max-width: calc(75% - 1.25rem);
 `
 
-const Badge = styled.span<Omit<Tag, 'name'>>`
+const Badge = styled.div<Omit<Tag, 'name'>>`
   display: inline-block;
   white-space: nowrap;
   padding-inline: 0.25rem;
@@ -80,7 +83,7 @@ export default function InitiativeCard({initiative, flip = false}: InitiativePro
                   key={tag.name}
                   color={tag.color}
                   bgColor={tag.bgColor}
-                >Initiative</Badge>
+                >{tag.name}</Badge>
               ))}
             </InitiativeTags>
           ) : null
