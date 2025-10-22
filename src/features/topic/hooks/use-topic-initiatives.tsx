@@ -32,6 +32,11 @@ export function useTopicInitiatives(slug: string): QueryResults {
 
   const initiatives: Initiative[] = data.questionBySlug.initiatives.map((initiative) => ({
     ...initiative,
+    image: [
+        import.meta.env.VITE_BACKEND_BASE_URL,
+        import.meta.env.VITE_MEDIA_PATH,
+        initiative.image,
+      ].join('/'),
     tags: initiative.tags.map((tag) => ({...tag, color: 'red', bgColor: 'lightgray'})),
     content: typeof initiative.content === 'string'
       ? parse(initiative.content)
