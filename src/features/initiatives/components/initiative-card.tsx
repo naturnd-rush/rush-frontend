@@ -71,7 +71,7 @@ type InitiativeProps = { initiative: Initiative } & Flippable
 export default function InitiativeCard({initiative, flip = false}: InitiativeProps) {
   return (
     <Container>
-      { initiative.image === ''
+      { initiative.image !== ''
           ? <Image src={initiative.image} alt={initiative.title} flip={flip} />
           : null
       }
