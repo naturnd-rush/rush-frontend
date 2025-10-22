@@ -18,9 +18,9 @@ const Container = styled.div`
 
 // only implementing for 'md' breakpoint
 const Image = styled.img<Flippable>`
-  object-fit: contain;
-  height: 25%;
+  object-fit: cover;
   width: 25%;
+  aspect-ratio: 1/1;
   float: ${(props) => props.flip ? 'right' : 'left'};
   margin-right: ${(props) => props.flip ? '0' : '1.25rem'};
   margin-left:  ${(props) => props.flip ? '1.25rem' : '0'};
