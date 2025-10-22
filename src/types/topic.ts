@@ -26,4 +26,28 @@ type TabIds = {
 }
 type TopicWithTabIds = Topic & TabIds
 
-export type { Topic, Tab, TabIds, TabQueryResult, TopicContent, TopicWithTabIds }
+type InitiativeTag = {
+  id?: string
+  name: string
+  color: string
+  bgColor: string
+}
+type Initiative = {
+  content: string | React.ReactElement | React.ReactElement[]
+  id?: string
+  image: string
+  link: string
+  title: string
+  tags: InitiativeTag[]
+}
+
+export type {
+  Topic,
+  Tab,
+  TabIds,
+  TabQueryResult,
+  TopicContent,
+  TopicWithTabIds,
+  Initiative,
+  InitiativeTag
+}
