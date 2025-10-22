@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react";
 import { Link } from "@tanstack/react-router";
 import { styled } from "@linaria/react";
 import Panel, { PanelCloseButton, PanelContent } from "@/components/panel";
-import type { TopicContent } from "@/features/topic/types/topic";
+import type { TopicContent } from "@/types/topic";
 import Dropdown from "@/components/dropdown";
 import type { LoadingProps } from "@/app/types/backend";
 

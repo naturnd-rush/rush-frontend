@@ -1,6 +1,6 @@
 import { styled } from '@linaria/react'
 import { Link } from '@tanstack/react-router'
-import type { TopicWithTabIds } from '../types/topic'
+import type { TopicWithTabIds } from '../../../types/topic'
 import { fallbackImage } from '@/utils/fallback-image'
 import fallbackImageUrl from '@/assets/topic-placeholder.png'
 

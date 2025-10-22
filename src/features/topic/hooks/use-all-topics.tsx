@@ -1,5 +1,5 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import type { TopicWithTabIds } from "../types/topic";
+import type { TopicWithTabIds } from "../../../types/topic";
 
 const GET_TOPICS = gql`
   query GetQuestions {

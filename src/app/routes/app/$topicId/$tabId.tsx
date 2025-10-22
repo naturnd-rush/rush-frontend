@@ -12,13 +12,14 @@ function RouteComponent() {
   
   // TODO: Refactor to one API call, use future endpoint useTab(tabId)
   const topic = useTopic(topicId)
-  const {loading, error, tabs} = useTopicTabs(topicId)
+  const [loading, error, tabs] = useTopicTabs(topicId)
   
   // Extract currently active tab from list of tabs for dropdown menu
   let otherTabs = tabs.slice()
   const activeTabIndex = otherTabs.findIndex((tab) => tab.id == tabId)
   const activeTab = otherTabs?.splice(Math.max(activeTabIndex, 0), 1)[0]
   const tabContent = activeTab?.content ?? null
+  otherTabs.push({id: 'initiatives', title: 'Check Out', content: ''})
 
   // TODO: handle and display loading and error states.
 

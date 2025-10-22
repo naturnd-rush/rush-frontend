@@ -1,5 +1,5 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import type { TopicContent } from "../types/topic";
+import type { TopicContent } from "../../../types/topic";
 
 const GET_TOPIC = gql`
   query TopicLayersQuery($slug: String!) {
