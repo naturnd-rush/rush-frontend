@@ -71,26 +71,29 @@ type InitiativeProps = { initiative: Initiative } & Flippable
 export default function InitiativeCard({initiative, flip = false}: InitiativeProps) {
   return (
     <Container>
-        <Image src={initiative.image} alt={initiative.title} flip={flip} />
-        <Link to={initiative.link} target="_blank">
-          <Heading flip={flip}>{initiative.title}</Heading>
-        </Link>
-        {initiative.tags.length > 0
-          ? (
-            <InitiativeTags>
-              {initiative.tags.map((tag) => (
-                <Badge
-                  key={tag.name}
-                  color={tag.color}
-                  bgColor={tag.bgColor}
-                >{tag.name}</Badge>
-              ))}
-            </InitiativeTags>
-          ) : null
-        }
-        <Description>
-          {initiative.content}
-        </Description>
-      </Container>
+      { initiative.image === ''
+          ? <Image src={initiative.image} alt={initiative.title} flip={flip} />
+          : null
+      }
+      <Link to={initiative.link} target="_blank">
+        <Heading flip={flip}>{initiative.title}</Heading>
+      </Link>
+      {initiative.tags.length > 0
+        ? (
+          <InitiativeTags>
+            {initiative.tags.map((tag) => (
+              <Badge
+                key={tag.name}
+                color={tag.color}
+                bgColor={tag.bgColor}
+              >{tag.name}</Badge>
+            ))}
+          </InitiativeTags>
+        ) : null
+      }
+      <Description>
+        {initiative.content}
+      </Description>
+    </Container>
   )
 }
