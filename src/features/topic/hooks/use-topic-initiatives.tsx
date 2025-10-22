@@ -32,7 +32,7 @@ export function useTopicInitiatives(slug: string): QueryResults {
 
   const initiatives: Initiative[] = data.questionBySlug.initiatives.map((initiative) => ({
     ...initiative,
-    image: initiative.image
+    image: initiative.image !== ''
       ? [
           import.meta.env.VITE_BACKEND_BASE_URL,
           import.meta.env.VITE_MEDIA_PATH,
