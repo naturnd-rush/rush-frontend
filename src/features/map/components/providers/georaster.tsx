@@ -13,11 +13,8 @@ export default function GeoRaster({ url }: GeoRasterProps) {
 
   const layerRef = useRef(null);
 
-  console.log("Rendering GeoRaster");
-
   useEffect(() => {
-    console.log("Loading Georaster");
-
+    let staleEffect = false;
     parseGeoraster(url).then((georaster: any) => {
       const layer = new GeoRasterLayer({
         attribution: "Planet",
@@ -37,13 +34,16 @@ export default function GeoRaster({ url }: GeoRasterProps) {
       layerRef.current = layer;
       const container = layerContainer || map;
 
-      container.addLayer(layer);
+      if(!staleEffect) container.addLayer(layer);
 
       // map.fitBounds(layer.getBounds());
       // console.log("MAP CENTER", map.getCenter());
     });
 
-    return () => { if(layerRef.current) map.removeLayer(layerRef.current) };
+    return () => {
+      staleEffect = true
+      if(layerRef.current) map.removeLayer(layerRef.current)
+    };
   }, [map, layerContainer]);
 
   return null;

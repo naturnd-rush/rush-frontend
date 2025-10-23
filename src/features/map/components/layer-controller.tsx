@@ -17,12 +17,14 @@ export default function LayerController(props: LayerControllerProps) {
   
   const [on, toggle] = useToggle(props.activeByDefault);
   const provider = layerQuery.layer?.mapData.providerState
-  console.log(layerQuery.layer?.mapData.geotiffLink)
+  
   return (
     <>
       { provider === "GEOJSON" ? <GeoJSONProvider layerId={props.layerId} /> : null }
-      { provider === "GEOTIFF" && layerQuery?.layer
-        ? <GeoRaster url={layerQuery.layer?.mapData.geotiffLink} />
+      { provider === "GEOTIFF" && layerQuery?.layer && on
+        ? <GeoRaster
+            url={layerQuery.layer?.mapData.geotiffLink}
+          />
         : null
       }
       { layerQuery.layer && legendNode ? createPortal(
