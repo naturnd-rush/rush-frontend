@@ -1,4 +1,12 @@
+import type { Orderable } from "./backend"
 import type { StyleOnLayer } from "./styles"
+
+type LayerDisplay = {
+  activeByDefault: boolean
+  layerId: string
+}
+
+type OrderedLayerDisplay = LayerDisplay & Orderable
 
 type LayerDetails = {
   description: string,
@@ -18,10 +26,11 @@ type LayerQueryResult = LayerDetails & {
 type Layer = LayerDetails & LayerGeoJSON
 
 type LayerGroup = {
-  id: string,
   groupName: string,
   groupDescription: string,
+  layers: OrderedLayerDisplay[]
 }
+type OrderedLayerGroup = LayerGroup & Orderable
 
 type LayerOnTopic = {
   activeByDefault: boolean,
@@ -34,6 +43,7 @@ export type {
   LayerDetails,
   LayerGeoJSON,
   LayerGroup,
+  OrderedLayerGroup,
   LayerOnTopic,
   LayerQueryResult
 }

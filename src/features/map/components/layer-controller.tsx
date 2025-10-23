@@ -6,14 +6,16 @@ import { useLayer } from "../hooks/use-layer";
 import { useEffect } from "react";
 
 export type LayerControllerProps = {
-  layerId: string,
+  layerId: string
+  groupId: string
+  activeByDefault: boolean
 }
 
 export default function LayerController(props: LayerControllerProps) {
-  const legendNode = document.getElementById('legend')
+  const legendNode = document.getElementById(props.groupId)
   const layerQuery = useLayer(props.layerId)
   
-  const [on, toggle] = useToggle(false);
+  const [on, toggle] = useToggle(props.activeByDefault);
   const geoJSONQuery = useLayerGeoJSON(props.layerId)
 
   useEffect(() => {

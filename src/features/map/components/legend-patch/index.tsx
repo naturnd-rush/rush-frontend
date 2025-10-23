@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react"
-import type { Style } from "../../types/styles"
+import type { Style } from "../../../../app/types/styles"
 
 const PATCH_WIDTH_PX = 45
 const PATCH_HEIGHT_PX = 27
