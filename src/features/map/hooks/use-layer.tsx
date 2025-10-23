@@ -1,6 +1,6 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
 import type { LayerDetails, LayerMapData } from "../../../app/types/layers";
-import { expandBackendLink } from "@/utils/expand-backend-link";
+//import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_LAYER = gql`
   query LayerQuery($id: UUID!) {
