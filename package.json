@@ -18,6 +18,9 @@
     "@reactuses/core": "^6.0.6",
     "@tanstack/react-router": "^1.124.0",
     "@tanstack/react-router-devtools": "^1.124.0",
+    "chroma-js": "^3.1.2",
+    "georaster": "^1.6.0",
+    "georaster-layer-for-leaflet": "^4.1.2",
     "graphql": "^16.11.0",
     "html-react-parser": "^5.2.6",
     "leaflet": "^1.9.4",
@@ -33,6 +36,7 @@
   "devDependencies": {
     "@eslint/js": "^9.29.0",
     "@tanstack/router-plugin": "^1.124.0",
+    "@types/chroma-js": "^3.1.1",
     "@types/leaflet": "^1.9.20",
     "@types/node": "^24.0.13",
     "@types/react": "^19.1.8",

@@ -1,5 +1,6 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
 import type { TopicWithTabIds } from "../../../types/topic";
+import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPICS = gql`
   query GetQuestions {
@@ -25,11 +26,7 @@ export function useAllTopics(): QueryResults {
   const topics = data.allQuestions.map((topic: TopicWithTabIds) => {
     return {
       ...topic,
-      image: [
-        import.meta.env.VITE_BACKEND_BASE_URL,
-        import.meta.env.VITE_MEDIA_PATH,
-        topic.image,
-      ].join('/')
+      image: expandBackendLink(topic.image)
     }
   })
 

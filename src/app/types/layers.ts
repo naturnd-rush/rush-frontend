@@ -38,6 +38,14 @@ type LayerOnTopic = {
   layerGroup: LayerGroup,
 }
 
+type LayerMapData = {
+  campaignLink: string
+  geotiffLink: string
+  mapLink: string
+  name: string
+  providerState: string
+}
+
 export type {
   Layer,
   LayerDetails,
@@ -45,5 +53,6 @@ export type {
   LayerGroup,
   OrderedLayerGroup,
   LayerOnTopic,
-  LayerQueryResult
+  LayerQueryResult,
+  LayerMapData,
 }

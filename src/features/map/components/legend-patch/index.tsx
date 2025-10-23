@@ -1,5 +1,6 @@
 import { styled } from "@linaria/react"
 import type { Style } from "../../../../app/types/styles"
+import { expandBackendLink } from "@/utils/expand-backend-link"
 
 const PATCH_WIDTH_PX = 45
 const PATCH_HEIGHT_PX = 27
@@ -88,16 +89,6 @@ const PatchMarkerChip = styled.div<PatchMarkerProps>`
   border: 2px solid white;
 `
 
-function expandMarkerURL(markerIconPath?: string) {
-  return markerIconPath
-    ? [
-        import.meta.env.VITE_BACKEND_BASE_URL,
-        import.meta.env.VITE_MEDIA_PATH,
-        markerIconPath,
-      ].join('/')
-    : undefined
-}
-
 function PatchMarker(props: LegendPatchProps) {
   // Check there are styles passed
   if (!props.styles?.length) return null;
@@ -112,7 +103,7 @@ function PatchMarker(props: LegendPatchProps) {
           bgColor={style.markerBackgroundColor}
           overlap={index > 0}
           key={style.id}
-        ><img src={expandMarkerURL(style.markerIcon)} /></PatchMarkerChip>
+        ><img src={expandBackendLink(style.markerIcon)} /></PatchMarkerChip>
       )}
     </PatchMarkerContainer>
   )

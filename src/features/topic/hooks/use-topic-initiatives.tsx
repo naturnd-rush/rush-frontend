@@ -1,6 +1,7 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
 import parse from 'html-react-parser';
 import type { Initiative } from "../../../types/topic";
+import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPIC_INITIATIVES = gql`
   query TopicTabsQuery($slug: String!) {
@@ -32,13 +33,7 @@ export function useTopicInitiatives(slug: string): QueryResults {
 
   const initiatives: Initiative[] = data.questionBySlug.initiatives.map((initiative) => ({
     ...initiative,
-    image: initiative.image !== ''
-      ? [
-          import.meta.env.VITE_BACKEND_BASE_URL,
-          import.meta.env.VITE_MEDIA_PATH,
-          initiative.image,
-        ].join('/')
-      : '',
+    image: expandBackendLink(initiative.image) ?? '',
     tags: initiative.tags.map((tag) => ({
       ...tag,
       color: tag.color ?? 'white',

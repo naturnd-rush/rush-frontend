@@ -1,9 +1,9 @@
 import { createPortal } from "react-dom";
 import { useToggle } from "@reactuses/core";
-import { useLayerGeoJSON } from "../hooks/use-layer-geojson";
 import LegendItem from "./legend-item";
 import { useLayer } from "../hooks/use-layer";
-import { useEffect } from "react";
+import GeoJSONProvider from "./providers/geojson";
+import GeoRaster from "./providers/georaster";
 
 export type LayerControllerProps = {
   layerId: string
@@ -16,18 +16,18 @@ export default function LayerController(props: LayerControllerProps) {
   const layerQuery = useLayer(props.layerId)
   
   const [on, toggle] = useToggle(props.activeByDefault);
-  const geoJSONQuery = useLayerGeoJSON(props.layerId)
-
-  useEffect(() => {
-    if (on && !geoJSONQuery.called) geoJSONQuery.getGeoJSON()
-  }, [on, geoJSONQuery])
-
+  const provider = layerQuery.layer?.mapData.providerState
+  console.log(layerQuery.layer?.mapData.geotiffLink)
   return (
     <>
-      { on ? geoJSONQuery.geoJSON : null }
+      { provider === "GEOJSON" ? <GeoJSONProvider layerId={props.layerId} /> : null }
+      { provider === "GEOTIFF" && layerQuery?.layer
+        ? <GeoRaster url={layerQuery.layer?.mapData.geotiffLink} />
+        : null
+      }
       { layerQuery.layer && legendNode ? createPortal(
         <LegendItem
-          loading={geoJSONQuery.loading}
+          loading={false}
           layer={layerQuery.layer}
           active={on}
           onToggleLayer={toggle}
