@@ -1,5 +1,5 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import type { Layer } from "../types/layers";
+import type { Layer } from "../../../app/types/layers";
 
 const GET_ALL_LAYERS = gql`
   query AllLayersQuery() {
