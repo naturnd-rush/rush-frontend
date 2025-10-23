@@ -58,7 +58,7 @@ export function useLayer(id: string): QUERY_RESULTS {
     stylesOnLayer: data.layer.stylesOnLayer,
     mapData: {
       ...data.layer.mapData,
-      geotiffLink: expandBackendLink(data.layer.mapData.geotiffLink),
+      geotiffLink: data.layer.mapData.geotiffLink,
     }
   }
 
