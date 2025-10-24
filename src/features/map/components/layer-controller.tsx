@@ -20,7 +20,8 @@ export default function LayerController(props: LayerControllerProps) {
   
   return (
     <>
-      { provider === "GEOJSON" ? <GeoJSONProvider layerId={props.layerId} /> : null }
+      { provider === "GEOJSON" && on
+        ? <GeoJSONProvider layerId={props.layerId} /> : null }
       { provider === "GEOTIFF" && layerQuery?.layer && on
         ? <GeoRaster
             url={layerQuery.layer?.mapData.geotiffLink}
