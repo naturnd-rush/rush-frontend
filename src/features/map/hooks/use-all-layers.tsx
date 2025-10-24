@@ -9,7 +9,7 @@ const GET_ALL_LAYERS = gql`
     name
     stylesOnLayer {
       legendDescription
-      legendOrder
+      displayOrder
       style {
         drawFill
         drawMarker

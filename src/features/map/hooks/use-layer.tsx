@@ -11,7 +11,7 @@ const GET_LAYER = gql`
     stylesOnLayer {
       id
       legendDescription
-      legendOrder
+      displayOrder
       style {
         id
         drawFill
