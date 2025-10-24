@@ -121,6 +121,7 @@ export default function LegendItem(props: LegendItemProps) {
 
   const layerStyles = props.layer.stylesOnLayer
     .slice()
+    .filter((s) => s.style.drawFill || s.style.drawMarker || s.style.drawStroke)
     .sort((a, b) => a.legendOrder - b.legendOrder)
 
   return (

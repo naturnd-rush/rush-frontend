@@ -1,5 +1,6 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import type { LayerDetails } from "../../../app/types/layers";
+import type { LayerDetails, LayerMapData } from "../../../app/types/layers";
+//import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_LAYER = gql`
   query LayerQuery($id: UUID!) {
@@ -31,11 +32,18 @@ const GET_LAYER = gql`
         strokeWeight
       }
     }
+    mapData {
+      campaignLink
+      geotiffLink
+      mapLink
+      name
+      providerState
+    }
   }
 }
 `
-
-type QUERY_RESULTS = { loading: boolean, error?: ApolloError, layer?: LayerDetails }
+type Layer = LayerDetails & { mapData: LayerMapData }
+type QUERY_RESULTS = { loading: boolean, error?: ApolloError, layer?: Layer }
 export function useLayer(id: string): QUERY_RESULTS {
   const { loading, error, data } = useQuery(
     GET_LAYER,
@@ -43,12 +51,15 @@ export function useLayer(id: string): QUERY_RESULTS {
   );
   
   if (loading || error) return { loading, error, layer: undefined }
-
-  const layer: LayerDetails = {
+  const layer: Layer = {
     id: data.layer.id,
     name: data.layer.name,
     description: data.layer.description,
     stylesOnLayer: data.layer.stylesOnLayer,
+    mapData: {
+      ...data.layer.mapData,
+      geotiffLink: data.layer.mapData.geotiffLink,
+    }
   }
 
   return { loading, error, layer }
