@@ -8,6 +8,7 @@ const GET_TOPIC_TABS = gql`
       id
       tabs {
         id
+        slug
         title
         content
       }
@@ -26,7 +27,7 @@ export function useTopicTabs(slug: string): QueryResults {
 
   const tabs: Tab[] = data.questionBySlug.tabs.map((tab) => ({
     title: tab.title,
-    id: tab.id,
+    id: tab.slug,
     content: parse(tab.content),
   }))
 
