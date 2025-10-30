@@ -22,6 +22,7 @@ export default function GeoRaster({ url }: GeoRasterProps) {
         resolution: 128,
         debugLevel: 0,
         pixelValuesToColorFn: (values) => {
+          if (!values || values[0] < 1) console.log(values)
           const [red, green, blue] = values;
           const color = chroma(red, green, blue);
 

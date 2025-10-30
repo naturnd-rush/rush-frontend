@@ -4,6 +4,7 @@ import LegendItem from "./legend-item";
 import { useLayer } from "../hooks/use-layer";
 import GeoJSONProvider from "./providers/geojson";
 import GeoRaster from "./providers/georaster";
+import Toggleable from "@/components/toggleable";
 
 export type LayerControllerProps = {
   layerId: string
@@ -20,14 +21,16 @@ export default function LayerController(props: LayerControllerProps) {
   
   return (
     <>
-      { provider === "GEOJSON" && on
+    <Toggleable on={on}>
+      { provider === "GEOJSON"
         ? <GeoJSONProvider layerId={props.layerId} /> : null }
-      { provider === "GEOTIFF" && layerQuery?.layer && on
+      { provider === "GEOTIFF" && layerQuery?.layer
         ? <GeoRaster
             url={layerQuery.layer?.mapData.geotiffLink}
           />
         : null
       }
+    </Toggleable>
       { layerQuery.layer && legendNode ? createPortal(
         <LegendItem
           loading={false}
