@@ -22,23 +22,16 @@ export default function GeoRaster({ url }: GeoRasterProps) {
         resolution: 128,
         debugLevel: 0,
         pixelValuesToColorFn: (values) => {
-          if (!values || values[0] < 1) console.log(values)
-          const [red, green, blue] = values;
-          const color = chroma(red, green, blue);
-
+          const [red, green, blue, alpha] = values;
+          const color = chroma(red, green, blue).alpha(alpha/255);
           return color.css();
         }
       });
-
-      console.log("GeoRaster_layer", layer);
 
       layerRef.current = layer;
       const container = layerContainer || map;
 
       if(!staleEffect) container.addLayer(layer);
-
-      // map.fitBounds(layer.getBounds());
-      // console.log("MAP CENTER", map.getCenter());
     });
 
     return () => {
