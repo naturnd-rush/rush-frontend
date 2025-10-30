@@ -1,5 +1,5 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import type { TopicWithTabIds } from "../../../types/topic";
+import type { Topic, TabSlugs, TopicWithTabIds } from "../../../types/topic";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPICS = gql`
@@ -11,7 +11,7 @@ const GET_TOPICS = gql`
       subtitle
       title
       tabs {
-        id
+        slug
       }
     }
   }
@@ -23,9 +23,10 @@ export function useAllTopics(): QueryResults {
 
   if (loading || error || data === undefined) return { loading, error, topics: undefined }
 
-  const topics = data.allQuestions.map((topic: TopicWithTabIds) => {
+  const topics = data.allQuestions.map((topic: Topic & TabSlugs) => {
     return {
       ...topic,
+      tabs: topic.tabs.map((tab) => {return {...tab, id: tab.slug}}),
       image: expandBackendLink(topic.image)
     }
   })

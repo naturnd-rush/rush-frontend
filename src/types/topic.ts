@@ -8,6 +8,7 @@ type Topic = {
 type TabQueryResult = {
   title: string,
   id: string,
+  slug: string,
   content: string
 }
 type Tab = {
@@ -22,6 +23,11 @@ type TopicContent = {
 type TabIds = {
   tabs: {
     id: string
+  }[]
+}
+type TabSlugs = {
+  tabs: {
+    slug: string
   }[]
 }
 type TopicWithTabIds = Topic & TabIds
@@ -45,6 +51,7 @@ export type {
   Topic,
   Tab,
   TabIds,
+  TabSlugs,
   TabQueryResult,
   TopicContent,
   TopicWithTabIds,

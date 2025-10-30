@@ -1,5 +1,5 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import type { TopicContent } from "../../../types/topic";
+import type { TabQueryResult, TopicContent } from "../../../types/topic";
 
 const GET_TOPIC = gql`
   query TopicLayersQuery($slug: String!) {
@@ -11,6 +11,7 @@ const GET_TOPIC = gql`
       subtitle
       tabs {
         id
+        slug
         title
       }
     }
@@ -19,7 +20,9 @@ const GET_TOPIC = gql`
 
 type QueryResults = { loading: boolean, error?: ApolloError, topic?: TopicContent }
 export function useTopic(slug: string): QueryResults {
-  const { loading, error, data } = useQuery<{questionBySlug: TopicContent}>(
+  const { loading, error, data } = useQuery<{
+    questionBySlug: { title: string, tabs: TabQueryResult[] }
+  }>(
     GET_TOPIC,
     { variables: { slug: slug }}
   );
@@ -30,7 +33,7 @@ export function useTopic(slug: string): QueryResults {
     title: data.questionBySlug.title,
     tabs: data.questionBySlug.tabs.map((tab) => ({
       title: tab.title,
-      id: tab.id,
+      id: tab.slug,
       content: ''
     }))
   }
