@@ -28,15 +28,10 @@ export default function GeoRaster({ url }: GeoRasterProps) {
         }
       });
 
-      console.log("GeoRaster_layer", layer);
-
       layerRef.current = layer;
       const container = layerContainer || map;
 
       if(!staleEffect) container.addLayer(layer);
-
-      // map.fitBounds(layer.getBounds());
-      // console.log("MAP CENTER", map.getCenter());
     });
 
     return () => {
