@@ -68,7 +68,7 @@ const Nav = styled.nav`
   z-index: 10;
   box-shadow: 0px 0px 8px 2px #888;
 
-  padding-inline: 1rem;
+  padding-inline: 0.75rem 0.5rem;
 `
 
 const SiteTitle = styled.div`
@@ -92,7 +92,7 @@ const Spacer = styled.div`
 const NavLinks = Pages.map((page) => {
   const { title, target, external, ...buttonProps } = page
   const button = (
-    <Button key={title} {...buttonProps} >
+    <Button key={title} padding='0.75rem' {...buttonProps} >
       {title}
     </Button>
   )
@@ -107,7 +107,7 @@ const NavLinks = Pages.map((page) => {
       >
         { button }
       </Link>
-    ) : button
+    ) : <div>{ button }</div>
 })
 
 export default function NavBar() {

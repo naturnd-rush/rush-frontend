@@ -6,35 +6,65 @@ import { FaBars } from "react-icons/fa";
 
 const StyledDropdown = styled.div`
   position: absolute;
-  top: 48px;
+  top: 40px;
   right: 8px;
-  background-color: white;
+  background-color: #f2f2f2;
   display: flex;
   flex-direction: column;
   align-items: left;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 
   > * {
     justify-content: flex-start;
+    padding-inline: 0.75rem;
+  }
+
+  &:before, &:after {
+    content: "";
+    height: 0.5rem;
+  }
+
+  &:hover {
+    max-height: 500px;
   }
 
   // animation
-  height: 0;
-  padding: 0;
+  max-height: 0;
   overflow: hidden;
-  transition: all 500ms;
-  transition-delay: 300ms;
+  transition: max-height 500ms;
 `
+
+const onMouse = (event: 'enter' | 'leave', isOpen: boolean) => {
+  if (isOpen) return;
+  const dropdown = document.getElementById('nav-mobile-dropdown')
+  if (dropdown != undefined) {
+    dropdown.style.maxHeight = event === 'enter' ? '500px' : '0'
+  }
+}
 
 export default function Dropdown({ children }: PropsWithChildren) {
   if (!children) return;
   const [isOpen, setIsOpen] = useState(false)
   return (
     <>
-      <Button icon={<FaBars/>} onClick={() => setIsOpen(!isOpen)}/>
+      <div
+        onMouseEnter={() => onMouse('enter', isOpen)}
+      >
+        <Button
+          rightIcon={<FaBars/>}
+          onClick={() => setIsOpen(!isOpen)}
+          bgColor={isOpen ? "#f2f2f2" : "white"}
+        ></Button>
+      </div>
       {
         createPortal((
-          <StyledDropdown style={isOpen ? { height: 'unset', padding: '6px'} : {}}>
+          <StyledDropdown 
+            onMouseLeave={() => {
+              onMouse('leave', isOpen)
+              setIsOpen(false)
+            }}
+            id="nav-mobile-dropdown"
+            style={isOpen ? { maxHeight: '500px'} : {}}>
             { children }
           </StyledDropdown>
         ), document.body)
