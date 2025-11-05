@@ -11,6 +11,9 @@ import {
 } from "react-icons/fa6";
 import Button from "@/components/button";
 import copyUrlToClipboard from "@/utils/copy-url-to-clipboard";
+import { useTheme } from "@/theme";
+import { useMediaQuery } from "styled-breakpoints/use-media-query";
+import Dropdown from "./mobile-dropdown";
 
 /** Mocked up data */
 const Pages = [
@@ -65,7 +68,7 @@ const Nav = styled.nav`
   z-index: 10;
   box-shadow: 0px 0px 8px 2px #888;
 
-  padding-inline: 1rem;
+  padding-inline: 0.75rem 0.5rem;
 `
 
 const SiteTitle = styled.div`
@@ -86,27 +89,30 @@ const Spacer = styled.div`
   place-self: stretch;
 `
 
-export default function NavBar() {
-  const NavLinks = Pages.map((page) => {
-    const { title, target, external, ...buttonProps } = page
-    const button = (
-      <Button key={title} {...buttonProps} >
-        {title}
-      </Button>
-    )
+const NavLinks = Pages.map((page) => {
+  const { title, target, external, ...buttonProps } = page
+  const button = (
+    <Button key={title} padding='0.75rem' {...buttonProps} >
+      {title}
+    </Button>
+  )
 
-    return target
-      ? (
-        <Link
-          to={target}
-          target={external ? '_blank' : '_self' }
-          className="[&.active]:font-bold"
-          key={title}
-        >
-          { button }
-        </Link>
-      ) : button
-  })
+  return target
+    ? (
+      <Link
+        to={target}
+        target={external ? '_blank' : '_self' }
+        className="[&.active]:font-bold"
+        key={title}
+      >
+        { button }
+      </Link>
+    ) : <div>{ button }</div>
+})
+
+export default function NavBar() {
+  const { down } = useTheme().breakpoints
+  const isMobile = useMediaQuery(down('sm'))
 
   return (
     <Nav>
@@ -117,7 +123,7 @@ export default function NavBar() {
         </SiteTitle>
       </Link>
       <Spacer />
-      { NavLinks }
+      { isMobile ? <Dropdown>{NavLinks}</Dropdown> : NavLinks }
     </Nav>
   )
 }
