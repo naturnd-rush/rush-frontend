@@ -1,4 +1,4 @@
-import type { LayerGroup } from "@/app/types/layers"
+import type { LayerGroup } from "@/types/layers"
 import { styled } from "@linaria/react"
 import type { PropsWithChildren } from "react"
 

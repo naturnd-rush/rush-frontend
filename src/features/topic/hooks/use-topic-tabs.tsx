@@ -1,5 +1,4 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import parse from 'html-react-parser';
 import type { Tab, TabQueryResult } from "../../../types/topic";
 
 const GET_TOPIC_TABS = gql`
@@ -10,13 +9,14 @@ const GET_TOPIC_TABS = gql`
         id
         slug
         title
-        content
+        displayOrder
+        iconUrl
       }
     }
   }
 `
 
-type QueryResults = [ loading: boolean, error: ApolloError | undefined, tabs: Tab[] ]
+type QueryResults = [ loading: boolean, error: ApolloError | undefined, tabs: Omit<Tab,'content'>[] ]
 export function useTopicTabs(slug: string): QueryResults {
   const { loading, error, data } = useQuery<{questionBySlug: { tabs: TabQueryResult[] }}>(
     GET_TOPIC_TABS,
@@ -25,10 +25,11 @@ export function useTopicTabs(slug: string): QueryResults {
   
   if (loading || error || data === undefined) return [loading, error, []]
 
-  const tabs: Tab[] = data.questionBySlug.tabs.map((tab) => ({
+  const tabs: Omit<Tab,'content'>[] = data.questionBySlug.tabs.map((tab) => ({
     title: tab.title,
     id: tab.slug,
-    content: parse(tab.content),
+    displayOrder: tab.displayOrder,
+    iconUrl: tab.iconUrl,
   }))
 
   return [ loading, error, tabs ]

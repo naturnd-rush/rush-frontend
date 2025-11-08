@@ -4,7 +4,7 @@ import { styled } from "@linaria/react";
 import Panel, { PanelCloseButton, PanelContent } from "@/components/panel";
 import type { TopicContent } from "@/types/topic";
 import Dropdown from "@/components/dropdown";
-import type { LoadingProps } from "@/app/types/backend";
+import type { LoadingProps } from "@/types/backend";
 
 const ContentText = styled.div`
   color: black;

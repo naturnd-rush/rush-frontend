@@ -10,15 +10,19 @@ type TabQueryResult = {
   id: string,
   slug: string,
   content: string
+  displayOrder: number,
+  iconUrl: string,
 }
 type Tab = {
   title: string,
   id: string,
   content: string | React.ReactElement | React.ReactElement[]
+  displayOrder: number,
+  iconUrl: string,
 }
 type TopicContent = {
   title: string,
-  tabs: Tab[]
+  tabs: Omit<Tab,'content'>[]
 }
 type TabIds = {
   tabs: {

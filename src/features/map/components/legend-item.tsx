@@ -6,10 +6,10 @@ import Button from "@/components/button"
 import Spacer from "@/components/spacer"
 import Spinner from "@/components/spinner"
 import Switch from "@/components/switch"
-import type { LayerDetails } from "../../../app/types/layers"
+import type { LayerDetails } from "../../../types/layers"
 import LegendPatch from "./legend-patch"
 import type { PropsWithChildren } from "react"
-import type { StyleOnLayer } from "../../../app/types/styles"
+import type { StyleOnLayer } from "../../../types/styles"
 
 // Style Components
 

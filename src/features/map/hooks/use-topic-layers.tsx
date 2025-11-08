@@ -1,5 +1,5 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import type { OrderedLayerGroup } from "../../../app/types/layers";
+import type { OrderedLayerGroup } from "../../../types/layers";
 
 const GET_TOPIC_LAYERS = gql`
   query TopicLayersQuery($slug: String!) {
