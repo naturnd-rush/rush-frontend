@@ -1,5 +1,7 @@
 import { styled } from "@linaria/react";
 import { Link } from "@tanstack/react-router";
+import Button from "./button";
+import type { ReactNode } from "react";
 
 const StyledDropdown = styled.div`
   position: relative;
@@ -68,17 +70,18 @@ const StyledDropdown = styled.div`
 type DropdownItem = {
   link?: string
   label: string
+  icon: ReactNode
 }
 
 type DropdownProps = {
-  activeLabel?: string
+  activeItem?: DropdownItem
   items: DropdownItem[]
 }
-export default function Dropdown({activeLabel, items}:DropdownProps) {
-  if (!activeLabel || !items || items.length < 1) return;
+export default function Dropdown({activeItem, items}:DropdownProps) {
+  if (!activeItem || !items || items.length < 1) return;
   return (
     <StyledDropdown>
-      <DropdownLink label={activeLabel} />
+      <DropdownLink {...activeItem} />
       { items.length > 0
         ? (
           <ul>
@@ -94,6 +97,6 @@ export default function Dropdown({activeLabel, items}:DropdownProps) {
   )
 }
 
-function DropdownLink({link, label}:DropdownItem) {
-  return <Link to={link} from='/app/$topicId'>{label}</Link>
+function DropdownLink({link, label, icon}: DropdownItem) {
+  return <Link to={link} from='/app/$topicId'><Button icon={icon}>{label}</Button></Link>
 }

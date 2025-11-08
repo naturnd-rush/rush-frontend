@@ -1,5 +1,5 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
-import type { LayerDetails, LayerMapData } from "../../../app/types/layers";
+import type { LayerDetails, LayerMapData } from "../../../types/layers";
 //import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_LAYER = gql`

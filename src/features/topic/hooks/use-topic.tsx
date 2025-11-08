@@ -1,5 +1,6 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
 import type { TabQueryResult, TopicContent } from "../../../types/topic";
+import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPIC = gql`
   query TopicLayersQuery($slug: String!) {
@@ -13,12 +14,14 @@ const GET_TOPIC = gql`
         id
         slug
         title
+        displayOrder
+        iconUrl
       }
     }
   }
 `
 
-type QueryResults = { loading: boolean, error?: ApolloError, topic?: TopicContent }
+type QueryResults = [ loading: boolean, error?: ApolloError, topic?: TopicContent ]
 export function useTopic(slug: string): QueryResults {
   const { loading, error, data } = useQuery<{
     questionBySlug: { title: string, tabs: TabQueryResult[] }
@@ -27,16 +30,18 @@ export function useTopic(slug: string): QueryResults {
     { variables: { slug: slug }}
   );
   
-  if (loading || error || data === undefined) return { loading, error, topic: undefined }
+  if (loading || error || data === undefined) return [ loading, error, undefined ]
 
   const topic: TopicContent = {
-    title: data.questionBySlug.title,
+    title: data.questionBySlug?.title,
     tabs: data.questionBySlug.tabs.map((tab) => ({
-      title: tab.title,
+      title: tab?.title,
       id: tab.slug,
+      displayOrder: tab.displayOrder,
+      icon: <img src={expandBackendLink(tab?.iconUrl)} />,
       content: ''
     }))
   }
 
-  return { loading, error, topic }
+  return [ loading, error, topic ]
 }

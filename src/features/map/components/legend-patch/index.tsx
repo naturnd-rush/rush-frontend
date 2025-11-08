@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react"
-import type { Style } from "../../../../app/types/styles"
+import type { Style } from "../../../../types/styles"
 import { expandBackendLink } from "@/utils/expand-backend-link"
 
 const PATCH_WIDTH_PX = 45
