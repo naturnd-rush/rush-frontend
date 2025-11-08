@@ -18,7 +18,7 @@ type Tab = {
   id: string,
   content: string | React.ReactElement | React.ReactElement[]
   displayOrder: number,
-  iconUrl: string,
+  icon: React.ReactElement,
 }
 type TopicContent = {
   title: string,

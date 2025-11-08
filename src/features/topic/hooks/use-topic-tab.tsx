@@ -72,7 +72,7 @@ export function useTopicTab(
     id: tabResult.slug,
     content: parse(tabResult.content),
     displayOrder: tabResult.displayOrder,
-    iconUrl: tabResult.iconUrl,
+    icon: <img src={tabResult.iconUrl} />,
   }
 
   return [ loading, error, tab]

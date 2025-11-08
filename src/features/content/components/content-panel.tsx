@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { styled } from "@linaria/react";
 import Panel, { PanelCloseButton, PanelContent } from "@/components/panel";
@@ -14,16 +14,16 @@ const ContentText = styled.div`
 `
 
 export default function Content({
-  children, title, tabs, loading, activeTabLabel
-}: PropsWithChildren<TopicContent & LoadingProps & {activeTabLabel?: string}>) {
+  children, title, tabs, loading, activeTab
+}: PropsWithChildren<TopicContent & LoadingProps & {activeTab?: { link: string, label: string, icon: ReactNode}}>) {
   return (
     <Panel id='content-panel' title={title} style={{ minHeight: '40%' }}>
       <Link to='/app'>
         <PanelCloseButton />
       </Link>
 
-      <Dropdown activeLabel={activeTabLabel} items={
-        tabs.map((tab) => {return { link: tab.id, label: tab.title}})
+      <Dropdown activeItem={activeTab} items={
+        tabs.map((tab) => {return { link: tab.id, label: tab.title, icon: tab.icon}})
       } />
       <PanelContent loading={loading}>
         <ContentText>

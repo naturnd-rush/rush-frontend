@@ -2,6 +2,7 @@ import Content from '@/features/content/components/content-panel'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { useTopicTab } from '@/features/topic/hooks/use-topic-tab'
 import { createFileRoute } from '@tanstack/react-router'
+import { FaLink } from 'react-icons/fa'
 
 export const Route = createFileRoute('/app/$topicId/')({
   component: RouteComponent,
@@ -24,7 +25,7 @@ function RouteComponent() {
     id: 'initiatives',
     title: 'Check Out',
     displayOrder: otherTabs.length,
-    iconUrl: ''
+    icon: <FaLink />,
   })
 
   // TODO: handle and display loading and error states.
@@ -34,7 +35,7 @@ function RouteComponent() {
       loading={loadingTopic || loadingTab}
       title={tab?.title ?? 'Topic'}
       tabs={otherTabs}
-      activeTabLabel={activeTab?.title}
+      activeTab={{link: '', label: activeTab.title, icon: activeTab.icon}}
     >
       {tab?.content}
       {errorTopic ? errorTopic.message : null}

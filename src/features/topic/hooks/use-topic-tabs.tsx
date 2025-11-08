@@ -29,7 +29,7 @@ export function useTopicTabs(slug: string): QueryResults {
     title: tab.title,
     id: tab.slug,
     displayOrder: tab.displayOrder,
-    iconUrl: tab.iconUrl,
+    icon: <img src={tab.iconUrl} />,
   }))
 
   return [ loading, error, tabs ]
