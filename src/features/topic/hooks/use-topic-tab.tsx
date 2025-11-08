@@ -1,6 +1,7 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
 import parse from 'html-react-parser';
 import type { Tab, TabQueryResult } from "../../../types/topic";
+import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TAB = gql`
   query TopicTabQuery($questionSlug: String!, $questionTabSlug: String!) {
@@ -72,7 +73,7 @@ export function useTopicTab(
     id: tabResult?.slug,
     content: parse(tabResult.content),
     displayOrder: tabResult.displayOrder,
-    icon: <img src={tabResult?.iconUrl} />,
+    icon: <img src={expandBackendLink(tabResult?.iconUrl)} />,
   }
 
   return [ loading, error, tab]

@@ -1,5 +1,6 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
 import type { TabQueryResult, TopicContent } from "../../../types/topic";
+import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPIC = gql`
   query TopicLayersQuery($slug: String!) {
@@ -37,7 +38,7 @@ export function useTopic(slug: string): QueryResults {
       title: tab?.title,
       id: tab.slug,
       displayOrder: tab.displayOrder,
-      icon: <img src={tab.iconUrl} />,
+      icon: <img src={expandBackendLink(tab?.iconUrl)} />,
       content: ''
     }))
   }
