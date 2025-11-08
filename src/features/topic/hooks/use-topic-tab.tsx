@@ -68,11 +68,11 @@ export function useTopicTab(
   if (tabResult === undefined) return [loading, error, undefined]
   
   const tab: Tab = {
-    title: tabResult.title,
-    id: tabResult.slug,
+    title: tabResult?.title,
+    id: tabResult?.slug,
     content: parse(tabResult.content),
     displayOrder: tabResult.displayOrder,
-    icon: <img src={tabResult.iconUrl} />,
+    icon: <img src={tabResult?.iconUrl} />,
   }
 
   return [ loading, error, tab]

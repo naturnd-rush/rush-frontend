@@ -26,8 +26,8 @@ export function useTopicTabs(slug: string): QueryResults {
   if (loading || error || data === undefined) return [loading, error, []]
 
   const tabs: Omit<Tab,'content'>[] = data.questionBySlug.tabs.map((tab) => ({
-    title: tab.title,
-    id: tab.slug,
+    title: tab?.title,
+    id: tab?.slug,
     displayOrder: tab.displayOrder,
     icon: <img src={tab.iconUrl} />,
   }))

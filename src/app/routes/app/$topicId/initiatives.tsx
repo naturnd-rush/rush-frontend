@@ -32,7 +32,7 @@ function RouteComponent() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
           {initiatives.map((item, index) => (
             <InitiativeCard
-              key={item.title}
+              key={item?.title}
               initiative={item}
               flip={index%2===0}
             />

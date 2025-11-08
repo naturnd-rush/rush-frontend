@@ -35,7 +35,7 @@ function RouteComponent() {
       loading={loadingTopic || loadingTab}
       title={tab?.title ?? 'Topic'}
       tabs={otherTabs}
-      activeTab={{link: '', label: activeTab.title, icon: activeTab.icon}}
+      activeTab={{link: '', label: activeTab?.title, icon: activeTab?.icon}}
     >
       {tab?.content}
       {errorTopic ? errorTopic.message : null}

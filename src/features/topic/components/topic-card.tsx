@@ -89,8 +89,8 @@ export default function TopicCard({ topic }: { topic: TopicWithTabIds }) {
           onError={fallbackImage(fallbackImageUrl)}
         />
         <Content>
-          <Title>{topic.title}</Title>
-          <Subtitle>{topic.subtitle}</Subtitle>
+          <Title>{topic?.title}</Title>
+          <Subtitle>{topic?.subtitle}</Subtitle>
         </Content>
       </Card>
     </Link>

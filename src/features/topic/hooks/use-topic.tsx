@@ -32,9 +32,9 @@ export function useTopic(slug: string): QueryResults {
   if (loading || error || data === undefined) return [ loading, error, undefined ]
 
   const topic: TopicContent = {
-    title: data.questionBySlug.title,
+    title: data.questionBySlug?.title,
     tabs: data.questionBySlug.tabs.map((tab) => ({
-      title: tab.title,
+      title: tab?.title,
       id: tab.slug,
       displayOrder: tab.displayOrder,
       icon: <img src={tab.iconUrl} />,

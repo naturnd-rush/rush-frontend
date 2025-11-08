@@ -23,7 +23,7 @@ export default function Content({
       </Link>
 
       <Dropdown activeItem={activeTab} items={
-        tabs.map((tab) => {return { link: tab.id, label: tab.title, icon: tab.icon}})
+        tabs.map((tab) => {return { link: tab?.id, label: tab?.title, icon: tab?.icon}})
       } />
       <PanelContent loading={loading}>
         <ContentText>

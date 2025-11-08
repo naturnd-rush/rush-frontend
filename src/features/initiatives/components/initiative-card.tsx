@@ -72,11 +72,11 @@ export default function InitiativeCard({initiative, flip = false}: InitiativePro
   return (
     <Container>
       { initiative.image !== ''
-          ? <Image src={initiative.image} alt={initiative.title} flip={flip} />
+          ? <Image src={initiative?.image} alt={initiative?.title} flip={flip} />
           : null
       }
       <Link to={initiative.link} target="_blank">
-        <Heading flip={flip}>{initiative.title}</Heading>
+        <Heading flip={flip}>{initiative?.title}</Heading>
       </Link>
       {initiative.tags.length > 0
         ? (
