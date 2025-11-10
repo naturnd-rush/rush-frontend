@@ -8,7 +8,7 @@ import chroma from "chroma-js"
 type GeoRasterProps = {
   url: string,
 }
-export default function GeoRaster({ url }: GeoRasterProps) {
+export default function GeoRasterProvider({ url }: GeoRasterProps) {
   const { map, layerContainer } = useLeafletContext();
 
   const layerRef = useRef(null);

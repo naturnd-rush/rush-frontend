@@ -9,7 +9,7 @@ type LayerDisplay = {
 type OrderedLayerDisplay = LayerDisplay & Orderable
 
 type LayerDetails = {
-  description: string,
+  description: string | React.ReactElement | React.ReactElement[],
   id: string,
   name: string,
   stylesOnLayer: StyleOnLayer[],
