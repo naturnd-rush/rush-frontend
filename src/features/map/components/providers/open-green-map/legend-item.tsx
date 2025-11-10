@@ -103,7 +103,7 @@ type Team = {
 
 // LegendItemOGM Component
 //   A single legend entry row for an OpenGreenMap layer.
-const LegendItemOGM = (props: LegendItemProps & { mapLink: string }) => {
+const LegendItemOGM = (props: LegendItemProps & { mapLink: string, campaignLink?: string }) => {
   const [ isOpen, onToggle ] = useToggle(false);
 
   const active = props.active
@@ -197,7 +197,7 @@ const LegendItemOGM = (props: LegendItemProps & { mapLink: string }) => {
       </LegendItemDescription>
       <ButtonContainer>
         <a
-          href={`https://greenmap.org/manage/features/add?mapId=${ogmMapId}`}
+          href={props.campaignLink ?? `https://greenmap.org/manage/features/add?mapId=${ogmMapId}`}
           rel='external'
         >
           <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Add a Feature'}</Button>

@@ -33,6 +33,7 @@ export default function LayerController(props: LayerControllerProps) {
           { provider === MapProvider.OpenGreenMap
             ? <LegendItemOGM
                 mapLink={layerQuery.layer?.mapData.mapLink ?? ''}
+                campaignLink={layerQuery.layer?.mapData.campaignLink}
                 loading={layerQuery.layer === undefined}
                 layer={layerQuery.layer ?? {
                   id: '',
