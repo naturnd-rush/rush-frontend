@@ -43,15 +43,23 @@ const MapTitlesContainer = styled.div`
 const TeamTitle = styled.p`
   font-family: 'Urbanist Variable', sans-serif;
   font-weight: 300;
-  font-size: 0.75rem;
-  // TODO: noOfLines(1)
+  font-size: 0.875rem;
+  // line-clamp
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `
 
 const MapTitle = styled.p`
   font-family: 'Figtree Variable', sans-serif;
   font-weight: 700;
-  font-size: 1rem;
-  // TODO: noOfLines(2)
+  font-size: 1.125rem;
+  // line-clamp
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `
 
 const Image = styled.img`
@@ -62,8 +70,23 @@ const Image = styled.img`
   border-radius: 1rem;
 `
 
-const LegendItemDescription = styled.div`
-  
+const LegendItemDescription = styled.div<{isOpen: boolean}>`
+  cursor: pointer;
+  overflow: hidden;
+  padding: 4px;
+  padding-bottom: ${(props) => props.isOpen ? '0.75em' : '0'};
+  box-shadow: ${(props) => props.isOpen ? 'none' : 'inset 0px -24px 16px -16px hsla(0,0%,0%,.25)'};
+  border-radius: 4px;
+  // line-clamp
+  display: -webkit-box;
+  -webkit-line-clamp: ${(props) => props.isOpen ? 'none' : '3'};;
+  -webkit-box-orient: vertical;
+
+  &:hover {
+    padding-bottom: 0.75em;
+    box-shadow: none;
+    -webkit-line-clamp: none;
+  }
 `
 
 const ButtonContainer = styled.div`
@@ -171,27 +194,23 @@ const LegendItemOGM = (props: LegendItemProps & { mapLink: string }) => {
         </a>
       </MapDetailsContainer>
       {/* Description */}
-      <div
-        onClick={onToggle}
-      >
-        <LegendItemDescription>{props.layer.description}</LegendItemDescription>
-      </div>
-      { true || isOpen ? (
-        <ButtonContainer>
-          <a
-            href={`https://greenmap.org/manage/features/add?mapId=${ogmMapId}`}
-            rel='external'
-          >
-            <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Add a Feature'}</Button>
-          </a>
-          <a
-            href={`https://greenmap.org/browse/sites?map=${ogmMapId}`}
-            rel='external'
-          >
-            <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Visit Campaign'}</Button>
-          </a>
-        </ButtonContainer>
-      ) : null }
+      <LegendItemDescription isOpen={isOpen} onClick={onToggle}>
+        {props.layer.description}
+      </LegendItemDescription>
+      <ButtonContainer>
+        <a
+          href={`https://greenmap.org/manage/features/add?mapId=${ogmMapId}`}
+          rel='external'
+        >
+          <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Add a Feature'}</Button>
+        </a>
+        <a
+          href={`https://greenmap.org/browse/sites?map=${ogmMapId}`}
+          rel='external'
+        >
+          <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Visit Campaign'}</Button>
+        </a>
+      </ButtonContainer>
     </LegendItemContainer>
   )
 }
