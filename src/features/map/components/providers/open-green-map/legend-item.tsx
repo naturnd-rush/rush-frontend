@@ -106,8 +106,6 @@ type Team = {
 const LegendItemOGM = (props: LegendItemProps & { mapLink: string }) => {
   const [ isOpen, onToggle ] = useToggle(false);
 
-  //const layerStatus = useMapLayerDataStore((state) => state.layerDataMap.get(layerId).status);
-  //const layer = layerMap.get(layerId);
   const active = props.active
 
   const [mapName, setMapName] = useState(props.layer.name)
