@@ -1,7 +1,8 @@
 import type { CSSProperties, PropsWithChildren } from "react";
 import { latLng, type MapOptions } from 'leaflet';
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
+import MapBasemap from "./map-basemap";
 
 export const DEFAULT_CENTER = latLng([48.46557, -123.314736]);
 export const DEFAULT_ZOOM = 12;
@@ -25,10 +26,7 @@ export default function MapView({ children, style }: PropsWithChildren<MapViewOp
       {...initialMapOptions}
       style={style}
     >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+      <MapBasemap />
       { children }
     </MapContainer>
   )
