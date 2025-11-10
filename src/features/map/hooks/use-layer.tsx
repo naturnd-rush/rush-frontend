@@ -1,4 +1,5 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
+import parse from 'html-react-parser';
 import type { LayerDetails, LayerMapData } from "../../../types/layers";
 //import { expandBackendLink } from "@/utils/expand-backend-link";
 
@@ -54,7 +55,7 @@ export function useLayer(id: string): QUERY_RESULTS {
   const layer: Layer = {
     id: data.layer.id,
     name: data.layer.name,
-    description: data.layer.description,
+    description: parse(data.layer.description),
     stylesOnLayer: data.layer.stylesOnLayer,
     mapData: {
       ...data.layer.mapData,

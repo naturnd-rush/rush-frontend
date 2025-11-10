@@ -1,6 +1,5 @@
 import { styled } from "@linaria/react"
 import { useDisclosure } from "@reactuses/core"
-import parse from 'html-react-parser'
 import { IoMdCloseCircleOutline, IoMdInformationCircle } from "react-icons/io"
 import Button from "@/components/button"
 import Spacer from "@/components/spacer"
@@ -155,7 +154,7 @@ export default function LegendItem(props: LegendItemProps) {
         />
       </LegendItemContainer>
       { isOpen
-        ? <LegendItemDetails layerStyles={layerStyles}>{parse(props.layer.description)}</LegendItemDetails>
+        ? <LegendItemDetails layerStyles={layerStyles}>{props.layer.description}</LegendItemDetails>
         : null
       }
     </div>

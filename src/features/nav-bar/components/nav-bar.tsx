@@ -107,7 +107,7 @@ const NavLinks = Pages.map((page) => {
       >
         { button }
       </Link>
-    ) : <div>{ button }</div>
+    ) : <div key={title}>{ button }</div>
 })
 
 export default function NavBar() {
