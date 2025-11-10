@@ -43,6 +43,14 @@ h1 {
   }
 }
 
+.leaflet-popup-content {
+  overflow-y: auto;
+  margin-top: 20px !important;
+  margin-right: 4px !important;
+  padding-right: 12px;
+  width: min(300px, 80vw) !important;
+}
+
 /* poppins-latin-700-normal */
 @font-face {
   font-family: Poppins;

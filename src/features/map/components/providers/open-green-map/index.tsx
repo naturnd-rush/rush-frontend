@@ -1,8 +1,10 @@
 import { useEffect, useState, type ReactNode } from "react"
+import { createRoot } from "react-dom/client"
 import ReactDOMServer from "react-dom/server"
+import { divIcon, marker, type LatLng, type Layer } from "leaflet"
 import { GeoJSON } from "react-leaflet"
 import type { Feature, Point } from "geojson"
-import { divIcon, marker, type LatLng, type Layer } from "leaflet"
+import parse from 'html-react-parser'
 
 type MapMarkerProps = {
   bgColor: string,
@@ -57,13 +59,44 @@ const pointToLayer = (f: Feature<Point, any>, l: LatLng): Layer => {
     })
   });
 }
-
+const popupOnEachFeature = (f: Feature<Point, any>, l: Layer) => {
+  const linkURL = `https://greenmap.org/browse/sites/${f.properties._id}`
+  const imageURL = f.properties.pictures[0]
+    ? `https://greenmap.org/api-v1/pictures/${f.properties.pictures[0]}/picture/sm`
+    : null;
+  // create DOM element
+  var div = document.createElement('div')
+  const root = createRoot(div)
+  root.render(
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px',
+      alignItems: 'flex-start',
+      maxHeight: 'min(36vh, 300px)',
+      overflow: 'auto',
+    }}>
+      <h2 style={{flex: 'none'}}>{f.properties.name}</h2>
+      { imageURL && (
+        <a href={linkURL ?? imageURL ?? '#'} target='_blank' rel='noreferrer'>
+          <img src={imageURL} alt={f.properties.name} style={{
+            maxHeight: '180px',
+            objectFit: 'contain'
+          }}/>
+        </a>
+      )}
+      <p>{parse(f.properties?.description?.blocks.filter((b: any) => b.type === "paragraph")[0]?.data.text ?? '')}</p>
+      <a href={linkURL} target="_blank">Show More at GreenMap.org</a>
+    </div>
+  )
+  l.bindPopup(div, {offset: [0,-6]});
+}
 const getOpenGreenMapLayer = async (featuresLink: string) => {
   return fetch(featuresLink)
     .then((response) => response.json())
     .then((json) => {
       return (
-        <GeoJSON data={json} pointToLayer={pointToLayer}/>
+        <GeoJSON data={json} pointToLayer={pointToLayer} onEachFeature={popupOnEachFeature}/>
       )
     })
 }
