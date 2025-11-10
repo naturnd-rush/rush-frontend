@@ -62,7 +62,7 @@ const Image = styled.img`
   border-radius: 1rem;
 `
 
-const LegendItemDescription = styled.p`
+const LegendItemDescription = styled.div`
   
 `
 
