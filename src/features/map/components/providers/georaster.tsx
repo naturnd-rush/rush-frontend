@@ -16,26 +16,31 @@ export default function GeoRasterProvider({ url }: GeoRasterProps) {
 
   useEffect(() => {
     let staleEffect = false;
-    parseGeoraster(url).then((georaster: any) => {
-      const layer = new GeoRasterLayer({
-        attribution: "Planet",
-        georaster,
-        resolution: 128,
-        debugLevel: 0,
-        pixelValuesToColorFn: (values) => {
-          const [red, green, blue, alpha] = values;
-          const color = chroma(red, green, blue).alpha(alpha/255);
-          return color.css();
-        }
+    if (layerRef.current === null) {
+      parseGeoraster(url).then((georaster: any) => {
+        const layer = new GeoRasterLayer({
+          attribution: "Planet",
+          georaster,
+          resolution: 128,
+          debugLevel: 0,
+          pixelValuesToColorFn: (values) => {
+            const [red, green, blue, alpha] = values;
+            const color = chroma(red, green, blue).alpha(alpha/255);
+            return color.css();
+          }
+        });
+  
+        console.log('GeoTIFF layer created: ' + url)
+  
+        layerRef.current = layer;
+        const container = layerContainer || map;
+  
+        if(!staleEffect) container.addLayer(layer);
       });
-
-      console.log('GeoTIFF layer created: ' + url)
-
-      layerRef.current = layer;
+    } else {
       const container = layerContainer || map;
-
-      if(!staleEffect) container.addLayer(layer);
-    });
+      if(!staleEffect) container.addLayer(layerRef.current);
+    }
 
     return () => {
       staleEffect = true
