@@ -4,6 +4,7 @@ import { useLeafletContext } from "@react-leaflet/core";
 import parseGeoraster from "georaster";
 import GeoRasterLayer from "georaster-layer-for-leaflet";
 import chroma from "chroma-js"
+import type { GridLayer } from "leaflet";
 
 type GeoRasterProps = {
   url: string,
@@ -12,7 +13,7 @@ export default function GeoRasterProvider({ url }: GeoRasterProps) {
   console.log('GeoTIFF layer render started: ' + url)
   const { map, layerContainer } = useLeafletContext();
 
-  const layerRef = useRef(null);
+  const layerRef = useRef<GridLayer>(null);
 
   useEffect(() => {
     let staleEffect = false;
@@ -25,7 +26,7 @@ export default function GeoRasterProvider({ url }: GeoRasterProps) {
           debugLevel: 0,
           pixelValuesToColorFn: (values) => {
             const [red, green, blue, alpha] = values;
-            const color = chroma(red, green, blue).alpha(alpha/255);
+            const color = chroma(red, green, blue).alpha(Math.max(alpha/255, 0.7));
             return color.css();
           }
         });
@@ -40,6 +41,7 @@ export default function GeoRasterProvider({ url }: GeoRasterProps) {
     } else {
       const container = layerContainer || map;
       if(!staleEffect) container.addLayer(layerRef.current);
+      layerRef.current.redraw()
     }
 
     return () => {
