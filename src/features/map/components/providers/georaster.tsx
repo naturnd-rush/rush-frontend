@@ -9,6 +9,7 @@ type GeoRasterProps = {
   url: string,
 }
 export default function GeoRasterProvider({ url }: GeoRasterProps) {
+  console.log('GeoTIFF layer render started: ' + url)
   const { map, layerContainer } = useLeafletContext();
 
   const layerRef = useRef(null);
@@ -28,6 +29,8 @@ export default function GeoRasterProvider({ url }: GeoRasterProps) {
         }
       });
 
+      console.log('GeoTIFF layer created: ' + url)
+
       layerRef.current = layer;
       const container = layerContainer || map;
 
@@ -37,8 +40,9 @@ export default function GeoRasterProvider({ url }: GeoRasterProps) {
     return () => {
       staleEffect = true
       if(layerRef.current) map.removeLayer(layerRef.current)
+      console.log('GeoTIFF layer removed: ' + url)
     };
-  }, [map, layerContainer]);
+  }, [map]);
 
   return null;
 }
