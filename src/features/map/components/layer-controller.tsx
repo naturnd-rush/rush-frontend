@@ -20,7 +20,6 @@ export type LayerControllerProps = {
   activeByDefault: boolean
 }
 export default function LayerController(props: LayerControllerProps) {
-  console.log(`Rendering LayerController: ${props.layerId}`)
   const legendNode = document.getElementById(props.groupId)
   const layerQuery = useLayer(props.layerId)
   

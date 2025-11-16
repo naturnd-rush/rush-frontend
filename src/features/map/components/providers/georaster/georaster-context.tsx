@@ -52,7 +52,8 @@ export const GeoRasterContextProvider = ({children}: PropsWithChildren) => {
   )
 }
 
-function geoRastersToLayer(georasters: GeoRaster[]): GridLayer {
+function geoRastersToLayer(georasters: GeoRaster[]): GridLayer | null {
+  if (georasters.length < 1) return null
   return new GeoRasterLayer({
     attribution: "Planet",
     georasters,
@@ -69,7 +70,9 @@ function geoRastersToLayer(georasters: GeoRaster[]): GridLayer {
 const GeoRasterLayers = () => {
   const { georasters } = useContext(GeoRasterContext)
   const layers = geoRastersToLayer(georasters.map((i) => i.data))
-  return <GeoRasterReactLeafletLayer geoRasterLayer={layers}/>
+  return layers
+    ? <GeoRasterReactLeafletLayer geoRasterLayer={layers}/>
+    : layers
 }
 
 const GeoRasterReactLeafletLayer = ({ geoRasterLayer }: { geoRasterLayer: GridLayer }) => {
