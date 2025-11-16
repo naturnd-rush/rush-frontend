@@ -84,7 +84,6 @@ const GeoRasterReactLeafletLayer = (
 
   useEffect(() => {
     map.addLayer(geoRasterLayer);
-    geoRasterLayer.redraw();
 
     return () => {
       map.removeLayer(geoRasterLayer)
