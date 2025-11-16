@@ -56,7 +56,6 @@ function geoRasterToLayer(georaster: GeoRasterItem): GridLayer {
   return new GeoRasterLayer({
     attribution: "Planet",
     georaster: georaster.data,
-    pane: georaster.id,
     caching: false,
     resolution: 128,
     debugLevel: 0,
@@ -73,19 +72,17 @@ const GeoRasterLayers = () => {
   const layers = georasters.map((i) =>
     <GeoRasterReactLeafletLayer
       geoRasterLayer={geoRasterToLayer(i)}
-      id={i.id}
     />
   )
   return layers
 }
 
 const GeoRasterReactLeafletLayer = (
-  { geoRasterLayer, id }: { geoRasterLayer: GridLayer, id: string }
+  { geoRasterLayer }: { geoRasterLayer: GridLayer }
 ) => {
   const { map } = useLeafletContext();
 
   useEffect(() => {
-    map.createPane(id)
     map.addLayer(geoRasterLayer);
     geoRasterLayer.redraw();
 
