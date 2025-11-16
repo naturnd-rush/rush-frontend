@@ -67,6 +67,7 @@ function geoRasterToLayer(georaster: GeoRaster): GridLayer {
 }
 
 const GeoRasterLayers = (georasters: GeoRasterState) => {
+  console.log('GeoRasterLayers: ', georasters)
   const layers = Object.values(georasters).map((georaster) =>
     <GeoRasterReactLeafletLayer georaster={georaster}/>
   )
@@ -83,6 +84,7 @@ const GeoRasterReactLeafletLayer = ({ georaster }: { georaster: GeoRaster }) => 
       layerRef.current = geoRasterToLayer(georaster)
     }
 
+    console.log('GeoRasterRLLayer: ', layerRef.current)
     container.addLayer(layerRef.current);
 
     return () => {
