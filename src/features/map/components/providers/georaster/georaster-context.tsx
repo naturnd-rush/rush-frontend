@@ -3,7 +3,7 @@ import chroma from 'chroma-js';
 import type { GeoRaster } from 'georaster-layer-for-leaflet';
 import GeoRasterLayer from 'georaster-layer-for-leaflet';
 import type { GridLayer } from 'leaflet';
-import { createContext, useEffect, useReducer, useRef, type ActionDispatch, type PropsWithChildren } from 'react'
+import { createContext, useContext, useEffect, useReducer, useRef, type ActionDispatch, type PropsWithChildren } from 'react'
 
 
 type GeoRasterState = {
@@ -69,7 +69,8 @@ function geoRasterToLayer(georaster: GeoRaster): GridLayer {
   });
 }
 
-const GeoRasterLayers = (georasters: GeoRasterState) => {
+const GeoRasterLayers = () => {
+  const { georasters } = useContext(GeoRasterContext)
   console.log('GeoRasterLayers: ', georasters)
   const layers = Object.values(georasters).map((georaster) =>
     <GeoRasterReactLeafletLayer georaster={georaster}/>
