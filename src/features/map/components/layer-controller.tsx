@@ -3,7 +3,7 @@ import { useToggle } from "@reactuses/core";
 import LegendItem from "./legend-item";
 import { useLayer } from "../hooks/use-layer";
 import GeoJSONProvider from "./providers/geojson";
-import GeoRasterProvider from "./providers/georaster";
+import GeoRasterProvider from "./providers/georaster/georaster";
 import Toggleable from "@/components/toggleable";
 import OpenGreenMapProvider from "./providers/open-green-map";
 import LegendItemOGM from "./providers/open-green-map/legend-item";
