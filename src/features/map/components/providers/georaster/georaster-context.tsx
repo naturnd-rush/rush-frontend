@@ -26,12 +26,15 @@ type GeoRasterContext = {
 function geoRasterReducer(state: GeoRasterState, action: GeoRasterAction) {
   switch (action.type) {
     case 'ADD':
-      console.log('GRR: ADD ' + action.payload.id)
-      return { ...state, [action.payload.id]: action.payload.data }
+      console.log('GRR: ADD ' + action.payload.id, action.payload.data)
+      const addedState = { ...state, [action.payload.id]: action.payload.data }
+      console.log('GRR: new state ', addedState)
+      return addedState
     case 'REMOVE':
       console.log('GRR: REMOVE ' + action.payload.id)
-      const {[action.payload.id]: _, ...newState} = state
-      return newState
+      const {[action.payload.id]: _, ...removedState} = state
+      console.log('GRR: new state ', removedState)
+      return removedState
   }
 }
     
