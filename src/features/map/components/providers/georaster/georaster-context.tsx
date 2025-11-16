@@ -81,6 +81,7 @@ const GeoRasterReactLeafletLayer = ({ geoRasterLayer }: { geoRasterLayer: GridLa
 
   useEffect(() => {
     container.addLayer(geoRasterLayer);
+    geoRasterLayer.redraw();
 
     return () => {
       map.removeLayer(geoRasterLayer)
