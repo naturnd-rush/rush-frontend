@@ -72,14 +72,14 @@ const GeoRasterLayers = () => {
   return <GeoRasterReactLeafletLayer geoRasterLayer={layers}/>
 }
 
-const GeoRasterReactLeafletLayer = ({ geoRasterLayer: georaster }: { geoRasterLayer: GridLayer }) => {
+const GeoRasterReactLeafletLayer = ({ geoRasterLayer }: { geoRasterLayer: GridLayer }) => {
   const { map, layerContainer } = useLeafletContext();
   const container = layerContainer || map;
   const layerRef = useRef<GridLayer>(null);
 
   useEffect(() => {
     if (layerRef.current === null) {
-      layerRef.current = georaster
+      layerRef.current = geoRasterLayer
     }
 
     container.addLayer(layerRef.current);
@@ -87,7 +87,7 @@ const GeoRasterReactLeafletLayer = ({ geoRasterLayer: georaster }: { geoRasterLa
     return () => {
       if(layerRef.current) map.removeLayer(layerRef.current)
     }
-  }, [georaster, container])
+  }, [geoRasterLayer, container])
 
   return null
 }
