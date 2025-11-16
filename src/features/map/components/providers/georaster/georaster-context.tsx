@@ -3,7 +3,7 @@ import chroma from 'chroma-js';
 import type { GeoRaster } from 'georaster-layer-for-leaflet';
 import GeoRasterLayer from 'georaster-layer-for-leaflet';
 import type { GridLayer } from 'leaflet';
-import { createContext, useContext, useEffect, useReducer, useRef, type ActionDispatch, type PropsWithChildren } from 'react'
+import { createContext, useContext, useEffect, useReducer, type ActionDispatch, type PropsWithChildren } from 'react'
 
 type GeoRasterItem = {
   id: string,
@@ -78,17 +78,12 @@ const GeoRasterLayers = () => {
 const GeoRasterReactLeafletLayer = ({ geoRasterLayer }: { geoRasterLayer: GridLayer }) => {
   const { map, layerContainer } = useLeafletContext();
   const container = layerContainer || map;
-  const layerRef = useRef<GridLayer>(null);
 
   useEffect(() => {
-    if (layerRef.current === null) {
-      layerRef.current = geoRasterLayer
-    }
-
-    container.addLayer(layerRef.current);
+    container.addLayer(geoRasterLayer);
 
     return () => {
-      if(layerRef.current) map.removeLayer(layerRef.current)
+      map.removeLayer(geoRasterLayer)
     }
   }, [geoRasterLayer, container])
 
