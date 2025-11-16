@@ -5,17 +5,18 @@ import GeoRasterLayer from 'georaster-layer-for-leaflet';
 import type { GridLayer } from 'leaflet';
 import { createContext, useContext, useEffect, useReducer, useRef, type ActionDispatch, type PropsWithChildren } from 'react'
 
-
-type GeoRasterState = {
-  [id: string]: GeoRaster
+type GeoRasterItem = {
+  id: string,
+  data: GeoRaster
 }
+type GeoRasterState = GeoRasterItem[]
 
 type GeoRasterAction = {
   type: 'ADD',
-  payload: { id: string, data: GeoRaster }
+  payload: GeoRasterItem
 } | {
   type: 'REMOVE',
-  payload: { id: string }
+  payload: Omit<GeoRasterItem, 'data'>
 }
 
 type GeoRasterContext = {
@@ -26,14 +27,10 @@ type GeoRasterContext = {
 function geoRasterReducer(state: GeoRasterState, action: GeoRasterAction) {
   switch (action.type) {
     case 'ADD':
-      console.log('GRR: ADD ' + action.payload.id, action.payload.data)
-      const addedState = { ...state, [action.payload.id]: action.payload.data }
-      console.log('GRR: new state ', addedState)
+      const addedState = state.concat([action.payload])
       return addedState
     case 'REMOVE':
-      console.log('GRR: REMOVE ' + action.payload.id)
-      const {[action.payload.id]: _, ...removedState} = state
-      console.log('GRR: new state ', removedState)
+      const removedState = state.filter((i) => i.id !== action.payload.id)
       return removedState
   }
 }
@@ -41,7 +38,7 @@ function geoRasterReducer(state: GeoRasterState, action: GeoRasterAction) {
 export const GeoRasterContext = createContext({} as GeoRasterContext);
 
 export const GeoRasterContextProvider = ({children}: PropsWithChildren) => {
-  const [georasters, dispatch] = useReducer(geoRasterReducer, {})
+  const [georasters, dispatch] = useReducer(geoRasterReducer, [])
   const value = {
     georasters,
     dispatch
@@ -55,10 +52,10 @@ export const GeoRasterContextProvider = ({children}: PropsWithChildren) => {
   )
 }
 
-function geoRasterToLayer(georaster: GeoRaster): GridLayer {
+function geoRastersToLayer(georasters: GeoRaster[]): GridLayer {
   return new GeoRasterLayer({
     attribution: "Planet",
-    georaster,
+    georasters,
     resolution: 128,
     debugLevel: 0,
     pixelValuesToColorFn: (values) => {
@@ -71,24 +68,20 @@ function geoRasterToLayer(georaster: GeoRaster): GridLayer {
 
 const GeoRasterLayers = () => {
   const { georasters } = useContext(GeoRasterContext)
-  console.log('GeoRasterLayers: ', georasters)
-  const layers = Object.values(georasters).map((georaster) =>
-    <GeoRasterReactLeafletLayer georaster={georaster}/>
-  )
-  return layers
+  const layers = geoRastersToLayer(georasters.map((i) => i.data))
+  return <GeoRasterReactLeafletLayer geoRasterLayer={layers}/>
 }
 
-const GeoRasterReactLeafletLayer = ({ georaster }: { georaster: GeoRaster }) => {
+const GeoRasterReactLeafletLayer = ({ geoRasterLayer: georaster }: { geoRasterLayer: GridLayer }) => {
   const { map, layerContainer } = useLeafletContext();
   const container = layerContainer || map;
   const layerRef = useRef<GridLayer>(null);
 
   useEffect(() => {
     if (layerRef.current === null) {
-      layerRef.current = geoRasterToLayer(georaster)
+      layerRef.current = georaster
     }
 
-    console.log('GeoRasterRLLayer: ', layerRef.current)
     container.addLayer(layerRef.current);
 
     return () => {
