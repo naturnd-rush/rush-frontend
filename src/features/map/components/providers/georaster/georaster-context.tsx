@@ -52,11 +52,11 @@ export const GeoRasterContextProvider = ({children}: PropsWithChildren) => {
   )
 }
 
-function geoRastersToLayer(georasters: GeoRaster[]): GridLayer | null {
-  if (georasters.length < 1) return null
+function geoRasterToLayer(georaster: GeoRasterItem): GridLayer {
   return new GeoRasterLayer({
     attribution: "Planet",
-    georasters,
+    georaster: georaster.data,
+    pane: georaster.id,
     resolution: 128,
     debugLevel: 0,
     pixelValuesToColorFn: (values) => {
@@ -69,24 +69,29 @@ function geoRastersToLayer(georasters: GeoRaster[]): GridLayer | null {
 
 const GeoRasterLayers = () => {
   const { georasters } = useContext(GeoRasterContext)
-  const layers = geoRastersToLayer(georasters.map((i) => i.data))
+  const layers = georasters.map((i) =>
+    <GeoRasterReactLeafletLayer
+      geoRasterLayer={geoRasterToLayer(i)}
+      id={i.id}
+    />
+  )
   return layers
-    ? <GeoRasterReactLeafletLayer geoRasterLayer={layers}/>
-    : layers
 }
 
-const GeoRasterReactLeafletLayer = ({ geoRasterLayer }: { geoRasterLayer: GridLayer }) => {
-  const { map, layerContainer } = useLeafletContext();
-  const container = layerContainer || map;
+const GeoRasterReactLeafletLayer = (
+  { geoRasterLayer, id }: { geoRasterLayer: GridLayer, id: string }
+) => {
+  const { map } = useLeafletContext();
 
   useEffect(() => {
-    container.addLayer(geoRasterLayer);
+    map.createPane(id)
+    map.addLayer(geoRasterLayer);
     geoRasterLayer.redraw();
 
     return () => {
       map.removeLayer(geoRasterLayer)
     }
-  }, [geoRasterLayer, container])
+  }, [geoRasterLayer, map])
 
   return null
 }
