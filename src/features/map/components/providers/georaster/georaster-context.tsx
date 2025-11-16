@@ -57,6 +57,7 @@ function geoRasterToLayer(georaster: GeoRasterItem): GridLayer {
     attribution: "Planet",
     georaster: georaster.data,
     pane: georaster.id,
+    caching: false,
     resolution: 128,
     debugLevel: 0,
     pixelValuesToColorFn: (values) => {
