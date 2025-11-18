@@ -1,12 +1,26 @@
-import Content from '@/features/content/components/content-panel'
+import { createFileRoute } from '@tanstack/react-router'
+import { ErrorBoundary, type FallbackProps } from 'react-error-boundary'
+import { FaLink } from 'react-icons/fa'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { useTopicTab } from '@/features/topic/hooks/use-topic-tab'
-import { createFileRoute } from '@tanstack/react-router'
-import { FaLink } from 'react-icons/fa'
+import Content from '@/features/content/components/content-panel'
 
 export const Route = createFileRoute('/app/$topicId/$tabId')({
   component: RouteComponent,
 })
+
+function fallbackRenderer({ error }: FallbackProps) {
+  return (
+    <Content
+      loading={false}
+      title='Error'
+      tabs={[]}
+    >
+      <p>Something went wrong:</p>
+      <pre style={{color: 'red'}}>{error.message}</pre>
+    </Content>
+  )
+}
 
 function RouteComponent() {
   const { topicId, tabId } = Route.useParams()
@@ -31,15 +45,17 @@ function RouteComponent() {
   // TODO: handle and display loading and error states.
 
   return (
-    <Content
-      loading={loadingTopic || loadingTab}
-      title={topic?.title ?? 'Topic'}
-      tabs={otherTabs}
-      activeTab={{link: '', label: activeTab?.title, icon: activeTab?.icon}}
-    >
-      {tab?.content}
-      {errorTopic ? errorTopic.message : null}
-      {errorTab ? errorTab.message : null}
-    </Content>
+    <ErrorBoundary fallbackRender={fallbackRenderer}>
+      <Content
+        loading={loadingTopic || loadingTab}
+        title={topic?.title ?? 'Topic'}
+        tabs={otherTabs}
+        activeTab={{link: '', label: activeTab?.title, icon: activeTab?.icon}}
+      >
+        {tab?.content}
+        {errorTopic ? errorTopic.message : null}
+        {errorTab ? errorTab.message : null}
+      </Content>
+    </ErrorBoundary>
   )
 }

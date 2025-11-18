@@ -28,7 +28,7 @@ export function useLayerGeoJSON(id: string): QUERY_RESULTS {
   if (data) {
     // TODO: Fix double-escaped JSON on backend.
     const fixedJSON = data.layer.serializedLeafletJson.replace(/\\\\\"/g, '\\\"')
-    const layerJSON = JSON.parse(fixedJSON)
+    const layerJSON = JSON.parse(fixedJSON ?? '')
     geoJSON = (
       <GeoJSON
         data={layerJSON.featureCollection}
