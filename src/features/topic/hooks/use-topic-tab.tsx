@@ -43,6 +43,7 @@ export function useTopicTab(
   questionSlug: string,
   questionTabSlug: string | undefined
 ): UseTopicTabResults {
+  console.log(`q: ${questionSlug}, t: ${questionTabSlug}`)
   let useTab = undefined;
   if (questionTabSlug === undefined) {
     useTab = () => useQuery<DefaultTabQueryResult>(
