@@ -72,7 +72,7 @@ export function useTopicTab(
   const tab: Tab = {
     title: tabResult?.title,
     id: tabResult?.slug,
-    content: parse(tabResult.content),
+    content: parse(tabResult.content ?? ''),
     displayOrder: tabResult.displayOrder,
     icon: <img src={expandBackendLink(tabResult?.iconUrl)} />,
   }

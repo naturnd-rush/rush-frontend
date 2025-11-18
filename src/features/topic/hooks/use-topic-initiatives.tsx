@@ -40,7 +40,7 @@ export function useTopicInitiatives(slug: string): QueryResults {
       bgColor: tag.bgColor ?? 'rgb(56, 161, 105)',
     })),
     content: typeof initiative.content === 'string'
-      ? parse(initiative.content)
+      ? parse(initiative.content ?? '')
       : initiative.content
   }))
 

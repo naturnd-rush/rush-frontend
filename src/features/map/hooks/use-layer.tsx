@@ -55,7 +55,7 @@ export function useLayer(id: string): QUERY_RESULTS {
   const layer: Layer = {
     id: data.layer.id,
     name: data.layer.name,
-    description: parse(data.layer.description),
+    description: parse(data.layer.description ?? ''),
     stylesOnLayer: data.layer.stylesOnLayer,
     mapData: {
       ...data.layer.mapData,
