@@ -41,15 +41,16 @@ const MapMarkerOpts: Omit<MapMarkerProps, 'icon'> = {
   fontSize: '1rem',
   border: '',
 }
-const pointToLayer = (f: Feature<Point, any>, l: LatLng): Layer => {
-  const icon = (
+const pointToLayer = (f: Feature<Point, { icons: string[], name: string }>, l: LatLng): Layer => {
+  const iconId = f.properties.icons.find(i => i && i !== '')
+  const icon = iconId ? (
     <img
       width="26px"
       height="26px"
-      src={`https://greenmap.org/api-v1/icons/${f.properties.icons[0]}/image/value`}
+      src={`https://greenmap.org/api-v1/icons/${iconId}/image/value`}
       alt={f.properties?.name ?? ''}
     />
-  )
+  ) : null
   return marker(l, {
     icon: divIcon({
       className: "",

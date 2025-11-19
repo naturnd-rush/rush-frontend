@@ -70,23 +70,17 @@ const Image = styled.img`
   border-radius: 1rem;
 `
 
-const LegendItemDescription = styled.div<{isOpen: boolean}>`
+const LegendItemDescription = styled.div<{isOpen: boolean, hasContent: boolean}>`
   cursor: pointer;
   overflow: hidden;
   padding: 4px;
   padding-bottom: ${(props) => props.isOpen ? '0.75em' : '0'};
-  box-shadow: ${(props) => props.isOpen ? 'none' : 'inset 0px -24px 16px -16px hsla(0,0%,0%,.25)'};
+  box-shadow: ${(props) => !props.hasContent || props.isOpen ? 'none' : 'inset 0px -24px 16px -16px hsla(0,0%,0%,.25)'};
   border-radius: 4px;
   // line-clamp
   display: -webkit-box;
   -webkit-line-clamp: ${(props) => props.isOpen ? 'none' : '3'};;
   -webkit-box-orient: vertical;
-
-  &:hover {
-    padding-bottom: 0.75em;
-    box-shadow: none;
-    -webkit-line-clamp: none;
-  }
 `
 
 const ButtonContainer = styled.div`
@@ -103,22 +97,20 @@ type Team = {
 
 // LegendItemOGM Component
 //   A single legend entry row for an OpenGreenMap layer.
-const LegendItemOGM = (props: LegendItemProps & { mapLink: string, campaignLink?: string }) => {
+const LegendItemOGM = (props: LegendItemProps & { mapId: string, campaignLink?: string }) => {
   const [ isOpen, onToggle ] = useToggle(false);
 
   const active = props.active
 
   const [mapName, setMapName] = useState(props.layer.name)
   const [team, setTeam] = useState<Team>({ name: '', id: null, src: fallbackImageUrl})
-  const mapLinkParams = new URLSearchParams(props.mapLink.split('?')[1])
-  const ogmMapId = mapLinkParams.has('map') ? mapLinkParams.get('map') : undefined
 
   useEffect(() => {
-    if (!ogmMapId|| team.id !== null) return;
+    if (!props.mapId || team.id !== null) return;
 
     let active = true
     // Fetch OGM Team Image
-    fetch(`https://greenmap.org/api-v1/maps/${ogmMapId}`)
+    fetch(`https://greenmap.org/api-v1/maps/${props.mapId}`)
       .then((response) => response.json())
       .then((json) => {
         const teamId = json.map?.visibility.team
@@ -148,7 +140,7 @@ const LegendItemOGM = (props: LegendItemProps & { mapLink: string, campaignLink?
         }
       })
       return () => { active = false }
-  }, [ogmMapId, team])
+  }, [props.mapId])
 
   return (
     <LegendItemContainer>
@@ -192,18 +184,22 @@ const LegendItemOGM = (props: LegendItemProps & { mapLink: string, campaignLink?
         </a>
       </MapDetailsContainer>
       {/* Description */}
-      <LegendItemDescription isOpen={isOpen} onClick={onToggle}>
+      <LegendItemDescription
+        isOpen={isOpen}
+        onClick={onToggle}
+        hasContent={props.layer?.description ? true : false}
+      >
         {props.layer.description}
       </LegendItemDescription>
       <ButtonContainer>
         <a
-          href={props.campaignLink ?? `https://greenmap.org/manage/features/add?mapId=${ogmMapId}`}
+          href={props.campaignLink ?? `https://greenmap.org/manage/features/add?mapId=${props.mapId}`}
           rel='external'
         >
           <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Add a Feature'}</Button>
         </a>
         <a
-          href={`https://greenmap.org/browse/sites?map=${ogmMapId}`}
+          href={`https://greenmap.org/browse/sites?map=${props.mapId}`}
           rel='external'
         >
           <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Visit Campaign'}</Button>
