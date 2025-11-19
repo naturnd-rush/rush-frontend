@@ -62,7 +62,7 @@ export default function LayerController(props: LayerControllerProps) {
         }
         { provider === MapProvider.OpenGreenMap
           ? <OpenGreenMapProvider
-              mapLink={layerQuery.layer?.mapData.mapLink}
+              mapId={layerQuery.layer?.mapData.mapId}
             />
           : null
         }

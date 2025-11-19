@@ -36,6 +36,7 @@ const GET_LAYER = gql`
     mapData {
       campaignLink
       geotiffLink
+      mapId
       mapLink
       name
       providerState
