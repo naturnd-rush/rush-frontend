@@ -101,6 +101,9 @@ const getOpenGreenMapLayer = async (featuresLink: string) => {
     })
 }
 
+const ogmFeaturesLink = (id: string) =>
+  `https://greenmap.org/api-v1/features?format=geojson&edit=false&map=${id}`
+
 type OpenGreenMapProps = {
   mapLink?: string,
   campaignLink?: string,
@@ -110,10 +113,11 @@ export default function OpenGreenMapProvider(props: OpenGreenMapProps) {
   const [openGreenMapLayer, setOpenGreenMapLayer] = useState<ReactNode>(undefined)
   
   useEffect(() => {
-    if (!props.mapLink || props.mapLink === '') return;
+    const mapId = props.mapLink?.split('/').at(-1)
+    if (!mapId) return;
 
     let active = true
-    getOpenGreenMapLayer(props.mapLink)
+    getOpenGreenMapLayer(ogmFeaturesLink(mapId))
       .then((layer) => { if (active) setOpenGreenMapLayer(layer)})
     return () => { active = false }
   }, [props.mapLink, props.campaignLink])
