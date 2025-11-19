@@ -17,8 +17,8 @@ function RouteComponent() {
   // Map Layer API Call
   const [ loading, error, layerGroups ] = useTopicLayers(topicId)
   
-  const groups = layerGroups?.sort(byDisplayOrder)
-    .map((group) => (<LayerGroupController {...group} />))
+  layerGroups?.sort(byDisplayOrder)
+  const groups = layerGroups?.map((group) => (<LayerGroupController {...group} />))
 
   // TODO: handle and display loading and error states.
 
