@@ -27,6 +27,7 @@ const GroupSubtitle = styled.h4`
 
 type LegendGroupProps = Omit<LayerGroup, 'layers'>
 const LegendGroup: ForwardRefRenderFunction<HTMLDivElement, PropsWithChildren<LegendGroupProps>> = (props, ref) => {
+  console.log(props.groupName + ref)
   return (
     <LayerStack id={props.groupName} ref={ref}>
       {props.groupName ? <GroupTitle>{props.groupName}</GroupTitle> : null}

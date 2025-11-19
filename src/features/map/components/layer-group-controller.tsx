@@ -19,6 +19,7 @@ export default function LayerGroupController(props: OrderedLayerGroup) {
   )
 
   const legendNode = document.getElementById('legend')
+  console.log(legendNode)
 
   return (
     <>
