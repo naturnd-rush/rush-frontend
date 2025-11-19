@@ -36,7 +36,7 @@ const GET_LAYER = gql`
     mapData {
       campaignLink
       geotiffLink
-      mapId
+      ogmMapId
       mapLink
       name
       providerState
@@ -59,8 +59,7 @@ export function useLayer(id: string): QUERY_RESULTS {
     description: parse(data.layer.description ?? ''),
     stylesOnLayer: data.layer.stylesOnLayer,
     mapData: {
-      ...data.layer.mapData,
-      geotiffLink: data.layer.mapData.geotiffLink,
+      ...data.layer.mapData
     }
   }
 
