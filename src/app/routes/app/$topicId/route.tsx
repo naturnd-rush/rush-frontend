@@ -1,6 +1,6 @@
 import Spacer from '@/components/spacer'
+import LayerGroupController from '@/features/map/components/layer-group-controller'
 import Legend from '@/features/map/components/legend'
-import LegendGroup from '@/features/map/components/legend-group'
 import MapControlOverlay, { MapControl } from '@/features/map/components/map-control-overlay'
 import MapView from '@/features/map/components/map-view'
 import { useTopicLayers } from '@/features/map/hooks/use-topic-layers'
@@ -18,7 +18,7 @@ function RouteComponent() {
   const [ loading, error, layerGroups ] = useTopicLayers(topicId)
   
   const groups = layerGroups?.sort(byDisplayOrder)
-    .map((group) => (<LegendGroup {...group} />))
+    .map((group) => (<LayerGroupController {...group} />))
 
   // TODO: handle and display loading and error states.
 
