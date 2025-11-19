@@ -1,4 +1,3 @@
-import { createPortal } from "react-dom";
 import { useToggle } from "@reactuses/core";
 import LegendItem from "./legend-item";
 import { useLayer } from "../hooks/use-layer";
@@ -16,7 +15,6 @@ const MapProvider = {
 
 export type LayerControllerProps = {
   layerId: string
-  groupNode: HTMLElement | null
   activeByDefault: boolean
 }
 export default function LayerController(props: LayerControllerProps) {
@@ -24,42 +22,35 @@ export default function LayerController(props: LayerControllerProps) {
   
   const [on, toggle] = useToggle(props.activeByDefault);
   const provider = layerQuery.layer?.mapData.providerState
-  
-  console.log(props.layerId + ': ' + props.groupNode)
 
   return (
     <>
-      { props.groupNode ? createPortal(
-        <>
-          { provider === MapProvider.OpenGreenMap
-            ? <LegendItemOGM
-                mapLink={layerQuery.layer?.mapData.mapLink ?? ''}
-                campaignLink={layerQuery.layer?.mapData.campaignLink}
-                loading={layerQuery.layer === undefined}
-                layer={layerQuery.layer ?? {
-                  id: '',
-                  description: '',
-                  name: 'Loading...',
-                  stylesOnLayer: []
-                }}
-                active={on}
-                onToggleLayer={toggle}
-              />
-            : <LegendItem
-                loading={layerQuery.layer === undefined}
-                layer={layerQuery.layer ?? {
-                  id: '',
-                  description: '',
-                  name: 'Loading...',
-                  stylesOnLayer: []
-                }}
-                active={on}
-                onToggleLayer={toggle}
-              />
-          }
-        </>,
-        props.groupNode
-      ) : null }
+      { provider === MapProvider.OpenGreenMap
+        ? <LegendItemOGM
+            mapLink={layerQuery.layer?.mapData.mapLink ?? ''}
+            campaignLink={layerQuery.layer?.mapData.campaignLink}
+            loading={layerQuery.layer === undefined}
+            layer={layerQuery.layer ?? {
+              id: '',
+              description: '',
+              name: 'Loading...',
+              stylesOnLayer: []
+            }}
+            active={on}
+            onToggleLayer={toggle}
+          />
+        : <LegendItem
+            loading={layerQuery.layer === undefined}
+            layer={layerQuery.layer ?? {
+              id: '',
+              description: '',
+              name: 'Loading...',
+              stylesOnLayer: []
+            }}
+            active={on}
+            onToggleLayer={toggle}
+          />
+      }
       <Toggleable on={on}>
         { provider === MapProvider.GeoJSON
           ? <GeoJSONProvider layerId={props.layerId} /> : null }

@@ -1,6 +1,6 @@
-import type { LayerGroup } from "@/types/layers"
-import { styled } from "@linaria/react"
 import { type ComponentPropsWithRef } from "react"
+import { styled } from "@linaria/react"
+import type { LayerGroup } from "@/types/layers"
 
 const LayerStack = styled.div`
   display: flex;
@@ -27,7 +27,6 @@ const GroupSubtitle = styled.h4`
 
 type LegendGroupProps = Omit<LayerGroup, 'layers'>
 const LegendGroup = (props: ComponentPropsWithRef<'div'> & LegendGroupProps) => {
-  console.log(props.groupName + ': ' + props.ref)
   return (
     <LayerStack id={props.groupName} ref={props.ref}>
       {props.groupName ? <GroupTitle>{props.groupName}</GroupTitle> : null}
