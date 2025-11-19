@@ -25,7 +25,7 @@ export default function LayerController(props: LayerControllerProps) {
   const [on, toggle] = useToggle(props.activeByDefault);
   const provider = layerQuery.layer?.mapData.providerState
   
-  console.log(props.layerId + props.groupNode)
+  console.log(props.layerId + ': ' + props.groupNode)
 
   return (
     <>
