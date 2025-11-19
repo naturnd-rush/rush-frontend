@@ -9,8 +9,8 @@ import { createPortal } from "react-dom";
 export default function LayerGroupController(props: OrderedLayerGroup) {
   const groupRef = useRef<HTMLDivElement>(null)
   const { layers, ...group } = props
-  layers.sort(byDisplayOrder)
-  const layerNodes = layers.map((layer) => 
+  
+  const layerNodes = [...layers].sort(byDisplayOrder).map((layer) => 
     <LayerController
       layerId={layer.layerId}
       activeByDefault={layer.activeByDefault}
