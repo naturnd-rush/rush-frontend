@@ -5,35 +5,44 @@ import LegendGroup from '@/features/map/components/legend-group'
 import MapControlOverlay, { MapControl } from '@/features/map/components/map-control-overlay'
 import MapView from '@/features/map/components/map-view'
 import { useTopicLayers } from '@/features/map/hooks/use-topic-layers'
+import { byDisplayOrder } from '@/lib/GraphQLProvider'
+import type { OrderedLayerDisplay, OrderedLayerGroup } from '@/types/layers'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
 })
 
+type LayerWithGroupId = OrderedLayerDisplay & { groupId: string }
+
+const layerGroupToLayersAndGroups = (layerGroups: OrderedLayerGroup[]) => {
+  let layers: LayerWithGroupId[] = []
+
+  const layerGroupsForLegend = layerGroups?.map((group) => {
+    const { layers: groupLayers, ...groupDetails } = group
+    // flatten layers to external array
+    groupLayers.forEach((layer) => {
+      const layerWithGroupId: LayerWithGroupId = { ...layer, groupId: group.groupName }
+      layers.push(layerWithGroupId)
+    })
+    
+    return groupDetails
+  })
+
+  layerGroupsForLegend.sort(byDisplayOrder)
+  layers.sort(byDisplayOrder)
+
+  return { layers, groups: layerGroupsForLegend }
+}
+
 function RouteComponent() {
   const { topicId } = Route.useParams()
   
   // Map Layer API Call
-  const [ loading, error, layers ] = useTopicLayers(topicId)
-  let leafletLayers: any[] = []
-  const layerGroups = layers?.map((group) => {
-    leafletLayers.push(group?.layers?.map((layer) => {
-      return (
-        <LayerController
-          layerId={layer.layerId}
-          groupId={group.groupName}
-          activeByDefault={layer.activeByDefault}
-          key={layer.layerId}
-        />
-      )
-    }
-    ))
-    return (
-      // {...group} is setting the HTML id field for DOM lookup in LayerController
-      <LegendGroup key={group.groupName} {...group} />
-    )
-  })
+  const [ loading, error, layerGroups ] = useTopicLayers(topicId)
+  const { layers, groups } = layerGroups
+    ? layerGroupToLayersAndGroups(layerGroups)
+    : { layers: null, groups: null }
 
   // TODO: handle and display loading and error states.
 
@@ -46,7 +55,7 @@ function RouteComponent() {
           top: '40px',
           left: '0',
         }}>
-        { leafletLayers }
+        { layers ? layers.map((l) => <LayerController {...l} />) : null }
       </MapView>
       <MapControl style={{ minHeight: '40%' }}>
         <Outlet />
@@ -55,7 +64,7 @@ function RouteComponent() {
       <MapControl>
         <Legend loading={loading}>
           {error?.message}
-          {layerGroups}
+          { groups ? groups.map((g) => <LegendGroup {...g} />) : null }
         </Legend>
       </MapControl>
     </MapControlOverlay>
