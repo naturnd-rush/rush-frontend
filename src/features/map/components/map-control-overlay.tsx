@@ -34,7 +34,7 @@ export default function MapControlOverlay({ children }: PropsWithChildren) {
   const isMobileOrTablet = useMediaQuery(down('lg'))
 
   return (
-    <ControlOverlay isMobile={isMobileOrTablet}>
+    <ControlOverlay isMobile={isMobileOrTablet} id='map-controls'>
       { children }
     </ControlOverlay>
   )

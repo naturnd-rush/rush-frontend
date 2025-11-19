@@ -1,3 +1,4 @@
+import type { Orderable } from '@/types/backend';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import type { PropsWithChildren } from 'react'
 
@@ -14,4 +15,8 @@ export default function GraphQLProvider({ children }: PropsWithChildren) {
   return (
     <ApolloProvider client={client}>{ children }</ApolloProvider>
   )
+}
+
+export function byDisplayOrder(a: Orderable, b: Orderable) {
+  return a.displayOrder - b.displayOrder;
 }

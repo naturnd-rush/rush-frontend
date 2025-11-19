@@ -1,6 +1,6 @@
-import type { LayerGroup } from "@/types/layers"
+import { type ComponentPropsWithRef } from "react"
 import { styled } from "@linaria/react"
-import type { PropsWithChildren } from "react"
+import type { LayerGroup } from "@/types/layers"
 
 const LayerStack = styled.div`
   display: flex;
@@ -26,12 +26,13 @@ const GroupSubtitle = styled.h4`
 `
 
 type LegendGroupProps = Omit<LayerGroup, 'layers'>
-export default function LegendGroup(props: PropsWithChildren<LegendGroupProps>) {
+const LegendGroup = (props: ComponentPropsWithRef<'div'> & LegendGroupProps) => {
   return (
-    <LayerStack id={props.groupName}>
+    <LayerStack id={props.groupName} ref={props.ref}>
       {props.groupName ? <GroupTitle>{props.groupName}</GroupTitle> : null}
       {props.groupDescription ? <GroupSubtitle>{props.groupDescription}</GroupSubtitle> : null}
       {props.children}
     </LayerStack>
   )
 }
+export default LegendGroup

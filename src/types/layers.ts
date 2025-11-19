@@ -49,6 +49,8 @@ type LayerMapData = {
 export type {
   Layer,
   LayerDetails,
+  LayerDisplay,
+  OrderedLayerDisplay,
   LayerGeoJSON,
   LayerGroup,
   OrderedLayerGroup,
