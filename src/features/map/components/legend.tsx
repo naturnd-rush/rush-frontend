@@ -1,4 +1,4 @@
-import { useEffect, useState, type PropsWithChildren } from "react";
+import { useEffect, useState, type ComponentPropsWithRef, type PropsWithChildren } from "react";
 import { styled } from "@linaria/react";
 import Panel, { PanelCloseButton, PanelContent } from "@/components/panel";
 import { useTheme } from "@/theme";
@@ -41,7 +41,8 @@ export default function Legend({
   children,
   showHint = true,
   loading = false,
-}: PropsWithChildren<LegendOpts>) {
+  ref,
+}: PropsWithChildren<LegendOpts> & ComponentPropsWithRef<"div">) {
   const { down } = useTheme().breakpoints
   const isMobileOrLaptop = useMediaQuery(down('lg'))
   const isMobile = useMediaQuery(down('sm'))
@@ -74,7 +75,9 @@ export default function Legend({
         <PanelContent
           id='legend'
           loading={loading}
-        >{ children }</PanelContent>
+        >
+          <div ref={ref}>{ children }</div>
+        </PanelContent>
         <PanelCloseButton onClick={toggleIsOpen}/>
       </Panel>
       { mobileLegendButton }

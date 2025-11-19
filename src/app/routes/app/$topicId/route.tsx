@@ -6,6 +6,7 @@ import MapView from '@/features/map/components/map-view'
 import { useTopicLayers } from '@/features/map/hooks/use-topic-layers'
 import { byDisplayOrder } from '@/lib/GraphQLProvider'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { useRef } from 'react'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
@@ -13,13 +14,17 @@ export const Route = createFileRoute('/app/$topicId')({
 
 function RouteComponent() {
   const { topicId } = Route.useParams()
+  const legendRef = useRef<HTMLDivElement>(null)
   
   // Map Layer API Call
   const [ loading, error, layerGroups ] = useTopicLayers(topicId)
   
   const groups = layerGroups
-    ? [...layerGroups].sort(byDisplayOrder).map((group) => (<LayerGroupController {...group} />))
+    ? [...layerGroups]
+        .sort(byDisplayOrder)
+        .map((group) => (<LayerGroupController legendRef={legendRef} {...group} />))
     : null
+
 
   // TODO: handle and display loading and error states.
 
@@ -39,7 +44,7 @@ function RouteComponent() {
       </MapControl>
       <Spacer />
       <MapControl>
-        <Legend loading={loading}>
+        <Legend loading={loading} ref={legendRef}>
           {error?.message}
         </Legend>
       </MapControl>
