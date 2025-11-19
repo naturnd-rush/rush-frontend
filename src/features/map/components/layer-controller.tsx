@@ -16,11 +16,10 @@ const MapProvider = {
 
 export type LayerControllerProps = {
   layerId: string
-  groupId: string
+  groupNode: HTMLElement | null
   activeByDefault: boolean
 }
 export default function LayerController(props: LayerControllerProps) {
-  const legendNode = document.getElementById(props.groupId)
   const layerQuery = useLayer(props.layerId)
   
   const [on, toggle] = useToggle(props.activeByDefault);
@@ -28,7 +27,7 @@ export default function LayerController(props: LayerControllerProps) {
   
   return (
     <>
-      { legendNode ? createPortal(
+      { props.groupNode ? createPortal(
         <>
           { provider === MapProvider.OpenGreenMap
             ? <LegendItemOGM
@@ -57,7 +56,7 @@ export default function LayerController(props: LayerControllerProps) {
               />
           }
         </>,
-        legendNode
+        props.groupNode
       ) : null }
       <Toggleable on={on}>
         { provider === MapProvider.GeoJSON

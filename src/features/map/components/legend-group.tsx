@@ -1,6 +1,6 @@
 import type { LayerGroup } from "@/types/layers"
 import { styled } from "@linaria/react"
-import type { PropsWithChildren } from "react"
+import { forwardRef, type ForwardRefRenderFunction, type PropsWithChildren } from "react"
 
 const LayerStack = styled.div`
   display: flex;
@@ -26,12 +26,14 @@ const GroupSubtitle = styled.h4`
 `
 
 type LegendGroupProps = Omit<LayerGroup, 'layers'>
-export default function LegendGroup(props: PropsWithChildren<LegendGroupProps>) {
+const LegendGroup: ForwardRefRenderFunction<HTMLDivElement, PropsWithChildren<LegendGroupProps>> = (props, ref) => {
   return (
-    <LayerStack id={props.groupName}>
+    <LayerStack id={props.groupName} ref={ref}>
       {props.groupName ? <GroupTitle>{props.groupName}</GroupTitle> : null}
       {props.groupDescription ? <GroupSubtitle>{props.groupDescription}</GroupSubtitle> : null}
       {props.children}
     </LayerStack>
   )
 }
+const ForwardedLegendGroup = forwardRef(LegendGroup)
+export default ForwardedLegendGroup

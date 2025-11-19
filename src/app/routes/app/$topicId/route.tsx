@@ -8,28 +8,32 @@ import { useTopicLayers } from '@/features/map/hooks/use-topic-layers'
 import { byDisplayOrder } from '@/lib/GraphQLProvider'
 import type { OrderedLayerDisplay, OrderedLayerGroup } from '@/types/layers'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { useRef } from 'react'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
 })
 
-type LayerWithGroupId = OrderedLayerDisplay & { groupId: string }
+type LayerWithGroupId = OrderedLayerDisplay & { groupNode: HTMLElement | null }
 
 const layerGroupToLayersAndGroups = (layerGroups: OrderedLayerGroup[]) => {
   let layers: LayerWithGroupId[] = []
 
+  layerGroups.sort(byDisplayOrder)
   const layerGroupsForLegend = layerGroups?.map((group) => {
     const { layers: groupLayers, ...groupDetails } = group
+    const groupNode = useRef(null)
+    const groupElement = <LegendGroup {...groupDetails} ref={groupNode} />
+
     // flatten layers to external array
     groupLayers.forEach((layer) => {
-      const layerWithGroupId: LayerWithGroupId = { ...layer, groupId: group.groupName }
+      const layerWithGroupId: LayerWithGroupId = { ...layer, groupNode: groupNode.current }
       layers.push(layerWithGroupId)
     })
     
-    return groupDetails
+    return groupElement
   })
 
-  layerGroupsForLegend.sort(byDisplayOrder)
   layers.sort(byDisplayOrder)
 
   return { layers, groups: layerGroupsForLegend }
@@ -64,7 +68,7 @@ function RouteComponent() {
       <MapControl>
         <Legend loading={loading}>
           {error?.message}
-          { groups ? groups.map((g) => <LegendGroup {...g} />) : null }
+          { groups }
         </Legend>
       </MapControl>
     </MapControlOverlay>
