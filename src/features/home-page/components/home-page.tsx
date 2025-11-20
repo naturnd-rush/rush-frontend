@@ -26,7 +26,7 @@ const HomePageContent = styled.div`
 `
 
 const HomePageTitle = styled.h1`
-  font-family: 'Figtree Variable', sans-serif;
+  font-family: Figtree, sans-serif;
   font-size: 2.5rem;
   line-height: 2rem;
   font-weight: 900;
@@ -35,7 +35,7 @@ const HomePageTitle = styled.h1`
 `
 
 const HomePageSubTitle = styled.h2`
-  font-family: 'Urbanist Variable', sans-serif;
+  font-family: Urbanist, sans-serif;
   font-size: 1rem;
   font-weight: 500;
   margin-top: 1rem;
@@ -43,7 +43,7 @@ const HomePageSubTitle = styled.h2`
 `
 
 const HomePageBody = styled.main`
-  font-family: 'Bitter Variable', sans-serif;
+  font-family: Bitter, sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
   margin-top: 0.75rem;

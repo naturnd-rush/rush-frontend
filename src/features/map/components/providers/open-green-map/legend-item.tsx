@@ -42,7 +42,7 @@ const MapTitlesContainer = styled.div`
 `
 
 const TeamTitle = styled.p`
-  font-family: 'Urbanist Variable', sans-serif;
+  font-family: Urbanist, sans-serif;
   font-weight: 300;
   font-size: 0.875rem;
   // line-clamp
@@ -53,7 +53,7 @@ const TeamTitle = styled.p`
 `
 
 const MapTitle = styled.p`
-  font-family: 'Figtree Variable', sans-serif;
+  font-family: Figtree, sans-serif;
   font-weight: 700;
   font-size: 1.125rem;
   // line-clamp

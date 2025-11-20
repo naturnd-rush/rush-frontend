@@ -8,7 +8,7 @@ import type { LoadingProps } from "@/types/backend";
 
 const ContentText = styled.div`
   color: black;
-  font-family: 'Bitter Variable', sans-serif;
+  font-family: Bitter, sans-serif;
   font-weight: 400;
   padding-top: 0.5rem;
 `

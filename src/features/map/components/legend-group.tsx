@@ -17,7 +17,7 @@ const GroupTitle = styled.h3`
 `
 
 const GroupSubtitle = styled.h4`
-  font-family: 'Urbanist Variable', sans-serif;
+  font-family: Urbanist, sans-serif;
   font-weight: normal;
   font-size: x-small;
   letter-spacing: 0.025em;

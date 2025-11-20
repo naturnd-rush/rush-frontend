@@ -7,7 +7,7 @@ import Button from "@/components/button";
 
 const LegendHintText = styled.h3`
   color: black;
-  font-family: 'Urbanist Variable', sans-serif;
+  font-family: Urbanist, sans-serif;
   font-size: .75rem;
   font-weight: 400;
   line-height: 250%;

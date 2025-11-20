@@ -34,7 +34,7 @@ const SpeechBubble = styled.div`
   width: 11rem;
   height: 12rem;
   padding: 1.4rem 1.125rem 4.75rem;
-  font-family: 'Urbanist Variable', sans-serif;
+  font-family: Urbanist, sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
   //transform: scale(-1, 1);

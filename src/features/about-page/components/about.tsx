@@ -18,7 +18,7 @@ export const AboutPageContent = styled.div`
 `
 
 export const AboutPageTitle = styled.h1`
-  font-family: 'Figtree Variable', sans-serif;
+  font-family: Figtree, sans-serif;
   font-size: 2.5rem;
   line-height: 3rem;
   font-weight: bold;
@@ -60,7 +60,7 @@ export const AboutPageHighSchoolsContainer = styled.div`
 
 export const AboutPageHighSchoolHeader = styled.p`
   flex: 0 0 auto;
-  font-family: 'Urbanist Variable', sans-serif;
+  font-family: Urbanist, sans-serif;
   font-size: 1.25rem;
   font-weight: 500;
   color: rgba(0,0,0,0.6);
@@ -79,7 +79,7 @@ export const AboutPageHighSchoolLogos = styled.div`
 
 export const AboutPageStudentContributorsHeader = styled.p`
   flex: 0 0 auto;
-  font-family: 'Urbanist Variable', sans-serif;
+  font-family: Urbanist, sans-serif;
   font-size: 1.25rem;
   font-weight: 500;
   color: rgba(0,0,0,0.6);
@@ -99,7 +99,7 @@ export const AboutPageStudentContributors = styled.div`
 `
 
 export const Text = styled.p`
-  font-family: 'Bitter Variable', serif;
+  font-family: Bitter, serif;
   font-size: 0.875rem;
   font-weight: 500;
   color: rgba(0,0,0,0.6);
@@ -111,7 +111,7 @@ export const List = styled.ul`
 `
 
 export const ListItem = styled.li`
-  font-family: 'Bitter Variable', serif;
+  font-family: Bitter, serif;
   font-size: 0.875rem;
   font-weight: 500;
   color: rgba(0,0,0,0.6);

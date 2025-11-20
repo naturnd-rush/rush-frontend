@@ -28,7 +28,7 @@ const LegendItemLabel = styled.label`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
-  font-family: 'Figtree Variable', sans-serif;
+  font-family: Figtree, sans-serif;
   font-size: 1rem;
   max-height: 2.9rem;
   white-space: normal;

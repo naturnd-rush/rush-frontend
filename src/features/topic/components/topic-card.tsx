@@ -64,7 +64,7 @@ const Title = styled.p`
   color: white;
 `
 const Subtitle = styled.p`
-  font-family: 'Urbanist Variable', sans-serif;
+  font-family: Urbanist, sans-serif;
   font-weight: 500;
   line-height: 130%;
   ${doubleDropShadow}

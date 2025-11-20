@@ -101,7 +101,7 @@ function DropdownLink({link, label, icon}: DropdownItem) {
   return (
     <Link to={link} from='/app/$topicId'>
       <Button icon={icon} style={{
-        fontFamily: `"Figtree Variable", sans-serif`,
+        fontFamily: `Figtree, sans-serif`,
         fontSize: '1.125rem',
         fontWeight: '500',
       }}>{label}</Button>

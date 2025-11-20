@@ -36,7 +36,7 @@ const _Button = styled.button<_ButtonProps>`
 
   // text properties
   white-space: nowrap;
-  font-family: 'Bitter Variable', serif;
+  font-family: Bitter, serif;
   font-size: var(--button-text-size);
   font-weight: ${props => (props.bold ? 800 : 500)};
   line-height: 1.2rem;
