@@ -1,6 +1,8 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
 import parse from 'html-react-parser';
 import type { LayerDetails, LayerMapData } from "../../../types/layers";
+import type { StyleOnLayer } from "@/types/styles";
+import { expandBackendLink } from "@/utils/expand-backend-link";
 //import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_LAYER = gql`
@@ -57,7 +59,13 @@ export function useLayer(id: string): QUERY_RESULTS {
     id: data.layer.id,
     name: data.layer.name,
     description: parse(data.layer.description ?? ''),
-    stylesOnLayer: data.layer.stylesOnLayer,
+    stylesOnLayer: data.layer.stylesOnLayer.map((style: StyleOnLayer) => ({
+      ...style,
+      style: {
+        ...style.style,
+        markerIcon: expandBackendLink(style.style.markerIcon),
+      }
+    })),
     mapData: {
       ...data.layer.mapData
     }

@@ -1,5 +1,7 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
 import type { Layer } from "../../../types/layers";
+import type { StyleOnLayer } from "@/types/styles";
+import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_ALL_LAYERS = gql`
   query AllLayersQuery() {
@@ -40,5 +42,16 @@ export function useAllLayers(): QUERY_RESULTS {
   
   if (loading || error) return { loading, error, layers: undefined }
 
-  return { loading, error, layers: data }
+  const layers = {
+    ...data,
+    stylesOnLayer: data.stylesOnLayer.map((style: StyleOnLayer) => ({
+      ...style,
+      style: {
+        ...style.style,
+        markerIcon: expandBackendLink(style.style.markerIcon),
+      }
+    }))
+  }
+
+  return { loading, error, layers }
 }
