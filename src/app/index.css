@@ -49,6 +49,7 @@ h1 {
   margin-right: 4px !important;
   padding-right: 12px;
   width: min(300px, 80vw) !important;
+  max-height: min(420px, 60vh) !important;
 }
 
 /* poppins-latin-700-normal */
