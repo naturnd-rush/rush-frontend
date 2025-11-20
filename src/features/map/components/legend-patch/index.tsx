@@ -1,8 +1,8 @@
 import { styled } from "@linaria/react"
 import type { Style } from "../../../../types/styles"
 
-const PATCH_WIDTH_PX = 45
-const PATCH_HEIGHT_PX = 27
+const PATCH_WIDTH_PX = 50
+const PATCH_HEIGHT_PX = 32
 
 const PatchContainer = styled.div`
   color: black;
@@ -39,11 +39,23 @@ const PatchPolygonContainer = styled.div`
 type PatchPolygonProps = {
   width: string,
   fillColor?: string,
+  border?: string,
+  strokeWidth?: number,
 }
 const PatchPolygonChip = styled.div<PatchPolygonProps>`
   width: ${props => (props.width ?? PATCH_WIDTH_PX + 'px')};
   height: ${PATCH_HEIGHT_PX + 'px'};
-  background-color: ${props => (props.fillColor ?? '#BBB')};
+  background-color: ${props => (props.fillColor ?? 'none')};
+  border: ${props => (props.border ?? 'unset')};
+  //border-left-width: ${props => (props.strokeWidth ? (props.strokeWidth / 2) + 'px' : 0)};
+  //border-right-width: ${props => (props.strokeWidth ? (props.strokeWidth / 2) + 'px' : 0)};
+
+  &:first-child {
+    //border-left: ${props => (props.border ?? 'unset')};
+  }
+  &:last-child {
+    //border-right: ${props => (props.border ?? 'unset')};
+  }
 `
 
 function PatchPolygon(props: LegendPatchProps) {
@@ -57,12 +69,22 @@ function PatchPolygon(props: LegendPatchProps) {
 
   return (
     <PatchPolygonContainer>
-      {styles.map((style) => <PatchPolygonChip
+      {styles.map((style) => {
+        const fillStyles = {
+          fillColor: style.fillColor
+        }
+        const strokeStyles = {
+          border: `${style.strokeWeight}px ${style.strokeDashArray ? 'dashed' : 'solid'} ${style.strokeColor}`,
+          strokeWidth: parseFloat(style.strokeWeight ?? '0'),
+        }
+
+        return <PatchPolygonChip
           width={chipWidth}
-          fillColor={style.fillColor}
+          { ...(style.drawFill   ? fillStyles   : {}) }
+          { ...(style.drawStroke ? strokeStyles : {}) }
           key={style.id}
         />
-      )}
+      })}
     </PatchPolygonContainer>
   )
 }
@@ -102,7 +124,7 @@ function PatchMarker(props: LegendPatchProps) {
           bgColor={style.markerBackgroundColor}
           overlap={index > 0}
           key={style.id}
-        ><img src={style.markerIcon} /></PatchMarkerChip>
+        ><img src={style.markerIcon} height='100%' width='100%' /></PatchMarkerChip>
       )}
     </PatchMarkerContainer>
   )

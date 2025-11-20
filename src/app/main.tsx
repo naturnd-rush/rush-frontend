@@ -4,6 +4,7 @@ import GraphQLProvider from '@/lib/GraphQLProvider'
 import RouterProvider from '@/lib/RouterProvider'
 import './reset.css'
 import './index.css'
+import './rush-text.css'
 
 // Render the app
 const rootElement = document.getElementById('root')!
