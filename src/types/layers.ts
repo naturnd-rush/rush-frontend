@@ -41,6 +41,7 @@ type LayerOnTopic = {
 type LayerMapData = {
   campaignLink: string
   geotiffLink: string
+  ogmMapId: string
   mapLink: string
   name: string
   providerState: string

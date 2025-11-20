@@ -41,15 +41,16 @@ const MapMarkerOpts: Omit<MapMarkerProps, 'icon'> = {
   fontSize: '1rem',
   border: '',
 }
-const pointToLayer = (f: Feature<Point, any>, l: LatLng): Layer => {
-  const icon = (
+const pointToLayer = (f: Feature<Point, { icons: string[], name: string }>, l: LatLng): Layer => {
+  const iconId = f.properties.icons.find(i => i && i !== '')
+  const icon = iconId ? (
     <img
       width="26px"
       height="26px"
-      src={`https://greenmap.org/api-v1/icons/${f.properties.icons[0]}/image/value`}
+      src={`https://greenmap.org/api-v1/icons/${iconId}/image/value`}
       alt={f.properties?.name ?? ''}
     />
-  )
+  ) : null
   return marker(l, {
     icon: divIcon({
       className: "",
@@ -101,8 +102,11 @@ const getOpenGreenMapLayer = async (featuresLink: string) => {
     })
 }
 
+const ogmFeaturesLink = (id: string) =>
+  `https://greenmap.org/api-v1/features?format=geojson&edit=false&map=${id}`
+
 type OpenGreenMapProps = {
-  mapLink?: string,
+  mapId?: string,
   campaignLink?: string,
 }
 export default function OpenGreenMapProvider(props: OpenGreenMapProps) {
@@ -110,13 +114,13 @@ export default function OpenGreenMapProvider(props: OpenGreenMapProps) {
   const [openGreenMapLayer, setOpenGreenMapLayer] = useState<ReactNode>(undefined)
   
   useEffect(() => {
-    if (!props.mapLink || props.mapLink === '') return;
+    if (!props.mapId) return;
 
     let active = true
-    getOpenGreenMapLayer(props.mapLink)
+    getOpenGreenMapLayer(ogmFeaturesLink(props.mapId))
       .then((layer) => { if (active) setOpenGreenMapLayer(layer)})
     return () => { active = false }
-  }, [props.mapLink, props.campaignLink])
+  }, [props.mapId, props.campaignLink])
   
 
   return openGreenMapLayer

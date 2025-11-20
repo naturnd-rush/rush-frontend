@@ -1,6 +1,5 @@
 import { styled } from "@linaria/react"
 import type { Style } from "../../../../types/styles"
-import { expandBackendLink } from "@/utils/expand-backend-link"
 
 const PATCH_WIDTH_PX = 45
 const PATCH_HEIGHT_PX = 27
@@ -103,7 +102,7 @@ function PatchMarker(props: LegendPatchProps) {
           bgColor={style.markerBackgroundColor}
           overlap={index > 0}
           key={style.id}
-        ><img src={expandBackendLink(style.markerIcon)} /></PatchMarkerChip>
+        ><img src={style.markerIcon} /></PatchMarkerChip>
       )}
     </PatchMarkerContainer>
   )
