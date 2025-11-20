@@ -102,7 +102,7 @@ function PatchMarker(props: LegendPatchProps) {
           bgColor={style.markerBackgroundColor}
           overlap={index > 0}
           key={style.id}
-        ><img src={style.markerIcon} /></PatchMarkerChip>
+        ><img src={style.markerIcon} height='100%' width='100%' /></PatchMarkerChip>
       )}
     </PatchMarkerContainer>
   )
