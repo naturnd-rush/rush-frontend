@@ -98,5 +98,13 @@ export default function Dropdown({activeItem, items}:DropdownProps) {
 }
 
 function DropdownLink({link, label, icon}: DropdownItem) {
-  return <Link to={link} from='/app/$topicId'><Button icon={icon}>{label}</Button></Link>
+  return (
+    <Link to={link} from='/app/$topicId'>
+      <Button icon={icon} style={{
+        fontFamily: `"Figtree Variable", sans-serif`,
+        fontSize: '1.125rem',
+        fontWeight: '500',
+      }}>{label}</Button>
+    </Link>
+  )
 }
