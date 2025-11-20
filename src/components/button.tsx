@@ -52,6 +52,7 @@ const ButtonIcon = styled.span<{iconOnly?: boolean, right?: boolean}>`
   margin-inline-start: ${props => !props.iconOnly && props.right ? '0.5rem' : 0 };
   margin-inline-end: ${props => !props.iconOnly && !props.right ? '0.5rem' : 0 };
   stroke-width: inherit;
+  min-width: 1.25em;
 
   svg {
     stroke-width: inherit;
