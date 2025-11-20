@@ -31,10 +31,8 @@ const MapIconsAndToggle = styled.div`
 const MapDetailsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  //align-items: flex-end;
-  //justify-content: space-between;
   width: 100%;
-  gap: 1rem;
+  gap: 0.5rem;
 `
 
 const MapTitlesContainer = styled.div`
