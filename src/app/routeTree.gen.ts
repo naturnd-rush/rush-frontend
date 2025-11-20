@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppTopicIdRouteRouteImport } from './routes/app/$topicId/route'
 import { Route as AppTopicIdIndexRouteImport } from './routes/app/$topicId/index'
+import { Route as AppTopicIdSubmitCompletedCardRouteImport } from './routes/app/$topicId/submit-completed-card'
 import { Route as AppTopicIdInitiativesRouteImport } from './routes/app/$topicId/initiatives'
 import { Route as AppTopicIdTabIdRouteImport } from './routes/app/$topicId/$tabId'
 
@@ -42,6 +43,12 @@ const AppTopicIdIndexRoute = AppTopicIdIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppTopicIdRouteRoute,
 } as any)
+const AppTopicIdSubmitCompletedCardRoute =
+  AppTopicIdSubmitCompletedCardRouteImport.update({
+    id: '/submit-completed-card',
+    path: '/submit-completed-card',
+    getParentRoute: () => AppTopicIdRouteRoute,
+  } as any)
 const AppTopicIdInitiativesRoute = AppTopicIdInitiativesRouteImport.update({
   id: '/initiatives',
   path: '/initiatives',
@@ -60,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
+  '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId/': typeof AppTopicIdIndexRoute
 }
 export interface FileRoutesByTo {
@@ -68,6 +76,7 @@ export interface FileRoutesByTo {
   '/app': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
+  '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId': typeof AppTopicIdIndexRoute
 }
 export interface FileRoutesById {
@@ -78,6 +87,7 @@ export interface FileRoutesById {
   '/app/': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
+  '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId/': typeof AppTopicIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
+    | '/app/$topicId/submit-completed-card'
     | '/app/$topicId/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
+    | '/app/$topicId/submit-completed-card'
     | '/app/$topicId'
   id:
     | '__root__'
@@ -106,6 +118,7 @@ export interface FileRouteTypes {
     | '/app/'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
+    | '/app/$topicId/submit-completed-card'
     | '/app/$topicId/'
   fileRoutesById: FileRoutesById
 }
@@ -153,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTopicIdIndexRouteImport
       parentRoute: typeof AppTopicIdRouteRoute
     }
+    '/app/$topicId/submit-completed-card': {
+      id: '/app/$topicId/submit-completed-card'
+      path: '/submit-completed-card'
+      fullPath: '/app/$topicId/submit-completed-card'
+      preLoaderRoute: typeof AppTopicIdSubmitCompletedCardRouteImport
+      parentRoute: typeof AppTopicIdRouteRoute
+    }
     '/app/$topicId/initiatives': {
       id: '/app/$topicId/initiatives'
       path: '/initiatives'
@@ -173,12 +193,14 @@ declare module '@tanstack/react-router' {
 interface AppTopicIdRouteRouteChildren {
   AppTopicIdTabIdRoute: typeof AppTopicIdTabIdRoute
   AppTopicIdInitiativesRoute: typeof AppTopicIdInitiativesRoute
+  AppTopicIdSubmitCompletedCardRoute: typeof AppTopicIdSubmitCompletedCardRoute
   AppTopicIdIndexRoute: typeof AppTopicIdIndexRoute
 }
 
 const AppTopicIdRouteRouteChildren: AppTopicIdRouteRouteChildren = {
   AppTopicIdTabIdRoute: AppTopicIdTabIdRoute,
   AppTopicIdInitiativesRoute: AppTopicIdInitiativesRoute,
+  AppTopicIdSubmitCompletedCardRoute: AppTopicIdSubmitCompletedCardRoute,
   AppTopicIdIndexRoute: AppTopicIdIndexRoute,
 }
 

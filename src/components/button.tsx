@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react";
-import type { PropsWithChildren, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, PropsWithChildren, ReactNode } from "react";
 
 type _ButtonProps = {
   bold: boolean;
@@ -58,7 +58,7 @@ const ButtonIcon = styled.span<{iconOnly?: boolean, right?: boolean}>`
   }
 `
 
-type ButtonProps = {
+interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   bold?: boolean
   color?: string
   bgColor?: string
@@ -68,9 +68,26 @@ type ButtonProps = {
   padding?: string
 }
 
-export default function Button({ children, color, bgColor, icon, rightIcon, bold = false, onClick, padding }: PropsWithChildren<ButtonProps>) {
+export default function Button({ 
+  children,
+  color,
+  bgColor,
+  icon,
+  rightIcon,
+  bold = false,
+  onClick,
+  padding,
+  style
+}: PropsWithChildren<ButtonProps>) {
   return (
-    <_Button bold={bold} color={color} bgColor={bgColor} onClick={onClick} padding={padding}>
+    <_Button
+      bold={bold}
+      color={color}
+      bgColor={bgColor}
+      onClick={onClick}
+      padding={padding}
+      style={style}
+    >
       { icon ? <ButtonIcon iconOnly={ children === undefined }>{ icon }</ButtonIcon> : null}
       { children }
       { rightIcon ? <ButtonIcon iconOnly={ children === undefined } right>{ rightIcon }</ButtonIcon> : null}

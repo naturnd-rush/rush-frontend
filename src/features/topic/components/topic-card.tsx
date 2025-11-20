@@ -18,8 +18,6 @@ const BackgroundImage = styled.img`
 
 const Card = styled.div`
   border-radius: 16px;
-  //background: #FFFFFFAA;
-  color: white;
   width: 320px;
   height: 448px;
   display: flex;
@@ -63,6 +61,7 @@ const Title = styled.p`
   ${doubleDropShadow}
   flex: 0;
   margin: 0;
+  color: white;
 `
 const Subtitle = styled.p`
   font-family: 'Urbanist Variable', sans-serif;
@@ -71,6 +70,7 @@ const Subtitle = styled.p`
   ${doubleDropShadow}
   flex: 0;
   margin: 0;
+  color: white;
 `
 
 export default function TopicCard({ topic }: { topic: TopicWithTabIds }) {
@@ -85,7 +85,7 @@ export default function TopicCard({ topic }: { topic: TopicWithTabIds }) {
     <Link to={topicRoute}>
       <Card>
         <BackgroundImage
-          src={topic.image}
+          src={topic.image ?? fallbackImageUrl}
           onError={fallbackImage(fallbackImageUrl)}
         />
         <Content>
