@@ -37,8 +37,7 @@ export const PlacesAutocomplete = () => {
     };
   }, [map, placeMarker, setMapCenter]);
 
-  const placeholderText = "Search...";
-  // 'Search for an address, business, or point of interest...'
+  const placeholderText = 'Search for an address or point of interest...'
 
   const inputWidth = "100%";
   // '27rem'
