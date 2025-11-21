@@ -55,6 +55,7 @@ function RouteComponent() {
             </MapControl>
             <Spacer />
             <MapControl>
+              <PlacesAutocomplete />
               <Legend loading={loading}>
                 {error?.message}
                 { groups }
@@ -63,7 +64,6 @@ function RouteComponent() {
           </>
         )}
       >
-        <PlacesAutocomplete />
       </MapView>
     </MapControlOverlay>
   )

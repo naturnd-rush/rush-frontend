@@ -3,7 +3,6 @@ import { useMap } from 'react-leaflet';
 import { SearchBox } from '@mapbox/search-js-react';
 import { type SearchBoxRetrieveResponse } from '@mapbox/search-js-core'
 import { latLng, Marker, marker } from 'leaflet';
-import Control from 'react-leaflet-custom-control';
 
 export const PlacesAutocomplete = () => {
   const map = useMap();
@@ -32,10 +31,10 @@ export const PlacesAutocomplete = () => {
   const placeholderText = 'Search...'
     // 'Search for an address, business, or point of interest...'
 
-  const inputWidth = `calc(100vw - 8.5rem)`
+  const inputWidth = '100%'
     // '27rem'
 
-  const inputPosition = 'topleft'
+  //const inputPosition = 'topleft'
 
   const onRetrieve = (res: SearchBoxRetrieveResponse) => {
     const place = res.features[0];
@@ -64,27 +63,25 @@ export const PlacesAutocomplete = () => {
   }
 
   return (
-    <Control prepend position={inputPosition}>
-      <SearchBox
-        accessToken='pk.eyJ1IjoicnVzaGFkbWluIiwiYSI6ImNtYzJudWd6czBhNTkybHEzNHdpNGE1MTUifQ.T-8P_6hh3kai9tTzjtvcTQ'
-        placeholder={placeholderText}
-        onRetrieve={onRetrieve}
-        onClear={onClear}
-        options={{
-          language: 'en',
-          country: 'CA',
-          proximity: mapCenter ? mapCenter : latLng([48.46557, -123.314736])
-        }}
-        popoverOptions={{
-          offset: 5
-        }}
-        theme={{
-          cssText: `
-            .Results { left: 0 !important; top: 46px !important; }
-            .SearchBox {width: ${inputWidth}}
-          `
-        }}
-      />
-    </Control>
+    <SearchBox
+      accessToken='pk.eyJ1IjoicnVzaGFkbWluIiwiYSI6ImNtYzJudWd6czBhNTkybHEzNHdpNGE1MTUifQ.T-8P_6hh3kai9tTzjtvcTQ'
+      placeholder={placeholderText}
+      onRetrieve={onRetrieve}
+      onClear={onClear}
+      options={{
+        language: 'en',
+        country: 'CA',
+        proximity: mapCenter ? mapCenter : latLng([48.46557, -123.314736])
+      }}
+      popoverOptions={{
+        offset: 5
+      }}
+      theme={{
+        cssText: `
+          .Results { left: 0 !important; top: 46px !important; }
+          .SearchBox {width: ${inputWidth}}
+        `
+      }}
+    />
   )
 }
