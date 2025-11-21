@@ -7,6 +7,7 @@ import { byDisplayOrder } from '@/lib/GraphQLProvider'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import LegendGroup from '@/features/map/components/legend-group'
 import LayerController from '@/features/map/components/layer-controller'
+import { PlacesAutocomplete } from '@/features/search/components/places-autocomplete'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
@@ -61,7 +62,8 @@ function RouteComponent() {
             </MapControl>
           </>
         )}
-      >    
+      >
+        <PlacesAutocomplete />
       </MapView>
     </MapControlOverlay>
   )
