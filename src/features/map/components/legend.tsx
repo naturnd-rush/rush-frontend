@@ -16,8 +16,6 @@ const LegendHintText = styled.h3`
 `
 
 const LegendButtonContainer = styled.div`
-  position: absolute;
-  right: 1rem;
   pointer-events: auto;
 `
 function LegendButton({onClick}: {onClick: () => void}) {
