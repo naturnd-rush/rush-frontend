@@ -8,6 +8,8 @@ import { createFileRoute, Outlet } from '@tanstack/react-router'
 import LegendGroup from '@/features/map/components/legend-group'
 import LayerController from '@/features/map/components/layer-controller'
 import { PlacesAutocomplete } from '@/features/search/components/places-autocomplete'
+import { useTheme } from '@/theme'
+import { useMediaQuery } from 'styled-breakpoints/use-media-query'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
@@ -35,7 +37,9 @@ function RouteComponent() {
         })
     : null
 
-
+  const { down } = useTheme().breakpoints
+  const isMobileOrTablet = useMediaQuery(down('lg'))
+  
   // TODO: handle and display loading and error states.
 
   return (
@@ -55,7 +59,7 @@ function RouteComponent() {
             </MapControl>
             <Spacer />
             <MapControl style={{
-              position: 'relative', /* for MapBox Search Results */
+              position: isMobileOrTablet ? 'unset' : 'relative', /* for MapBox Search Results */
               alignItems: 'flex-end',
             }}> 
               <PlacesAutocomplete />

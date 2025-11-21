@@ -51,3 +51,8 @@ h1 {
   width: min(300px, 80vw) !important;
   max-height: min(420px, 60vh) !important;
 }
+
+.leaflet-div-icon {
+    background: none;
+    border: none;
+}
