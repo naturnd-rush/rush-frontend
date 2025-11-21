@@ -7,6 +7,9 @@ import { byDisplayOrder } from '@/lib/GraphQLProvider'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import LegendGroup from '@/features/map/components/legend-group'
 import LayerController from '@/features/map/components/layer-controller'
+import { PlacesAutocomplete } from '@/features/search/components/places-autocomplete'
+import { useTheme } from '@/theme'
+import { useMediaQuery } from 'styled-breakpoints/use-media-query'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
@@ -34,7 +37,9 @@ function RouteComponent() {
         })
     : null
 
-
+  const { down } = useTheme().breakpoints
+  const isMobileOrTablet = useMediaQuery(down('lg'))
+  
   // TODO: handle and display loading and error states.
 
   return (
@@ -53,7 +58,11 @@ function RouteComponent() {
               <Outlet />
             </MapControl>
             <Spacer />
-            <MapControl>
+            <MapControl style={{
+              position: isMobileOrTablet ? 'unset' : 'relative', /* for MapBox Search Results */
+              alignItems: 'flex-end',
+            }}> 
+              <PlacesAutocomplete />
               <Legend loading={loading}>
                 {error?.message}
                 { groups }
@@ -61,7 +70,7 @@ function RouteComponent() {
             </MapControl>
           </>
         )}
-      >    
+      >
       </MapView>
     </MapControlOverlay>
   )

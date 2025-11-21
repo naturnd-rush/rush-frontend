@@ -7,6 +7,9 @@ export const MapControl = styled.div`
   z-index: 9999;
   pointer-events: none;
   flex: 0 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `
 
 type ControlOverlayProps = {
