@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { SearchBox } from '@mapbox/search-js-react';
-import { latLng, marker } from 'leaflet';
+import { type SearchBoxRetrieveResponse } from '@mapbox/search-js-core'
+import { latLng, Marker, marker } from 'leaflet';
+import Control from 'react-leaflet-custom-control';
 
 export const PlacesAutocomplete = () => {
   const map = useMap();
-  const [placeMarker, setPlaceMarker] = useState(null);
+  const [placeMarker, setPlaceMarker] = useState<Marker | null>(null);
   const [mapCenter, setMapCenter] = useState<{lat: number, lng: number} | null>(null);
 
   useEffect(() => {
@@ -27,22 +29,15 @@ export const PlacesAutocomplete = () => {
     }
   }, [ map, placeMarker, setMapCenter ])
 
-  const placeholderText = useBreakpointValue({
-    base: 'Search...',
-    md: 'Search for an address, business, or point of interest...',
-  }, {ssr:false, fallback:true});
+  const placeholderText = 'Search...'
+    // 'Search for an address, business, or point of interest...'
 
-  const inputWidth = useBreakpointValue({
-    base: `calc(100vw - 8.5rem)`,
-    md: '27rem',
-  }, {ssr:false, fallback:true});
+  const inputWidth = `calc(100vw - 8.5rem)`
+    // '27rem'
 
-  const inputPosition = useBreakpointValue({
-    base: 'topright',
-    lg: 'topleft',
-  }, {ssr:false, fallback:true});
+  const inputPosition = 'topleft'
 
-  const onRetrieve = (res) => {
+  const onRetrieve = (res: SearchBoxRetrieveResponse) => {
     const place = res.features[0];
     if (place?.geometry.coordinates) {
       // convert location to leaflet latlng
@@ -53,9 +48,8 @@ export const PlacesAutocomplete = () => {
       
       // add a marker to the map
       const placeMarker = marker(placeLatLng)
-      placeMarker.bindPopup(mapPopupContent(
-        place.properties.name,
-        ), {offset: [0,2]});
+      placeMarker.bindPopup(place.properties.name,
+        {offset: [0,2]});
       map.addLayer(placeMarker)
       map.flyTo(placeLatLng, 14)
       setPlaceMarker(placeMarker)
@@ -79,7 +73,7 @@ export const PlacesAutocomplete = () => {
         options={{
           language: 'en',
           country: 'CA',
-          proximity: mapCenter
+          proximity: mapCenter ? mapCenter : latLng([48.46557, -123.314736])
         }}
         popoverOptions={{
           offset: 5
