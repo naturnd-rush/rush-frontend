@@ -54,7 +54,7 @@ function RouteComponent() {
               <Outlet />
             </MapControl>
             <Spacer />
-            <MapControl>
+            <MapControl style={{ position: 'relative' /* for MapBox Search Results */ }}> 
               <PlacesAutocomplete />
               <Legend loading={loading}>
                 {error?.message}
