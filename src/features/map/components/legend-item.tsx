@@ -3,12 +3,11 @@ import { useDisclosure } from "@reactuses/core"
 import { IoMdCloseCircleOutline, IoMdInformationCircle } from "react-icons/io"
 import Button from "@/components/button"
 import Spacer from "@/components/spacer"
-import Spinner from "@/components/spinner"
-import Switch from "@/components/switch"
 import type { LayerDetails } from "../../../types/layers"
 import LegendPatch from "./legend-patch"
 import type { PropsWithChildren } from "react"
 import type { StyleOnLayer } from "../../../types/styles"
+import LegendItemToggle from "./legend-item-toggle"
 
 // Style Components
 
@@ -33,7 +32,7 @@ const LegendItemLabel = styled.label`
   max-height: 2.9rem;
   white-space: normal;
   display: -webkit-box !important; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-  padding-inline: 0.5rem;
+  padding-inline-start: 0.75rem;
 `
 
 // TODO: replace with semantic tag for accessibility.
@@ -68,18 +67,6 @@ const PatchBreakdownRowLabel = styled.p`
 `
 
 // Functional Sub-components
-type LegendItemControlProps = {
-  active: boolean,
-  loading: boolean,
-  onToggleLayer: () => void,
-}
-
-const LegendItemControl = (props: LegendItemControlProps) => {
-  return props.loading
-    ? <div style={{ paddingInline: '0.4375rem' }}><Spinner size='1.25rem' /></div>
-    : <Switch checked={props.active} onChange={props.onToggleLayer} />
-}
-
 const DetailsPatch = ({styleOnLayer}: {styleOnLayer: StyleOnLayer}) => {
   return (
     <PatchBreakdownRow>
@@ -126,7 +113,7 @@ export default function LegendItem(props: LegendItemProps) {
   return (
     <div>
       <LegendItemContainer>
-        <LegendItemControl
+        <LegendItemToggle
           active={props.active}
           loading={props.loading}
           onToggleLayer={props.onToggleLayer}
