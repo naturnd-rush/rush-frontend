@@ -4,13 +4,10 @@ import { useMediaQuery } from "styled-breakpoints/use-media-query";
 import { useTheme } from "@/theme";
 
 export const MapControl = styled.div`
-  //z-index: 9999;
-  //pointer-events: none;
-  //flex: 0 1;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  //width: 24rem;
+
   min-width: 18rem;
   max-height: calc(100svh - 60px);
 `
@@ -21,8 +18,8 @@ type ControlOverlayProps = {
 const ControlOverlay = styled.div<ControlOverlayProps>`
   flex: 1;
   gap: 5px;
-  height: calc(100% - 40px);
-  max-height: calc(100% - 40px);
+  height: calc(100svh - 60px);
+  //max-height: calc(100svh - 40px);
   width: calc(100vw - 20px);
   display: flex;
   flex-direction: ${(props) => props.isMobile ? 'column-reverse' : 'row'};
@@ -42,7 +39,7 @@ export default function MapControlOverlay({ children }: PropsWithChildren) {
   const isMobileOrTablet = useMediaQuery(down('lg'))
 
   return (
-    <ControlOverlay isMobile={isMobileOrTablet} id='map-controls'>
+    <ControlOverlay isMobile={isMobileOrTablet} id='map-control-overlay'>
       { children }
     </ControlOverlay>
   )

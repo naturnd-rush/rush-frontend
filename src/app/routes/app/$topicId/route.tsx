@@ -57,12 +57,15 @@ function RouteComponent() {
         <MapControlOverlay>
           <MapControl style={{
             minHeight: '30%',
+            maxHeight: isMobileOrTablet ? '40%' : undefined,
           }}>
             <Outlet />
           </MapControl>
           <Spacer />
           <MapControl style={{
-            minWidth: '24rem'
+            minWidth: '24rem',
+            alignSelf: isMobileOrTablet ? 'flex-end' : 'unset',
+            alignItems: 'flex-end'
           }}>
             <PlacesAutocomplete />
             <Legend loading={loading}>
