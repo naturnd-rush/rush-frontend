@@ -16,7 +16,6 @@ import {
   Image,
   List,
 } from '@/features/about-page/components/about'
-import backgroundImage from '@/assets/background-image.jpg'
 import naturnd from '@/assets/logos/1. NatuR&D.png'
 import uvicmapshop from '@/assets/logos/2. Map Shop - UVic.png'
 import pss from '@/assets/logos/3. PSS.png'
@@ -32,7 +31,6 @@ import obhs from '@/assets/logos/12. Oak Bay High.png'
 import phs from '@/assets/logos/13. Parklands High School.png'
 import mdhs from '@/assets/logos/14. Mount Doug High School.png'
 import clhs from '@/assets/logos/15. Claremont High School.png'
-//import rbct4n from '@/assets/logos/16. RBC Tech for Nature.png'
 import uviccel from '@/assets/logos/17. University of Victoria CEL.png'
 import enbs from '@/assets/logos/18. Engage with Nature-Based Solutions.png'
 import scbc from '@/assets/logos/SCBC_COL_2019.png'
@@ -282,14 +280,14 @@ const contributors = [
 ))
 
 function About() {
-  const { down } = useTheme().breakpoints
+  const { background, breakpoints: { down } } = useTheme()
   const downLg = useMediaQuery(down('lg'))
   const downXl = useMediaQuery(down('xl'))
   const down2xl = useMediaQuery(down('xxl'))
 
   return (
     <Scrollable style={{
-      backgroundImage: `linear-gradient(rgba(42, 42, 42, 0.7), rgba(42, 42, 42, 0.7)), url(${backgroundImage})`,
+      backgroundImage: `linear-gradient(rgba(42, 42, 42, 0.7), rgba(42, 42, 42, 0.7)), url(${background})`,
       backgroundSize: 'cover',
       // display backgroundImage and center topic cards when height not filled
       height: 'calc(100% - var(--nav-height))',
