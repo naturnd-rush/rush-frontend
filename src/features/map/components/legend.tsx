@@ -62,8 +62,11 @@ export default function Legend({
         width: isMobile ? 'calc(100% - 8px)' : undefined,
         maxHeight: isMobileOrLaptop ? 'calc(100% - 48px)' : undefined,
         top: isMobileOrLaptop ? '44px' : undefined,
-        right: isMobileOrLaptop ? '4px' : undefined,
-        alignSelf: isMobileOrLaptop ? 'flex-end' : 'stretch'
+        //right: isMobileOrLaptop ? '4px' : undefined,
+        alignSelf: isMobileOrLaptop ? 'flex-end' : 'stretch',
+        boxShadow: isMobileOrLaptop ? '-8px 8px 12px -8px rgb(0 0 0 / 0.75), 8px 8px 12px -8px rgb(0 0 0 / 0.75)' : 'none',
+        resize: 'both',
+        maxWidth: '100%',
       }}>
         { showHint && 
           <LegendHintText>

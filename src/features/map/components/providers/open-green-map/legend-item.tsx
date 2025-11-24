@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 import fallbackImageUrl from '@/assets/topic-placeholder.png'
 import { styled } from "@linaria/react";
 import Spacer from "@/components/spacer";
-import Spinner from "@/components/spinner";
-import Switch from "@/components/switch";
 import Button from "@/components/button";
 import type { Style } from "@/types/styles";
 import LegendPatch from "../../legend-patch";
+import LegendItemToggle from "../../legend-item-toggle";
 
 const LegendItemContainer = styled.div`
   display: flex;
@@ -185,13 +184,11 @@ const LegendItemOGM = (props: LegendItemProps & { mapId: string, campaignLink?: 
         <MapTitlesContainer id='map-titles-container'>
           {/* Map icons and toggle */}
           <MapIconsAndToggle id='map-toggle-patch-container'>
-            {props.loading
-              ? <Spinner />
-              : <Switch
-                  checked={active}
-                  onChange={props.onToggleLayer}
-                />
-            }
+            <LegendItemToggle
+              active={active}
+              loading={props.loading}
+              onToggleLayer={props.onToggleLayer}
+            />
             <Spacer />
             { styles.length > 0 
               ? (
@@ -235,7 +232,7 @@ const LegendItemOGM = (props: LegendItemProps & { mapId: string, campaignLink?: 
           href={props.campaignLink ?? `https://greenmap.org/manage/features/add?mapId=${props.mapId}`}
           rel='external'
         >
-          <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Add a Feature'}</Button>
+          <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Plot that Spot'}</Button>
         </a>
         <a
           href={`https://greenmap.org/browse/sites?map=${props.mapId}`}

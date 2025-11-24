@@ -10,6 +10,7 @@ import LayerController from '@/features/map/components/layer-controller'
 import { PlacesAutocomplete } from '@/features/search/components/places-autocomplete'
 import { useTheme } from '@/theme'
 import { useMediaQuery } from 'styled-breakpoints/use-media-query'
+import Control from 'react-leaflet-custom-control'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
@@ -43,35 +44,37 @@ function RouteComponent() {
   // TODO: handle and display loading and error states.
 
   return (
-    <MapControlOverlay>
-      <MapView
-        style={{
-          width: '100%',
-          height: 'calc(100% - 40px)',
-          position: 'absolute',
-          top: '40px',
-          left: '0',
-        }}
-        controls={(
-          <>
-            <MapControl style={{ minHeight: '40%' }}>
-              <Outlet />
-            </MapControl>
-            <Spacer />
-            <MapControl style={{
-              position: isMobileOrTablet ? 'unset' : 'relative', /* for MapBox Search Results */
-              alignItems: 'flex-end',
-            }}> 
-              <PlacesAutocomplete />
-              <Legend loading={loading}>
-                {error?.message}
-                { groups }
-              </Legend>
-            </MapControl>
-          </>
-        )}
-      >
-      </MapView>
-    </MapControlOverlay>
+    <MapView
+      style={{
+        width: '100%',
+        height: 'calc(100% - 40px)',
+        position: 'absolute',
+        top: '40px',
+        left: '0',
+      }}
+    >
+      <Control position='topleft'>
+        <MapControlOverlay>
+          <MapControl style={{
+            minHeight: '30%',
+            maxHeight: isMobileOrTablet ? '40%' : undefined,
+          }}>
+            <Outlet />
+          </MapControl>
+          <Spacer />
+          <MapControl style={{
+            minWidth: '24rem',
+            alignSelf: isMobileOrTablet ? 'flex-end' : 'unset',
+            alignItems: 'flex-end'
+          }}>
+            <PlacesAutocomplete />
+            <Legend loading={loading}>
+              {error?.message}
+              { groups }
+            </Legend>
+        </MapControl>
+        </MapControlOverlay>
+      </Control>
+    </MapView>
   )
 }

@@ -5,6 +5,8 @@ import Panel, { PanelCloseButton, PanelContent } from "@/components/panel";
 import type { TopicContent } from "@/types/topic";
 import Dropdown from "@/components/dropdown";
 import type { LoadingProps } from "@/types/backend";
+import { useTheme } from "@/theme";
+import { useMediaQuery } from "styled-breakpoints/use-media-query";
 
 const ContentText = styled.div`
   color: black;
@@ -16,8 +18,11 @@ const ContentText = styled.div`
 export default function Content({
   children, title, tabs, loading, activeTab
 }: PropsWithChildren<TopicContent & LoadingProps & {activeTab?: { link: string, label: string, icon: ReactNode}}>) {
+  const { down } = useTheme().breakpoints
+  const isMobileOrTablet = useMediaQuery(down('lg'))
+
   return (
-    <Panel id='content-panel' title={title} style={{ minHeight: '40%' }}>
+    <Panel id='content-panel' title={title} resize={!isMobileOrTablet} style={{ minHeight: '40%' }}>
       <Link to='/app'>
         <PanelCloseButton />
       </Link>

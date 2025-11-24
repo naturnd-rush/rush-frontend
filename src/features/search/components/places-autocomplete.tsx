@@ -37,7 +37,7 @@ export const PlacesAutocomplete = () => {
     };
   }, [map, placeMarker, setMapCenter]);
 
-  const placeholderText = 'Search for an address or point of interest...'
+  const placeholderText = 'Search for an address, point of interest...'
 
   const inputWidth = "100%";
   // '27rem'
@@ -86,7 +86,11 @@ export const PlacesAutocomplete = () => {
         }}
         theme={{
           cssText: `
-            .SearchBox {width: ${inputWidth}}
+            .SearchBox {
+              width: ${inputWidth};
+              border-radius: var(--panel-border-radius);
+            }
+            .Results { left: auto !important; top: 46px !important; }
           `,
         }}
       />
