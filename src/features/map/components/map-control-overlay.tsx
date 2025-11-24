@@ -5,12 +5,12 @@ import { useTheme } from "@/theme";
 
 export const MapControl = styled.div`
   //z-index: 9999;
-  pointer-events: none;
+  //pointer-events: none;
   //flex: 0 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  width: 24rem;
+  gap: 10px;
+  //width: 24rem;
   min-width: 18rem;
   max-height: calc(100svh - 60px);
 `
@@ -20,8 +20,10 @@ type ControlOverlayProps = {
 }
 const ControlOverlay = styled.div<ControlOverlayProps>`
   flex: 1;
+  gap: 5px;
   height: calc(100% - 40px);
   max-height: calc(100% - 40px);
+  width: calc(100vw - 20px);
   display: flex;
   flex-direction: ${(props) => props.isMobile ? 'column-reverse' : 'row'};
   align-items: stretch;
@@ -31,7 +33,7 @@ const ControlOverlay = styled.div<ControlOverlayProps>`
   }
 
   #content-panel {
-    width: ${(props) => props.isMobile ? 'min(36rem, 100%)' : 'unset'}
+    width: ${(props) => props.isMobile ? 'min(36rem, 100%)' : '24rem'}
   }
 `
 

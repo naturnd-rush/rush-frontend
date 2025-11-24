@@ -28,16 +28,18 @@ const StyledPanel = styled.section<{resize?:boolean}>`
   border-radius: var(--panel-border-radius);
   display: flex;
   flex-direction: column;
-  max-height: 100%;
   padding: 1rem;
   pointer-events: all;
   position: relative;
-  min-width: 18rem;
-  width: 24rem;
   overflow: hidden;
   resize: ${(props) => props.resize ? 'both' : 'none'};
+  
+  min-width: 18rem;
+  width: 24rem;
+  max-width: 100%;
   min-height: 8rem !important;
-
+  max-height: 100%;
+  
   &:hover {
     ${PanelResizeHandle} {
       color: rgb(216, 213, 171);

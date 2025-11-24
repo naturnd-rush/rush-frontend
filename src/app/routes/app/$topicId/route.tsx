@@ -44,49 +44,34 @@ function RouteComponent() {
   // TODO: handle and display loading and error states.
 
   return (
-    <MapControlOverlay>
-      <MapView
-        style={{
-          width: '100%',
-          height: 'calc(100% - 40px)',
-          position: 'absolute',
-          top: '40px',
-          left: '0',
-        }}
-        controls={false && (
-          <>
-            <MapControl style={{
-              minHeight: '30%',
-            }}>
-              
-            </MapControl>
-            <Spacer />
-            <MapControl style={{
-              position: isMobileOrTablet ? 'unset' : 'relative', /* for MapBox Search Results */
-              alignItems: 'flex-end',
-            }}> 
-              
-            </MapControl>
-          </>
-        )}
-      >
-        <Control position='topleft'>
+    <MapView
+      style={{
+        width: '100%',
+        height: 'calc(100% - 40px)',
+        position: 'absolute',
+        top: '40px',
+        left: '0',
+      }}
+    >
+      <Control position='topleft'>
+        <MapControlOverlay>
           <MapControl style={{
             minHeight: '30%',
           }}>
             <Outlet />
           </MapControl>
-        </Control>
-        <Control position='topright'>
-          <MapControl>
+          <Spacer />
+          <MapControl style={{
+            minWidth: '24rem'
+          }}>
             <PlacesAutocomplete />
             <Legend loading={loading}>
               {error?.message}
               { groups }
             </Legend>
-          </MapControl>
-        </Control>
-      </MapView>
-    </MapControlOverlay>
+        </MapControl>
+        </MapControlOverlay>
+      </Control>
+    </MapView>
   )
 }
