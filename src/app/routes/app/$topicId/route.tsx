@@ -10,6 +10,7 @@ import LayerController from '@/features/map/components/layer-controller'
 import { PlacesAutocomplete } from '@/features/search/components/places-autocomplete'
 import { useTheme } from '@/theme'
 import { useMediaQuery } from 'styled-breakpoints/use-media-query'
+import Control from 'react-leaflet-custom-control'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
@@ -52,25 +53,39 @@ function RouteComponent() {
           top: '40px',
           left: '0',
         }}
-        controls={(
+        controls={false && (
           <>
-            <MapControl style={{ minHeight: '40%' }}>
-              <Outlet />
+            <MapControl style={{
+              minHeight: '30%',
+            }}>
+              
             </MapControl>
             <Spacer />
             <MapControl style={{
               position: isMobileOrTablet ? 'unset' : 'relative', /* for MapBox Search Results */
               alignItems: 'flex-end',
             }}> 
-              <PlacesAutocomplete />
-              <Legend loading={loading}>
-                {error?.message}
-                { groups }
-              </Legend>
+              
             </MapControl>
           </>
         )}
       >
+        <Control position='topleft'>
+          <MapControl style={{
+            minHeight: '30%',
+          }}>
+            <Outlet />
+          </MapControl>
+        </Control>
+        <Control position='topright'>
+          <MapControl>
+            <PlacesAutocomplete />
+            <Legend loading={loading}>
+              {error?.message}
+              { groups }
+            </Legend>
+          </MapControl>
+        </Control>
       </MapView>
     </MapControlOverlay>
   )

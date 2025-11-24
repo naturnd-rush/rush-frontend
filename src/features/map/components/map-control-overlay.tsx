@@ -4,12 +4,15 @@ import { useMediaQuery } from "styled-breakpoints/use-media-query";
 import { useTheme } from "@/theme";
 
 export const MapControl = styled.div`
-  z-index: 9999;
+  //z-index: 9999;
   pointer-events: none;
-  flex: 0 1;
+  //flex: 0 1;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 24rem;
+  min-width: 18rem;
+  max-height: calc(100svh - 60px);
 `
 
 type ControlOverlayProps = {
@@ -24,7 +27,7 @@ const ControlOverlay = styled.div<ControlOverlayProps>`
   align-items: stretch;
 
   ${MapControl} {
-    padding: 1rem ${(props) => props.isMobile ? '0.25rem' : '1rem'};
+    //padding: 1rem ${(props) => props.isMobile ? '0.25rem' : '1rem'};
   }
 
   #content-panel {

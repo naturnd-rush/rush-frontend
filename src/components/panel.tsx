@@ -4,8 +4,26 @@ import Spinner from "./spinner";
 import Scrollable from "./scrollable";
 import Button from "./button";
 import { FaX } from "react-icons/fa6";
+import { TbRadiusBottomRight } from "react-icons/tb"
 
-const StyledPanel = styled.section`
+const PanelResizeHandle = styled.div`
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  
+  pointer-events: none;
+  cursor: nwse-resize;
+
+  color: rgb(39, 103, 73);
+
+  & > svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 3;
+  }
+`
+
+const StyledPanel = styled.section<{resize?:boolean}>`
   background-color: white;
   border-radius: var(--panel-border-radius);
   display: flex;
@@ -14,8 +32,17 @@ const StyledPanel = styled.section`
   padding: 1rem;
   pointer-events: all;
   position: relative;
-  min-width: 24rem;
+  min-width: 18rem;
   width: 24rem;
+  overflow: hidden;
+  resize: ${(props) => props.resize ? 'both' : 'none'};
+  min-height: 8rem !important;
+
+  &:hover {
+    ${PanelResizeHandle} {
+      color: rgb(216, 213, 171);
+    }
+  }
 `
 
 const PanelTitle = styled.h2`
@@ -33,13 +60,18 @@ const PanelLoading = styled.div`
   margin: 1rem;
 `
 
+
 type PanelProps = PropsWithChildren<
   HTMLAttributes<HTMLElement>
-  & { title?: string }
+  & { title?: string, resize?: boolean }
 >
 export default function Panel({children, title, ...props}: PanelProps) {
   return (
     <StyledPanel {...props}>
+      { props.resize
+        ? <PanelResizeHandle><TbRadiusBottomRight /></PanelResizeHandle>
+        : null
+      }
       { title
         ? <PanelTitle>{title}</PanelTitle>
         : null
@@ -58,10 +90,14 @@ type PanelContentProps = PropsWithChildren<
 export function PanelContent({loading, children, ...props}: PropsWithChildren<PanelContentProps>) {
   return loading
     ? <PanelLoading><Spinner size='2rem' /></PanelLoading>
-    : <Scrollable {...props} style={{
-      marginRight: '-0.75rem',
-      paddingRight: '0.5rem',
-    }}>{children}</Scrollable>
+    : (
+    <>
+      <Scrollable {...props} style={{
+        marginRight: '-0.75rem',
+        paddingRight: '0.5rem',
+      }}>{children}</Scrollable>
+    </>
+    )
 }
 
 // Close Button

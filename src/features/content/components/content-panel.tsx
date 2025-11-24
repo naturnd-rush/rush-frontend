@@ -17,7 +17,7 @@ export default function Content({
   children, title, tabs, loading, activeTab
 }: PropsWithChildren<TopicContent & LoadingProps & {activeTab?: { link: string, label: string, icon: ReactNode}}>) {
   return (
-    <Panel id='content-panel' title={title} style={{ minHeight: '40%' }}>
+    <Panel id='content-panel' title={title} resize={true} style={{ minHeight: '40%' }}>
       <Link to='/app'>
         <PanelCloseButton />
       </Link>
