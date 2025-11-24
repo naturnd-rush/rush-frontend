@@ -90,6 +90,7 @@ export const PlacesAutocomplete = () => {
               width: ${inputWidth};
               border-radius: var(--panel-border-radius);
             }
+            .Results { left: auto !important; top: 46px !important; }
           `,
         }}
       />
