@@ -19,18 +19,17 @@ const ControlOverlay = styled.div<ControlOverlayProps>`
   flex: 1;
   gap: 5px;
   height: calc(100svh - 60px);
-  //max-height: calc(100svh - 40px);
   width: calc(100vw - 20px);
   display: flex;
   flex-direction: ${(props) => props.isMobile ? 'column-reverse' : 'row'};
   align-items: stretch;
 
-  ${MapControl} {
-    //padding: 1rem ${(props) => props.isMobile ? '0.25rem' : '1rem'};
-  }
-
   #content-panel {
     width: ${(props) => props.isMobile ? 'min(36rem, 100%)' : '24rem'}
+  }
+
+  .leaflet-control:has(> &) {
+    pointer-events: none;
   }
 `
 
