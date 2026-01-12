@@ -16,12 +16,7 @@ const GroupTitle = styled.h3`
   color: rgb(26, 32, 44);
 `
 
-const GroupSubtitle = styled.h4`
-  font-family: Urbanist, sans-serif;
-  font-weight: normal;
-  font-size: x-small;
-  letter-spacing: 0.025em;
-  width: 100%;
+const GroupSubtitle = styled.div`
   color: rgb(26, 32, 44);
 `
 
