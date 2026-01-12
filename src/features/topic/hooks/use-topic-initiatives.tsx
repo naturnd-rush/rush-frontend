@@ -16,6 +16,8 @@ const GET_TOPIC_INITIATIVES = gql`
         tags {
           id
           name
+          textColor
+          backgroundColor
         }
       }
     }
@@ -36,8 +38,8 @@ export function useTopicInitiatives(slug: string): QueryResults {
     image: expandBackendLink(initiative.image) ?? '',
     tags: initiative.tags.map((tag) => ({
       ...tag,
-      color: tag.color ?? 'white',
-      bgColor: tag.bgColor ?? 'rgb(56, 161, 105)',
+      textColor: tag.textColor ?? 'white',
+      backgroundColor: tag.backgroundColor ?? 'rgb(56, 161, 105)',
     })),
     content: typeof initiative.content === 'string'
       ? parse(initiative.content ?? '')

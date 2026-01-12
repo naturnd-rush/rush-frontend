@@ -1,6 +1,7 @@
 import { styled } from "@linaria/react"
 import { Link } from "@tanstack/react-router"
-import type { InitiativeTag as Tag, Initiative } from "@/types/topic"
+import type { Initiative } from "@/types/topic"
+import Badge from "@/components/badge"
 
 type Flippable = {
   flip: boolean
@@ -49,18 +50,6 @@ const InitiativeTags = styled.div`
   max-width: calc(75% - 1.25rem);
 `
 
-const Badge = styled.div<Omit<Tag, 'name'>>`
-  display: inline-block;
-  white-space: nowrap;
-  padding-inline: 0.25rem;
-  text-transform: uppercase;
-  font-size: x-small;
-  border-radius: 0.125rem;
-  font-weight: bold;
-  color: ${(props) => props.color};
-  background-color: ${(props) => props.bgColor};
-`
-
 const Description = styled.section`
   margin-inline: 1.25rem;
   margin-bottom: 0.75rem;
@@ -84,8 +73,8 @@ export default function InitiativeCard({initiative, flip = false}: InitiativePro
             {initiative.tags.map((tag) => (
               <Badge
                 key={tag.name}
-                color={tag.color}
-                bgColor={tag.bgColor}
+                textColor={tag.textColor}
+                backgroundColor={tag.backgroundColor}
               >{tag.name}</Badge>
             ))}
           </InitiativeTags>

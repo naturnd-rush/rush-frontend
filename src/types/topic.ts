@@ -36,11 +36,11 @@ type TabSlugs = {
 }
 type TopicWithTabIds = Topic & TabIds
 
-type InitiativeTag = {
+type Tag = {
   id?: string
   name: string
-  color: string
-  bgColor: string
+  textColor: string
+  backgroundColor: string
 }
 type Initiative = {
   content: string | React.ReactElement | React.ReactElement[]
@@ -48,7 +48,11 @@ type Initiative = {
   image: string
   link: string
   title: string
-  tags: InitiativeTag[]
+  tags: Tag[]
+}
+
+type TopicSash = {
+  sash?: Tag
 }
 
 export type {
@@ -60,5 +64,6 @@ export type {
   TopicContent,
   TopicWithTabIds,
   Initiative,
-  InitiativeTag
+  Tag,
+  TopicSash,
 }

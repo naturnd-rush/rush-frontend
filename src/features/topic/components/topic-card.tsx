@@ -1,8 +1,9 @@
 import { styled } from '@linaria/react'
 import { Link } from '@tanstack/react-router'
-import type { TopicWithTabIds } from '../../../types/topic'
+import type { TopicSash, TopicWithTabIds } from '../../../types/topic'
 import { fallbackImage } from '@/utils/fallback-image'
 import fallbackImageUrl from '@/assets/topic-placeholder.png'
+import Badge from '@/components/badge'
 
 const BackgroundImage = styled.img`
   // from baseStyle
@@ -73,7 +74,7 @@ const Subtitle = styled.p`
   color: white;
 `
 
-export default function TopicCard({ topic }: { topic: TopicWithTabIds }) {
+export default function TopicCard({ topic }: { topic: TopicWithTabIds & TopicSash }) {
 
   const topicRoute = topic?.id
     ? topic.tabs && topic.tabs.length > 0
@@ -89,6 +90,12 @@ export default function TopicCard({ topic }: { topic: TopicWithTabIds }) {
           onError={fallbackImage(fallbackImageUrl)}
         />
         <Content>
+          { topic.sash ? (
+            <Badge
+              backgroundColor={topic.sash.backgroundColor}
+              textColor={topic.sash.textColor}
+            >{topic.sash.name}</Badge>
+          ) : null }
           <Title>{topic?.title}</Title>
           <Subtitle>{topic?.subtitle}</Subtitle>
         </Content>
