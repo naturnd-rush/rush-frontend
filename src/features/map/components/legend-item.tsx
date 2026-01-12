@@ -23,7 +23,7 @@ const LegendItemContainer = styled.div`
 
 const LegendItemLabel = styled.label`
   color: black;
-  flex: 1 0 50%;
+  flex: 1 1 50%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
