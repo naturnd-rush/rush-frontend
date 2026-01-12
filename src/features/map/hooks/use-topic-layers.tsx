@@ -1,4 +1,5 @@
 import { ApolloError, gql, useQuery } from "@apollo/client";
+import parse from 'html-react-parser';
 import type { OrderedLayerGroup } from "../../../types/layers";
 
 const GET_TOPIC_LAYERS = gql`
@@ -29,8 +30,12 @@ export function useTopicLayers(slug: string): QUERY_RESULTS {
   if (loading || error) return [ loading, error, undefined ]
 
   const layers = data.questionBySlug.layerGroupsOnQuestion.map((group: any) => {
-    const { layersOnLayerGroup, ...groupDetails } = group
-    return { ...groupDetails, layers: layersOnLayerGroup }
+    const { layersOnLayerGroup, groupDescription, ...groupDetails } = group
+    return {
+      ...groupDetails,
+      groupDescription: parse(groupDescription ?? ''),
+      layers: layersOnLayerGroup
+    }
   })
 
   return [ loading, error, layers ]

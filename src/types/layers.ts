@@ -27,7 +27,7 @@ type Layer = LayerDetails & LayerGeoJSON
 
 type LayerGroup = {
   groupName: string,
-  groupDescription: string,
+  groupDescription: string | React.ReactElement | React.ReactElement[],
   layers: OrderedLayerDisplay[]
 }
 type OrderedLayerGroup = LayerGroup & Orderable
