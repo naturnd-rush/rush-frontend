@@ -52,7 +52,7 @@ type Initiative = {
 }
 
 type TopicSash = {
-  sash: Tag
+  sash?: Tag
 }
 
 export type {

@@ -82,8 +82,6 @@ export default function TopicCard({ topic }: { topic: TopicWithTabIds & TopicSas
       : `/app/${topic.slug}`
     : '.'
 
-  const {id, name: sashText, ...sashStyle} = topic.sash
-
   return (
     <Link to={topicRoute}>
       <Card>
@@ -92,7 +90,12 @@ export default function TopicCard({ topic }: { topic: TopicWithTabIds & TopicSas
           onError={fallbackImage(fallbackImageUrl)}
         />
         <Content>
-          <Badge {...sashStyle}>{sashText}</Badge>
+          { topic.sash ? (
+            <Badge
+              backgroundColor={topic.sash.backgroundColor}
+              textColor={topic.sash.textColor}
+            >{topic.sash.name}</Badge>
+          ) : null }
           <Title>{topic?.title}</Title>
           <Subtitle>{topic?.subtitle}</Subtitle>
         </Content>
