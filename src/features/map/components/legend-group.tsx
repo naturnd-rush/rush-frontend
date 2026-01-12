@@ -16,12 +16,16 @@ const GroupTitle = styled.h3`
   color: rgb(26, 32, 44);
 `
 
+const GroupSubtitle = styled.div`
+  color: rgb(26, 32, 44);
+`
+
 type LegendGroupProps = Omit<LayerGroup, 'layers'>
 const LegendGroup = (props: ComponentPropsWithRef<'div'> & LegendGroupProps) => {
   return (
     <LayerStack id={props.groupName} ref={props.ref}>
       {props.groupName ? <GroupTitle>{props.groupName}</GroupTitle> : null}
-      {props.groupDescription ? props.groupDescription : null}
+      {props.groupDescription ? <GroupSubtitle>{props.groupDescription}</GroupSubtitle> : null}
       {props.children}
     </LayerStack>
   )
