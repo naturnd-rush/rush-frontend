@@ -39,6 +39,7 @@ const LegendItemLabel = styled.label`
 const DetailsContainer = styled.div`
   //margin-top: 0.25rem;
   margin-inline-start: 0.5rem;
+  margin-inline-end: 0.75rem;
   margin-bottom: 0.75rem;
   color: black;
 `
