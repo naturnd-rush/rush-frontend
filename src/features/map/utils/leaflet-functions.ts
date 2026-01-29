@@ -4,7 +4,7 @@ import type { Feature, Point } from "geojson";
 export function pointToLayer(feature: Feature<Point>, coords: LatLngExpression) {
   const markerOpts = feature?.properties?.__pointDivIconStyleProps
     ? { icon: divIcon(feature.properties.__pointDivIconStyleProps) }
-    : undefined
+    : { opacity: 0 }
 
   return marker(coords, markerOpts)
 }
