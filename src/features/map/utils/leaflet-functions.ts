@@ -1,4 +1,4 @@
-import { divIcon, Layer, marker, type LatLngExpression } from "leaflet";
+import { divIcon, Layer, marker, tooltip, type LatLngExpression } from "leaflet";
 import type { Feature, Point } from "geojson";
 
 export function pointToLayer(feature: Feature<Point>, coords: LatLngExpression) {
@@ -20,10 +20,17 @@ export function bindFeaturePopup(feature: Feature<Point>, layer: Layer) {
 
 export function bindFeatureTooltip(feature: Feature<Point>, layer: Layer) {
   if (feature?.properties?.__hasTooltip) {
-    layer.bindTooltip(
-      feature.properties.__tooltipHTML,
-      feature.properties.__tooltipOptions,
-    )
+    const {
+      __tooltipOptions,
+      __tooltipHTML,
+      __tooltipLat,
+      __tooltipLng
+    } = feature.properties
+    const leafletTooltip = tooltip(__tooltipOptions)
+    leafletTooltip.setLatLng([__tooltipLat,__tooltipLng])
+    leafletTooltip.setContent(__tooltipHTML)
+
+    layer.bindTooltip(leafletTooltip)
   }
 }
 
