@@ -1,6 +1,6 @@
 import { ApolloError, gql, useLazyQuery, type LazyQueryExecFunction, type OperationVariables } from "@apollo/client";
 import { GeoJSON } from 'react-leaflet';
-import { bindFeaturePopup, pointToLayer } from "../utils/leaflet-functions";
+import { onEachFeature, pointToLayer } from "../utils/leaflet-functions";
 
 const GET_LAYER_GEOJSON = gql`
   query LayerQuery($id: UUID!) {
@@ -34,7 +34,7 @@ export function useLayerGeoJSON(id: string): QUERY_RESULTS {
         data={layerJSON.featureCollection}
         style={(f) => f?.properties.__style}
         pointToLayer={pointToLayer}
-        onEachFeature={bindFeaturePopup}
+        onEachFeature={onEachFeature}
       />
     )
   }

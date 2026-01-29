@@ -13,7 +13,21 @@ export function bindFeaturePopup(feature: Feature<Point>, layer: Layer) {
   if (feature?.properties?.__hasPopup) {
     layer.bindPopup(
       feature.properties.__popupHTML,
-      feature.properties.__popupOptions
+      feature.properties.__popupOptions,
     )
   }
+}
+
+export function bindFeatureTooltip(feature: Feature<Point>, layer: Layer) {
+  if (feature?.properties?.__hasTooltip) {
+    layer.bindTooltip(
+      feature.properties.__tooltipHTML,
+      feature.properties.__tooltipOptions,
+    )
+  }
+}
+
+export function onEachFeature(feature: Feature<Point>, layer: Layer) {
+  bindFeaturePopup(feature, layer)
+  bindFeatureTooltip(feature, layer)
 }
