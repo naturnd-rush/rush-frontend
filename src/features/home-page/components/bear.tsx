@@ -17,6 +17,7 @@ const _Bear = styled.div`
   background-size: 20rem 20rem;
   background-position: bottom 0 right 0;
   background-repeat: no-repeat;
+  pointer-events: none;
 `
 
 const SpeechBubble = styled.div`
