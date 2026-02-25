@@ -14,7 +14,8 @@ export default function LegendItemToggle(props: LegendItemControlProps) {
       <div style={{
         fontSize: '14px',
         flex: '0 0 auto',
-        display: 'inline',
+        display: 'inline-flex',
+        alignItems: 'center',
       }}>
         <Switch
           checked={props.active}
