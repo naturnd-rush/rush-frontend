@@ -24,7 +24,7 @@ const StyledSwitch = styled.input`
     content: "";
     position: absolute;
     top: 50%;
-    left: 0;
+    left: 2px;
     transform: translate(0, -50%);
     box-sizing: border-box;
     width: 16px;
@@ -34,7 +34,7 @@ const StyledSwitch = styled.input`
   }
 
   &:checked::before {
-    left: 1em;
+    left: 16px;
   }
 
   &:checked {
