@@ -9,8 +9,9 @@ const StyledSwitch = styled.input`
   appearance: none;
   position: relative;
   font-size: inherit;
-  width: 2em;
-  height: 1em;
+  width: 30px;
+  height: 16px;
+  padding: 2px;
   box-sizing: content-box;
   //border: 1px solid;
   border-radius: 1em;
@@ -26,10 +27,8 @@ const StyledSwitch = styled.input`
     left: 0;
     transform: translate(0, -50%);
     box-sizing: border-box;
-    width: 0.7em;
-    height: 0.7em;
-    margin: 0 0.15em;
-    //border: 1px solid;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: white;
   }
