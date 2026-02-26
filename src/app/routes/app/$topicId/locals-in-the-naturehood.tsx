@@ -1,7 +1,7 @@
 import Content from '@/features/content/components/content-panel'
 import ChecklistCard from '@/features/custom/components/checklist-card'
 import { useTopic } from '@/features/topic/hooks/use-topic'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Navigate } from '@tanstack/react-router'
 import { FaBinoculars } from 'react-icons/fa'
 import { LuInfo } from 'react-icons/lu'
 import Arbutus from "@/assets/LocalsNatureHood/Arbutus.jpg"
@@ -33,7 +33,7 @@ import WesternTerrestrialGarterSnake from "@/assets/LocalsNatureHood/WesternTerr
 import WoodDuck from "@/assets/LocalsNatureHood/WoodDuck.jpg"
 
 export const Route = createFileRoute(
-  '/app/nature-in-the-city-map/locals-in-the-naturehood',
+  '/app/$topicId/locals-in-the-naturehood',
 )({
   component: RouteComponent,
 })
@@ -270,66 +270,70 @@ const locals = [
 ];
 
 function RouteComponent() {
-    // TODO: Refactor to one API call, use future endpoint useTab(tabId)
-    const [loadingTopic, errorTopic, topic] = useTopic('nature-in-the-city-map')
-    
-    // Extract currently active tab from list of tabs for dropdown menu
-    let otherTabs = topic?.tabs.slice() ?? []
-    otherTabs.sort((a, b) => a.displayOrder - b.displayOrder)
+  const { topicId } = Route.useParams()
   
-    // TODO: handle and display loading and error states.
+  // TODO: Refactor to one API call, use future endpoint useTab(tabId)
+  const [loadingTopic, errorTopic, topic] = useTopic('nature-in-the-city-map')
   
-    return (
-      <Content
-        loading={loadingTopic}
-        title={topic?.title ?? 'Topic'}
-        tabs={otherTabs}
-        activeTab={{link: '', label: 'Locals in the NatureHood', icon: <FaBinoculars />}}
-      >
-        <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: '500', lineHeight: '130%', textShadow: 'rgba(0,0,0,0.3) 1px 1px 4px', marginTop: '.25rem', marginBottom: '1rem'}}>
-          Use this handy checklist to track the Locals you have seen in the
-          NatureHood. Artwork by{" "}
-          <a href="https://www.kristibridgeman.com/" target='_blank' rel='noreferrer'>
-            Kristi Bridgeman
-          </a>
-          .
+  // Extract currently active tab from list of tabs for dropdown menu
+  let otherTabs = topic?.tabs.slice() ?? []
+  otherTabs.sort((a, b) => a.displayOrder - b.displayOrder)
+
+  // TODO: handle and display loading and error states.
+
+  return topicId !== 'rush-to-play' ? (
+        <Navigate to="/app/$topicId" params={{ topicId: topicId }} />
+      ) : (
+    <Content
+      loading={loadingTopic}
+      title={topic?.title ?? 'Topic'}
+      tabs={otherTabs}
+      activeTab={{link: '', label: 'Locals in the NatureHood', icon: <FaBinoculars />}}
+    >
+      <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: '500', lineHeight: '130%', textShadow: 'rgba(0,0,0,0.3) 1px 1px 4px', marginTop: '.25rem', marginBottom: '1rem'}}>
+        Use this handy checklist to track the Locals you have seen in the
+        NatureHood. Artwork by{" "}
+        <a href="https://www.kristibridgeman.com/" target='_blank' rel='noreferrer'>
+          Kristi Bridgeman
+        </a>
+        .
+      </p>
+      <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: '500', fontSize: '0.75rem'}}>
+        <LuInfo style={{ display: 'inline' }} /> Data is kept on your device,
+        cannot be transfered to another device, and is never sent to the
+        cloud, RUSH, or anyone.
+      </p>
+      <div style={{
+        margin: '0.25rem',
+        padding: '0.25rem',
+        backgroundColor: '#eef4d6',
+        boxShadow: 'rgba(0,0,0,0.1) 0 2px 4px;',
+      }}>
+        <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: '400', fontSize: '0.875rem', fontStyle: 'italic'}}>
+          NatureHood recognizes that language is critical for connecting the{" "}
+          <span style={{ color: "#ffaa2d" }}>W̱SÁNEĆ</span> and{" "}
+          <span style={{ color: "#0d3396" }}>lək̓ʷəŋən</span> speaking peoples
+          to their culture, spirituality, identity and land.&emsp;
+          <span style={{ color: "#ffaa2d", fontStyle: "normal" }}>
+            ■&nbsp;SENĆOŦEN
+          </span>
+          &emsp;
+          <span style={{ color: "#0d3396", fontStyle: "normal" }}>
+            ■&nbsp;lək̓ʷəŋən
+          </span>
         </p>
-        <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: '500', fontSize: '0.75rem'}}>
-          <LuInfo style={{ display: 'inline' }} /> Data is kept on your device,
-          cannot be transfered to another device, and is never sent to the
-          cloud, RUSH, or anyone.
-        </p>
-        <div style={{
-          margin: '0.25rem',
-          padding: '0.25rem',
-          backgroundColor: '#eef4d6',
-          boxShadow: 'rgba(0,0,0,0.1) 0 2px 4px;',
-        }}>
-          <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: '400', fontSize: '0.875rem', fontStyle: 'italic'}}>
-            NatureHood recognizes that language is critical for connecting the{" "}
-            <span style={{ color: "#ffaa2d" }}>W̱SÁNEĆ</span> and{" "}
-            <span style={{ color: "#0d3396" }}>lək̓ʷəŋən</span> speaking peoples
-            to their culture, spirituality, identity and land.&emsp;
-            <span style={{ color: "#ffaa2d", fontStyle: "normal" }}>
-              ■&nbsp;SENĆOŦEN
-            </span>
-            &emsp;
-            <span style={{ color: "#0d3396", fontStyle: "normal" }}>
-              ■&nbsp;lək̓ʷəŋən
-            </span>
-          </p>
-        </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'stretch'}}>
-          { locals.map((local) => (
-            <ChecklistCard
-              key={local.name}
-              {...local}
-              onCheckChange={onCheckChange(local.name)}
-              defaultChecked={isCheckInStorage(local.name)}
-            />
-          ))}
-        </div>
-        {errorTopic ? errorTopic.message : null}
-      </Content>
-    )
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'stretch'}}>
+        { locals.map((local) => (
+          <ChecklistCard
+            key={local.name}
+            {...local}
+            onCheckChange={onCheckChange(local.name)}
+            defaultChecked={isCheckInStorage(local.name)}
+          />
+        ))}
+      </div>
+      {errorTopic ? errorTopic.message : null}
+    </Content>
+  )
 }
