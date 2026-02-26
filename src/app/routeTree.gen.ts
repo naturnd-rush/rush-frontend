@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppTopicIdRouteRouteImport } from './routes/app/$topicId/route'
 import { Route as AppTopicIdIndexRouteImport } from './routes/app/$topicId/index'
+import { Route as AppNatureInTheCityMapLocalsInTheNaturehoodRouteImport } from './routes/app/nature-in-the-city-map/locals-in-the-naturehood'
 import { Route as AppTopicIdSubmitCompletedCardRouteImport } from './routes/app/$topicId/submit-completed-card'
 import { Route as AppTopicIdInitiativesRouteImport } from './routes/app/$topicId/initiatives'
 import { Route as AppTopicIdTabIdRouteImport } from './routes/app/$topicId/$tabId'
@@ -43,6 +44,12 @@ const AppTopicIdIndexRoute = AppTopicIdIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppTopicIdRouteRoute,
 } as any)
+const AppNatureInTheCityMapLocalsInTheNaturehoodRoute =
+  AppNatureInTheCityMapLocalsInTheNaturehoodRouteImport.update({
+    id: '/app/nature-in-the-city-map/locals-in-the-naturehood',
+    path: '/app/nature-in-the-city-map/locals-in-the-naturehood',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AppTopicIdSubmitCompletedCardRoute =
   AppTopicIdSubmitCompletedCardRouteImport.update({
     id: '/submit-completed-card',
@@ -68,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
+  '/app/nature-in-the-city-map/locals-in-the-naturehood': typeof AppNatureInTheCityMapLocalsInTheNaturehoodRoute
   '/app/$topicId/': typeof AppTopicIdIndexRoute
 }
 export interface FileRoutesByTo {
@@ -77,6 +85,7 @@ export interface FileRoutesByTo {
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
+  '/app/nature-in-the-city-map/locals-in-the-naturehood': typeof AppNatureInTheCityMapLocalsInTheNaturehoodRoute
   '/app/$topicId': typeof AppTopicIdIndexRoute
 }
 export interface FileRoutesById {
@@ -88,6 +97,7 @@ export interface FileRoutesById {
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
+  '/app/nature-in-the-city-map/locals-in-the-naturehood': typeof AppNatureInTheCityMapLocalsInTheNaturehoodRoute
   '/app/$topicId/': typeof AppTopicIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
     | '/app/$topicId/submit-completed-card'
+    | '/app/nature-in-the-city-map/locals-in-the-naturehood'
     | '/app/$topicId/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
     | '/app/$topicId/submit-completed-card'
+    | '/app/nature-in-the-city-map/locals-in-the-naturehood'
     | '/app/$topicId'
   id:
     | '__root__'
@@ -119,6 +131,7 @@ export interface FileRouteTypes {
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
     | '/app/$topicId/submit-completed-card'
+    | '/app/nature-in-the-city-map/locals-in-the-naturehood'
     | '/app/$topicId/'
   fileRoutesById: FileRoutesById
 }
@@ -127,6 +140,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AppTopicIdRouteRoute: typeof AppTopicIdRouteRouteWithChildren
   AppIndexRoute: typeof AppIndexRoute
+  AppNatureInTheCityMapLocalsInTheNaturehoodRoute: typeof AppNatureInTheCityMapLocalsInTheNaturehoodRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -165,6 +179,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app/$topicId/'
       preLoaderRoute: typeof AppTopicIdIndexRouteImport
       parentRoute: typeof AppTopicIdRouteRoute
+    }
+    '/app/nature-in-the-city-map/locals-in-the-naturehood': {
+      id: '/app/nature-in-the-city-map/locals-in-the-naturehood'
+      path: '/app/nature-in-the-city-map/locals-in-the-naturehood'
+      fullPath: '/app/nature-in-the-city-map/locals-in-the-naturehood'
+      preLoaderRoute: typeof AppNatureInTheCityMapLocalsInTheNaturehoodRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/app/$topicId/submit-completed-card': {
       id: '/app/$topicId/submit-completed-card'
@@ -213,6 +234,8 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AppTopicIdRouteRoute: AppTopicIdRouteRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
+  AppNatureInTheCityMapLocalsInTheNaturehoodRoute:
+    AppNatureInTheCityMapLocalsInTheNaturehoodRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
