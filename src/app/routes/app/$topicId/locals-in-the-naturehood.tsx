@@ -281,7 +281,7 @@ function RouteComponent() {
 
   // TODO: handle and display loading and error states.
 
-  return topicId !== 'rush-to-play' ? (
+  return topicId !== 'nature-in-the-city-map' ? (
         <Navigate to="/app/$topicId" params={{ topicId: topicId }} />
       ) : (
     <Content
