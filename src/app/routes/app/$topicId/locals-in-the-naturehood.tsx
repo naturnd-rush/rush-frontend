@@ -2,7 +2,7 @@ import Content from '@/features/content/components/content-panel'
 import ChecklistCard from '@/features/custom/components/checklist-card'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { createFileRoute, Navigate } from '@tanstack/react-router'
-import { FaBinoculars } from 'react-icons/fa'
+import { FaBinoculars, FaLink } from 'react-icons/fa'
 import { LuInfo } from 'react-icons/lu'
 import Arbutus from "@/assets/LocalsNatureHood/Arbutus.jpg"
 import AmericanWigeon from "@/assets/LocalsNatureHood/AmericanWigeon.jpg"
@@ -278,6 +278,15 @@ function RouteComponent() {
   // Extract currently active tab from list of tabs for dropdown menu
   let otherTabs = topic?.tabs.slice() ?? []
   otherTabs.sort((a, b) => a.displayOrder - b.displayOrder)
+  // Add the initiatives tab to the end
+  if (topic?.hasInitiatives) {
+    otherTabs.push({
+      id: 'initiatives',
+      title: 'Check Out',
+      displayOrder: otherTabs.length,
+      icon: <FaLink />,
+    })
+  }
 
   // TODO: handle and display loading and error states.
 
