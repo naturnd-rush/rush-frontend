@@ -95,7 +95,7 @@ export function PanelContent({loading, children, ...props}: PropsWithChildren<Pa
     : (
     <>
       <Scrollable {...props} style={{
-        marginRight: '-0.75rem',
+        //marginRight: '-0.75rem',
       }}>{children}</Scrollable>
     </>
     )

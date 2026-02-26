@@ -35,12 +35,14 @@ function RouteComponent() {
   const activeTab = otherTabs?.splice(Math.max(activeTabIndex, 0), 1)[0]
   otherTabs.sort((a, b) => a.displayOrder - b.displayOrder)
   // Add the initiatives tab to the end
-  otherTabs.push({
-    id: 'initiatives',
-    title: 'Check Out',
-    displayOrder: otherTabs.length,
-    icon: <FaLink />,
-  })
+  if (topic?.hasInitiatives) {
+    otherTabs.push({
+      id: 'initiatives',
+      title: 'Check Out',
+      displayOrder: otherTabs.length,
+      icon: <FaLink />,
+    })
+  }
 
   // TODO: handle and display loading and error states.
 

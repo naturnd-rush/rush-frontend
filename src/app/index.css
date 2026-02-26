@@ -36,6 +36,15 @@ h1 {
   line-height: 1.1;
 }
 
+ol, ul {
+  margin-top: 0;
+  margin-bottom: 0.625rem;
+}
+
+p {
+  margin-bottom: 0.625rem;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

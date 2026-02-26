@@ -67,8 +67,8 @@ export default function HomePage({ children }: PropsWithChildren) {
   return (
     <Scrollable style={{
       backgroundImage: `
-        linear-gradient(rgba(42, 42, 42, 0.7),
-        rgba(42, 42, 42, 0.7)),
+        linear-gradient(rgba(42, 42, 42, 0),
+        rgba(42, 42, 42, 0.1)),
         url(${background})`,
       backgroundSize: 'cover',
       // display backgroundImage and center topic cards when height not filled

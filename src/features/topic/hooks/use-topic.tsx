@@ -17,14 +17,17 @@ const GET_TOPIC = gql`
         displayOrder
         iconUrl
       }
+      initiatives {
+        id
+      }
     }
   }
 `
 
-type QueryResults = [ loading: boolean, error?: ApolloError, topic?: TopicContent ]
+type QueryResults = [ loading: boolean, error?: ApolloError, topic?: TopicContent & { hasInitiatives: boolean } ]
 export function useTopic(slug: string): QueryResults {
   const { loading, error, data } = useQuery<{
-    questionBySlug: { title: string, tabs: TabQueryResult[] }
+    questionBySlug: { title: string, tabs: TabQueryResult[], initiatives: { id: string }[] }
   }>(
     GET_TOPIC,
     { variables: { slug: slug }}
@@ -32,7 +35,7 @@ export function useTopic(slug: string): QueryResults {
   
   if (loading || error || data === undefined) return [ loading, error, undefined ]
 
-  const topic: TopicContent = {
+  const topic: TopicContent & { hasInitiatives: boolean } = {
     title: data.questionBySlug?.title,
     tabs: data.questionBySlug.tabs.map((tab) => ({
       title: tab?.title,
@@ -40,7 +43,8 @@ export function useTopic(slug: string): QueryResults {
       displayOrder: tab.displayOrder,
       icon: <img src={expandBackendLink(tab?.iconUrl)} />,
       content: ''
-    }))
+    })),
+    hasInitiatives: data.questionBySlug.initiatives.length > 0
   }
 
   return [ loading, error, topic ]

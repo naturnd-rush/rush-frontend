@@ -3,7 +3,7 @@ import Content from '@/features/content/components/content-panel'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { createFileRoute, Navigate } from '@tanstack/react-router'
 import { useState } from 'react'
-import { FaStamp } from 'react-icons/fa'
+import { FaLink, FaStamp } from 'react-icons/fa'
 
 export const Route = createFileRoute('/app/$topicId/submit-completed-card')({
   component: RouteComponent,
@@ -18,6 +18,15 @@ function RouteComponent() {
     // Extract currently active tab from list of tabs for dropdown menu
     let otherTabs = topic?.tabs.slice() ?? []
     otherTabs.sort((a, b) => a.displayOrder - b.displayOrder)
+    // Add the initiatives tab to the end
+    if (topic?.hasInitiatives) {
+      otherTabs.push({
+        id: 'initiatives',
+        title: 'Check Out',
+        displayOrder: otherTabs.length,
+        icon: <FaLink />,
+      })
+    }
   
     // TODO: handle and display loading and error states.
 

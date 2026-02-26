@@ -15,6 +15,7 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppTopicIdRouteRouteImport } from './routes/app/$topicId/route'
 import { Route as AppTopicIdIndexRouteImport } from './routes/app/$topicId/index'
 import { Route as AppTopicIdSubmitCompletedCardRouteImport } from './routes/app/$topicId/submit-completed-card'
+import { Route as AppTopicIdLocalsInTheNaturehoodRouteImport } from './routes/app/$topicId/locals-in-the-naturehood'
 import { Route as AppTopicIdInitiativesRouteImport } from './routes/app/$topicId/initiatives'
 import { Route as AppTopicIdTabIdRouteImport } from './routes/app/$topicId/$tabId'
 
@@ -49,6 +50,12 @@ const AppTopicIdSubmitCompletedCardRoute =
     path: '/submit-completed-card',
     getParentRoute: () => AppTopicIdRouteRoute,
   } as any)
+const AppTopicIdLocalsInTheNaturehoodRoute =
+  AppTopicIdLocalsInTheNaturehoodRouteImport.update({
+    id: '/locals-in-the-naturehood',
+    path: '/locals-in-the-naturehood',
+    getParentRoute: () => AppTopicIdRouteRoute,
+  } as any)
 const AppTopicIdInitiativesRoute = AppTopicIdInitiativesRouteImport.update({
   id: '/initiatives',
   path: '/initiatives',
@@ -67,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
+  '/app/$topicId/locals-in-the-naturehood': typeof AppTopicIdLocalsInTheNaturehoodRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId/': typeof AppTopicIdIndexRoute
 }
@@ -76,6 +84,7 @@ export interface FileRoutesByTo {
   '/app': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
+  '/app/$topicId/locals-in-the-naturehood': typeof AppTopicIdLocalsInTheNaturehoodRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId': typeof AppTopicIdIndexRoute
 }
@@ -87,6 +96,7 @@ export interface FileRoutesById {
   '/app/': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
+  '/app/$topicId/locals-in-the-naturehood': typeof AppTopicIdLocalsInTheNaturehoodRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId/': typeof AppTopicIdIndexRoute
 }
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
+    | '/app/$topicId/locals-in-the-naturehood'
     | '/app/$topicId/submit-completed-card'
     | '/app/$topicId/'
   fileRoutesByTo: FileRoutesByTo
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
+    | '/app/$topicId/locals-in-the-naturehood'
     | '/app/$topicId/submit-completed-card'
     | '/app/$topicId'
   id:
@@ -118,6 +130,7 @@ export interface FileRouteTypes {
     | '/app/'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
+    | '/app/$topicId/locals-in-the-naturehood'
     | '/app/$topicId/submit-completed-card'
     | '/app/$topicId/'
   fileRoutesById: FileRoutesById
@@ -173,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTopicIdSubmitCompletedCardRouteImport
       parentRoute: typeof AppTopicIdRouteRoute
     }
+    '/app/$topicId/locals-in-the-naturehood': {
+      id: '/app/$topicId/locals-in-the-naturehood'
+      path: '/locals-in-the-naturehood'
+      fullPath: '/app/$topicId/locals-in-the-naturehood'
+      preLoaderRoute: typeof AppTopicIdLocalsInTheNaturehoodRouteImport
+      parentRoute: typeof AppTopicIdRouteRoute
+    }
     '/app/$topicId/initiatives': {
       id: '/app/$topicId/initiatives'
       path: '/initiatives'
@@ -193,6 +213,7 @@ declare module '@tanstack/react-router' {
 interface AppTopicIdRouteRouteChildren {
   AppTopicIdTabIdRoute: typeof AppTopicIdTabIdRoute
   AppTopicIdInitiativesRoute: typeof AppTopicIdInitiativesRoute
+  AppTopicIdLocalsInTheNaturehoodRoute: typeof AppTopicIdLocalsInTheNaturehoodRoute
   AppTopicIdSubmitCompletedCardRoute: typeof AppTopicIdSubmitCompletedCardRoute
   AppTopicIdIndexRoute: typeof AppTopicIdIndexRoute
 }
@@ -200,6 +221,7 @@ interface AppTopicIdRouteRouteChildren {
 const AppTopicIdRouteRouteChildren: AppTopicIdRouteRouteChildren = {
   AppTopicIdTabIdRoute: AppTopicIdTabIdRoute,
   AppTopicIdInitiativesRoute: AppTopicIdInitiativesRoute,
+  AppTopicIdLocalsInTheNaturehoodRoute: AppTopicIdLocalsInTheNaturehoodRoute,
   AppTopicIdSubmitCompletedCardRoute: AppTopicIdSubmitCompletedCardRoute,
   AppTopicIdIndexRoute: AppTopicIdIndexRoute,
 }
