@@ -5,6 +5,7 @@ import RouterProvider from '@/lib/RouterProvider'
 import './reset.css'
 import './index.css'
 import '@/theme/fonts.css'
+import { FirebaseProvider } from '@/lib/FirebaseProvider'
 
 // Render the app
 const rootElement = document.getElementById('root')!
@@ -13,7 +14,9 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <GraphQLProvider>
-        <RouterProvider />
+        <FirebaseProvider>
+          <RouterProvider />
+        </FirebaseProvider>
       </GraphQLProvider>
     </StrictMode>
   )

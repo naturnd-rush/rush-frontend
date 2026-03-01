@@ -20,6 +20,7 @@
     "@tanstack/react-router": "^1.124.0",
     "@tanstack/react-router-devtools": "^1.124.0",
     "chroma-js": "^3.1.2",
+    "firebase": "^12.9.0",
     "georaster": "^1.6.0",
     "georaster-layer-for-leaflet": "^4.1.2",
     "graphql": "^16.11.0",
