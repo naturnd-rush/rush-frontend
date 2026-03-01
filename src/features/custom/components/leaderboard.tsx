@@ -67,6 +67,9 @@ function LeaderboardComponent({ content }: { content: LeaderboardContent }) {
         <LeaderboardText align='left'>{content.total?.name}</LeaderboardText>
         <LeaderboardText align='right'>{content.total?.score.substring(0,4)}</LeaderboardText>
       </LeaderboardRow>
+      <a href="https://www.victoriadrains.com" target='_blank' rel='noreferrer'>
+        <div style={{ width: '100%', height: '100%' }} />
+      </a>
     </LeaderboardContainer>
   )
 }

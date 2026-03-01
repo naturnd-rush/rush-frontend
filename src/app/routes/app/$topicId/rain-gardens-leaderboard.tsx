@@ -54,7 +54,9 @@ function RouteComponent() {
       tabs={otherTabs}
       activeTab={{link: '', label: '1000 Rain Gardens', icon: <FaCloudShowersWater />}}
     >
-      <Leaderboard initContent={lbContent} />
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+        <Leaderboard initContent={lbContent} />
+      </div>
       {errorTopic ? errorTopic.message : null}
     </Content>
   )
