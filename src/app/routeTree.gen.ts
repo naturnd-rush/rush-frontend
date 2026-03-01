@@ -15,6 +15,7 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppTopicIdRouteRouteImport } from './routes/app/$topicId/route'
 import { Route as AppTopicIdIndexRouteImport } from './routes/app/$topicId/index'
 import { Route as AppTopicIdSubmitCompletedCardRouteImport } from './routes/app/$topicId/submit-completed-card'
+import { Route as AppTopicIdRainGardensLeaderboardRouteImport } from './routes/app/$topicId/rain-gardens-leaderboard'
 import { Route as AppTopicIdLocalsInTheNaturehoodRouteImport } from './routes/app/$topicId/locals-in-the-naturehood'
 import { Route as AppTopicIdInitiativesRouteImport } from './routes/app/$topicId/initiatives'
 import { Route as AppTopicIdTabIdRouteImport } from './routes/app/$topicId/$tabId'
@@ -50,6 +51,12 @@ const AppTopicIdSubmitCompletedCardRoute =
     path: '/submit-completed-card',
     getParentRoute: () => AppTopicIdRouteRoute,
   } as any)
+const AppTopicIdRainGardensLeaderboardRoute =
+  AppTopicIdRainGardensLeaderboardRouteImport.update({
+    id: '/rain-gardens-leaderboard',
+    path: '/rain-gardens-leaderboard',
+    getParentRoute: () => AppTopicIdRouteRoute,
+  } as any)
 const AppTopicIdLocalsInTheNaturehoodRoute =
   AppTopicIdLocalsInTheNaturehoodRouteImport.update({
     id: '/locals-in-the-naturehood',
@@ -75,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
   '/app/$topicId/locals-in-the-naturehood': typeof AppTopicIdLocalsInTheNaturehoodRoute
+  '/app/$topicId/rain-gardens-leaderboard': typeof AppTopicIdRainGardensLeaderboardRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId/': typeof AppTopicIdIndexRoute
 }
@@ -85,6 +93,7 @@ export interface FileRoutesByTo {
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
   '/app/$topicId/locals-in-the-naturehood': typeof AppTopicIdLocalsInTheNaturehoodRoute
+  '/app/$topicId/rain-gardens-leaderboard': typeof AppTopicIdRainGardensLeaderboardRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId': typeof AppTopicIdIndexRoute
 }
@@ -97,6 +106,7 @@ export interface FileRoutesById {
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
   '/app/$topicId/locals-in-the-naturehood': typeof AppTopicIdLocalsInTheNaturehoodRoute
+  '/app/$topicId/rain-gardens-leaderboard': typeof AppTopicIdRainGardensLeaderboardRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId/': typeof AppTopicIdIndexRoute
 }
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
     | '/app/$topicId/locals-in-the-naturehood'
+    | '/app/$topicId/rain-gardens-leaderboard'
     | '/app/$topicId/submit-completed-card'
     | '/app/$topicId/'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +131,7 @@ export interface FileRouteTypes {
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
     | '/app/$topicId/locals-in-the-naturehood'
+    | '/app/$topicId/rain-gardens-leaderboard'
     | '/app/$topicId/submit-completed-card'
     | '/app/$topicId'
   id:
@@ -131,6 +143,7 @@ export interface FileRouteTypes {
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
     | '/app/$topicId/locals-in-the-naturehood'
+    | '/app/$topicId/rain-gardens-leaderboard'
     | '/app/$topicId/submit-completed-card'
     | '/app/$topicId/'
   fileRoutesById: FileRoutesById
@@ -186,6 +199,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTopicIdSubmitCompletedCardRouteImport
       parentRoute: typeof AppTopicIdRouteRoute
     }
+    '/app/$topicId/rain-gardens-leaderboard': {
+      id: '/app/$topicId/rain-gardens-leaderboard'
+      path: '/rain-gardens-leaderboard'
+      fullPath: '/app/$topicId/rain-gardens-leaderboard'
+      preLoaderRoute: typeof AppTopicIdRainGardensLeaderboardRouteImport
+      parentRoute: typeof AppTopicIdRouteRoute
+    }
     '/app/$topicId/locals-in-the-naturehood': {
       id: '/app/$topicId/locals-in-the-naturehood'
       path: '/locals-in-the-naturehood'
@@ -214,6 +234,7 @@ interface AppTopicIdRouteRouteChildren {
   AppTopicIdTabIdRoute: typeof AppTopicIdTabIdRoute
   AppTopicIdInitiativesRoute: typeof AppTopicIdInitiativesRoute
   AppTopicIdLocalsInTheNaturehoodRoute: typeof AppTopicIdLocalsInTheNaturehoodRoute
+  AppTopicIdRainGardensLeaderboardRoute: typeof AppTopicIdRainGardensLeaderboardRoute
   AppTopicIdSubmitCompletedCardRoute: typeof AppTopicIdSubmitCompletedCardRoute
   AppTopicIdIndexRoute: typeof AppTopicIdIndexRoute
 }
@@ -222,6 +243,7 @@ const AppTopicIdRouteRouteChildren: AppTopicIdRouteRouteChildren = {
   AppTopicIdTabIdRoute: AppTopicIdTabIdRoute,
   AppTopicIdInitiativesRoute: AppTopicIdInitiativesRoute,
   AppTopicIdLocalsInTheNaturehoodRoute: AppTopicIdLocalsInTheNaturehoodRoute,
+  AppTopicIdRainGardensLeaderboardRoute: AppTopicIdRainGardensLeaderboardRoute,
   AppTopicIdSubmitCompletedCardRoute: AppTopicIdSubmitCompletedCardRoute,
   AppTopicIdIndexRoute: AppTopicIdIndexRoute,
 }
