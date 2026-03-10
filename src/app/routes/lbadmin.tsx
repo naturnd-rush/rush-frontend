@@ -195,15 +195,18 @@ export default function LbAdmin() {
                 pr='4.5rem'
                 type={show ? 'text' : 'password'}
                 placeholder='Enter password'
-                onChange={(e) => setContent(produce(content, (draftState) => {
-                  draftState.adminPassword = e.target.value
-                }))}
+                {...register("adminPassword", {
+                  required: true,
+                  onChange: (e) => setContent(produce(content, (draftState) => {
+                    draftState.adminPassword = e.target.value
+                  }))
+                })}
               />
               <Button h='1.75rem' size='sm' onClick={handleClick}>
                 {show ? 'Hide' : 'Show'}
               </Button>
           </Field.Root>
-          <input type="submit" />
+          <Button as="input" type="submit" colorPalette='green'>Submit</Button>
           <Text>{message}</Text>
         </Flex>
       </form>
