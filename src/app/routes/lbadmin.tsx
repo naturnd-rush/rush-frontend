@@ -206,7 +206,7 @@ export default function LbAdmin() {
                 {show ? 'Hide' : 'Show'}
               </Button>
           </Field.Root>
-          <Button as="input" type="submit" colorPalette='green'>Submit</Button>
+          <Button type="submit" colorPalette='green'>Submit</Button>
           <Text>{message}</Text>
         </Flex>
       </form>
