@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import {
   Button,
@@ -43,37 +43,16 @@ const isScoreInvalid = (score: string) => {
   return (score.length > 4 || score.length <= 0 || isNaN(Number(score)))
 }
 
-const validateForm = (content: LeaderboardContent) => {
-  return content.topRainmaker.name.length < 20 &&
-    content.topClass.name.length < 20 &&
-    content.topSchool.name.length < 20 &&
-    !isScoreInvalid(content.topRainmaker.score) &&
-    !isScoreInvalid(content.topClass.score) &&
-    !isScoreInvalid(content.topSchool.score)
-}
-
 export default function LbAdmin() {
   const { database } = useFirebase()
   if ( database === undefined ) return;
 
   const [content, setContent] = useState(lbContent)
-  const [isValid, setIsValid] = useState(false)
   const [message, setMessage] = useState('')
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
+
   
-  useEffect(() => {
-    setIsValid(validateForm(content))
-  }, [content, setIsValid])
-
-  const submitForm = () => {
-    set(ref(database, 'leaderboard/'), content)
-    .then(() => setMessage('Upload successful.'))
-    .catch((error) => {
-      setMessage(error.message)
-    })
-  }
-
   // react-hook-form
   interface FormValues {
     topRainmaker: string,
@@ -84,13 +63,36 @@ export default function LbAdmin() {
     topSchoolScore: string,
     adminPassword: string,
   }
-
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>()
-
+  
+  const submitForm = (data: FormValues) => {
+    const DbValues: Omit<LeaderboardContent, "total"> & { password: string }= {
+      topRainmaker: {
+        name: data.topRainmaker,
+        score: data.topRainmakerScore,
+      },
+      topClass: {
+        name: data.topClass,
+        score: data.topClassScore,
+      },
+      topSchool: {
+        name: data.topSchool,
+        score: data.topSchoolScore,
+      },
+      password: data.adminPassword,
+    }
+    set(ref(database, 'leaderboard/'), DbValues)
+    .then(() => setMessage('Upload successful.'))
+    .catch((error) => {
+      setMessage(error.message)
+    })
+  }
+  
   const onSubmit = handleSubmit(submitForm)
 
   return (
@@ -201,13 +203,7 @@ export default function LbAdmin() {
                 {show ? 'Hide' : 'Show'}
               </Button>
           </Field.Root>
-          <Button
-            onClick={submitForm}
-            colorScheme='green'
-            disabled={!isValid}
-          >
-            Submit
-          </Button>
+          <input type="submit" />
           <Text>{message}</Text>
         </Flex>
       </form>
