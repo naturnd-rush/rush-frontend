@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LbadminRouteImport } from './routes/lbadmin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
@@ -20,6 +21,11 @@ import { Route as AppTopicIdLocalsInTheNaturehoodRouteImport } from './routes/ap
 import { Route as AppTopicIdInitiativesRouteImport } from './routes/app/$topicId/initiatives'
 import { Route as AppTopicIdTabIdRouteImport } from './routes/app/$topicId/$tabId'
 
+const LbadminRoute = LbadminRouteImport.update({
+  id: '/lbadmin',
+  path: '/lbadmin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -77,6 +83,7 @@ const AppTopicIdTabIdRoute = AppTopicIdTabIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/lbadmin': typeof LbadminRoute
   '/app/$topicId': typeof AppTopicIdRouteRouteWithChildren
   '/app': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/lbadmin': typeof LbadminRoute
   '/app': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/lbadmin': typeof LbadminRoute
   '/app/$topicId': typeof AppTopicIdRouteRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/lbadmin'
     | '/app/$topicId'
     | '/app'
     | '/app/$topicId/$tabId'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/lbadmin'
     | '/app'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/lbadmin'
     | '/app/$topicId'
     | '/app/'
     | '/app/$topicId/$tabId'
@@ -151,12 +163,20 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  LbadminRoute: typeof LbadminRoute
   AppTopicIdRouteRoute: typeof AppTopicIdRouteRouteWithChildren
   AppIndexRoute: typeof AppIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/lbadmin': {
+      id: '/lbadmin'
+      path: '/lbadmin'
+      fullPath: '/lbadmin'
+      preLoaderRoute: typeof LbadminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -255,6 +275,7 @@ const AppTopicIdRouteRouteWithChildren = AppTopicIdRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  LbadminRoute: LbadminRoute,
   AppTopicIdRouteRoute: AppTopicIdRouteRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
 }

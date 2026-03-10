@@ -46,7 +46,7 @@ const LeaderboardText = styled.div<{ align: 'left' | 'right' }>`
   text-align: ${ props => props.align };
 `
 
-function LeaderboardComponent({ content }: { content: LeaderboardContent }) {
+export function LeaderboardComponent({ content }: { content: LeaderboardContent }) {
   return (
     <LeaderboardContainer
       style={{ backgroundImage: `url(${LeaderboardBackground})` }}
@@ -67,9 +67,12 @@ function LeaderboardComponent({ content }: { content: LeaderboardContent }) {
         <LeaderboardText align='left'>{content.total?.name}</LeaderboardText>
         <LeaderboardText align='right'>{content.total?.score.substring(0,4)}</LeaderboardText>
       </LeaderboardRow>
-      <a href="https://www.victoriadrains.com" target='_blank' rel='noreferrer'>
-        <div style={{ width: '100%', height: '100%' }} />
-      </a>
+      <a
+        href="https://www.victoriadrains.com"
+        target='_blank'
+        rel='noreferrer'
+        style={{ height: '100%' }}
+      />
     </LeaderboardContainer>
   )
 }
