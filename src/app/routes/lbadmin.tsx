@@ -8,6 +8,7 @@ import {
   Input,
   SimpleGrid,
   Text,
+  HStack,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form'
 import { produce } from 'immer'
@@ -113,6 +114,9 @@ export default function LbAdmin() {
                   }))
                 })}
               />
+              {errors.topRainmaker && (
+                <p role="alert">Names must be 1-20 characters.</p>
+              )}
             </Field.Root>
             <Field.Root invalid={!!errors.topRainmakerScore}>
               <Field.Label>Score</Field.Label>
@@ -128,6 +132,9 @@ export default function LbAdmin() {
                   }))
                 })}
               />
+              {errors.topRainmakerScore && (
+                <p role="alert">Scores must be a whole number with 1-4 digits.</p>
+              )}
             </Field.Root>
             
             <Field.Root invalid={!!errors.topClass}>
@@ -142,6 +149,9 @@ export default function LbAdmin() {
                   }))
                 })}
               />
+              {errors.topClass && (
+                <p role="alert">Names must be 1-20 characters.</p>
+              )}
             </Field.Root>
             <Field.Root invalid={!!errors.topClassScore}>
               <Field.Label>Score</Field.Label>
@@ -157,6 +167,9 @@ export default function LbAdmin() {
                   }))
                 })}
               />
+              {errors.topClassScore && (
+                <p role="alert">Scores must be a whole number with 1-4 digits.</p>
+              )}
             </Field.Root>
             
             <Field.Root invalid={!!errors.topSchool}>
@@ -171,6 +184,9 @@ export default function LbAdmin() {
                   }))
                 })}
               />
+              {errors.topSchool && (
+                <p role="alert">Names must be 1-20 characters.</p>
+              )}
             </Field.Root>
             <Field.Root invalid={!!errors.topSchoolScore}>
               <Field.Label>Score</Field.Label>
@@ -186,28 +202,36 @@ export default function LbAdmin() {
                   }))
                 })}
               />
+              {errors.topSchoolScore && (
+                <p role="alert">Scores must be a whole number with 1-4 digits.</p>
+              )}
             </Field.Root>
           </SimpleGrid>
 
           <Field.Root invalid={!!errors.adminPassword}>
             <Field.Label>Admin Password</Field.Label>
-              <Input
-                pr='4.5rem'
-                type={show ? 'text' : 'password'}
-                placeholder='Enter password'
-                {...register("adminPassword", {
-                  required: true,
-                  onChange: (e) => setContent(produce(content, (draftState) => {
-                    draftState.adminPassword = e.target.value
-                  }))
-                })}
-              />
-              <Button h='1.75rem' size='sm' onClick={handleClick}>
-                {show ? 'Hide' : 'Show'}
-              </Button>
+              <HStack>
+                <Input
+                  pr='4.5rem'
+                  type={show ? 'text' : 'password'}
+                  placeholder='Enter password'
+                  {...register("adminPassword", {
+                    required: true,
+                    onChange: (e) => setContent(produce(content, (draftState) => {
+                      draftState.adminPassword = e.target.value
+                    }))
+                  })}
+                />
+                <Button h='1.75rem' size='sm' onClick={handleClick}>
+                  {show ? 'Hide' : 'Show'}
+                </Button>
+              </HStack>
+              {errors.adminPassword && (
+                <p role="alert">Admin password is required.</p>
+              )}
           </Field.Root>
           <Button type="submit" colorPalette='green'>Submit</Button>
-          <Text>{message}</Text>
+          <Text color='fg.error'>{message}</Text>
         </Flex>
       </form>
     </Center>
