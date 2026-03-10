@@ -35,12 +35,12 @@ const lbContent = {
   adminPassword: '',
 }
 
-const isNameInvalid = (name: string) => {
-  return (name.length > 20 || name.length <= 0)
+const isNameValid = (name: string) => {
+  return !(name.length > 20 || name.length <= 0)
 }
 
-const isScoreInvalid = (score: string) => {
-  return (score.length > 4 || score.length <= 0 || isNaN(Number(score)))
+const isScoreValid = (score: string) => {
+  return !(score.length > 4 || score.length <= 0 || isNaN(Number(score)))
 }
 
 export default function LbAdmin() {
@@ -107,7 +107,7 @@ export default function LbAdmin() {
                 placeholder='Top Rainmaker name...'
                 {...register("topRainmaker", {
                   required: true,
-                  validate: isNameInvalid,
+                  validate: isNameValid,
                   onChange: (e) => setContent(produce(content, (draftState) => {
                     draftState.topRainmaker.name = e.target.value
                   }))
@@ -122,7 +122,7 @@ export default function LbAdmin() {
                 width='auto'
                 {...register("topRainmakerScore", {
                   required: true,
-                  validate: isScoreInvalid,
+                  validate: isScoreValid,
                   onChange: (e) => setContent(produce(content, (draftState) => {
                     draftState.topRainmaker.score = e.target.value
                   }))
@@ -136,7 +136,7 @@ export default function LbAdmin() {
                 placeholder='Top class name...'
                 {...register("topClass", {
                   required: true,
-                  validate: isNameInvalid,
+                  validate: isNameValid,
                   onChange: (e) => setContent(produce(content, (draftState) => {
                     draftState.topClass.name = e.target.value
                   }))
@@ -151,7 +151,7 @@ export default function LbAdmin() {
                 width='auto'
                 {...register("topClassScore", {
                   required: true,
-                  validate: isScoreInvalid,
+                  validate: isScoreValid,
                   onChange: (e) => setContent(produce(content, (draftState) => {
                     draftState.topClass.score = e.target.value
                   }))
@@ -165,7 +165,7 @@ export default function LbAdmin() {
                 placeholder='Top school name...'
                 {...register("topSchool", {
                   required: true,
-                  validate: isNameInvalid,
+                  validate: isNameValid,
                   onChange: (e) => setContent(produce(content, (draftState) => {
                     draftState.topSchool.name = e.target.value
                   }))
@@ -180,7 +180,7 @@ export default function LbAdmin() {
                 width='auto'
                 {...register("topSchoolScore", {
                   required: true,
-                  validate: isScoreInvalid,
+                  validate: isScoreValid,
                   onChange: (e) => setContent(produce(content, (draftState) => {
                     draftState.topSchool.score = e.target.value
                   }))
