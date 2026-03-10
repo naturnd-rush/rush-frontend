@@ -115,7 +115,7 @@ export default function LbAdmin() {
                 })}
               />
               {errors.topRainmaker && (
-                <p role="alert">Names must be 1-20 characters.</p>
+                <Text color='fg.error' role="alert">Names must be 1-20 characters.</Text>
               )}
             </Field.Root>
             <Field.Root invalid={!!errors.topRainmakerScore}>
@@ -133,7 +133,7 @@ export default function LbAdmin() {
                 })}
               />
               {errors.topRainmakerScore && (
-                <p role="alert">Scores must be a whole number with 1-4 digits.</p>
+                <Text color='fg.error' role="alert">Scores must be a whole number with 1-4 digits.</Text>
               )}
             </Field.Root>
             
@@ -150,7 +150,7 @@ export default function LbAdmin() {
                 })}
               />
               {errors.topClass && (
-                <p role="alert">Names must be 1-20 characters.</p>
+                <Text color='fg.error' role="alert">Names must be 1-20 characters.</Text>
               )}
             </Field.Root>
             <Field.Root invalid={!!errors.topClassScore}>
@@ -168,7 +168,7 @@ export default function LbAdmin() {
                 })}
               />
               {errors.topClassScore && (
-                <p role="alert">Scores must be a whole number with 1-4 digits.</p>
+                <Text color='fg.error' role="alert">Scores must be a whole number with 1-4 digits.</Text>
               )}
             </Field.Root>
             
@@ -185,7 +185,7 @@ export default function LbAdmin() {
                 })}
               />
               {errors.topSchool && (
-                <p role="alert">Names must be 1-20 characters.</p>
+                <Text color='fg.error' role="alert">Names must be 1-20 characters.</Text>
               )}
             </Field.Root>
             <Field.Root invalid={!!errors.topSchoolScore}>
@@ -203,7 +203,7 @@ export default function LbAdmin() {
                 })}
               />
               {errors.topSchoolScore && (
-                <p role="alert">Scores must be a whole number with 1-4 digits.</p>
+                <Text color='fg.error' role="alert">Scores must be a whole number with 1-4 digits.</Text>
               )}
             </Field.Root>
           </SimpleGrid>
@@ -227,7 +227,7 @@ export default function LbAdmin() {
                 </Button>
               </HStack>
               {errors.adminPassword && (
-                <p role="alert">Admin password is required.</p>
+                <Text color='fg.error' role="alert">Admin password is required.</Text>
               )}
           </Field.Root>
           <Button type="submit" colorPalette='green'>Submit</Button>
