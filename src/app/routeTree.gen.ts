@@ -9,16 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LbadminRouteImport } from './routes/lbadmin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppTopicIdRouteRouteImport } from './routes/app/$topicId/route'
 import { Route as AppTopicIdIndexRouteImport } from './routes/app/$topicId/index'
 import { Route as AppTopicIdSubmitCompletedCardRouteImport } from './routes/app/$topicId/submit-completed-card'
+import { Route as AppTopicIdRainGardensLeaderboardRouteImport } from './routes/app/$topicId/rain-gardens-leaderboard'
 import { Route as AppTopicIdLocalsInTheNaturehoodRouteImport } from './routes/app/$topicId/locals-in-the-naturehood'
 import { Route as AppTopicIdInitiativesRouteImport } from './routes/app/$topicId/initiatives'
 import { Route as AppTopicIdTabIdRouteImport } from './routes/app/$topicId/$tabId'
 
+const LbadminRoute = LbadminRouteImport.update({
+  id: '/lbadmin',
+  path: '/lbadmin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -50,6 +57,12 @@ const AppTopicIdSubmitCompletedCardRoute =
     path: '/submit-completed-card',
     getParentRoute: () => AppTopicIdRouteRoute,
   } as any)
+const AppTopicIdRainGardensLeaderboardRoute =
+  AppTopicIdRainGardensLeaderboardRouteImport.update({
+    id: '/rain-gardens-leaderboard',
+    path: '/rain-gardens-leaderboard',
+    getParentRoute: () => AppTopicIdRouteRoute,
+  } as any)
 const AppTopicIdLocalsInTheNaturehoodRoute =
   AppTopicIdLocalsInTheNaturehoodRouteImport.update({
     id: '/locals-in-the-naturehood',
@@ -70,21 +83,25 @@ const AppTopicIdTabIdRoute = AppTopicIdTabIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/lbadmin': typeof LbadminRoute
   '/app/$topicId': typeof AppTopicIdRouteRouteWithChildren
   '/app': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
   '/app/$topicId/locals-in-the-naturehood': typeof AppTopicIdLocalsInTheNaturehoodRoute
+  '/app/$topicId/rain-gardens-leaderboard': typeof AppTopicIdRainGardensLeaderboardRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId/': typeof AppTopicIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/lbadmin': typeof LbadminRoute
   '/app': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
   '/app/$topicId/locals-in-the-naturehood': typeof AppTopicIdLocalsInTheNaturehoodRoute
+  '/app/$topicId/rain-gardens-leaderboard': typeof AppTopicIdRainGardensLeaderboardRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId': typeof AppTopicIdIndexRoute
 }
@@ -92,11 +109,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/lbadmin': typeof LbadminRoute
   '/app/$topicId': typeof AppTopicIdRouteRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
   '/app/$topicId/locals-in-the-naturehood': typeof AppTopicIdLocalsInTheNaturehoodRoute
+  '/app/$topicId/rain-gardens-leaderboard': typeof AppTopicIdRainGardensLeaderboardRoute
   '/app/$topicId/submit-completed-card': typeof AppTopicIdSubmitCompletedCardRoute
   '/app/$topicId/': typeof AppTopicIdIndexRoute
 }
@@ -105,32 +124,38 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/lbadmin'
     | '/app/$topicId'
     | '/app'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
     | '/app/$topicId/locals-in-the-naturehood'
+    | '/app/$topicId/rain-gardens-leaderboard'
     | '/app/$topicId/submit-completed-card'
     | '/app/$topicId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/lbadmin'
     | '/app'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
     | '/app/$topicId/locals-in-the-naturehood'
+    | '/app/$topicId/rain-gardens-leaderboard'
     | '/app/$topicId/submit-completed-card'
     | '/app/$topicId'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/lbadmin'
     | '/app/$topicId'
     | '/app/'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
     | '/app/$topicId/locals-in-the-naturehood'
+    | '/app/$topicId/rain-gardens-leaderboard'
     | '/app/$topicId/submit-completed-card'
     | '/app/$topicId/'
   fileRoutesById: FileRoutesById
@@ -138,12 +163,20 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  LbadminRoute: typeof LbadminRoute
   AppTopicIdRouteRoute: typeof AppTopicIdRouteRouteWithChildren
   AppIndexRoute: typeof AppIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/lbadmin': {
+      id: '/lbadmin'
+      path: '/lbadmin'
+      fullPath: '/lbadmin'
+      preLoaderRoute: typeof LbadminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -186,6 +219,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTopicIdSubmitCompletedCardRouteImport
       parentRoute: typeof AppTopicIdRouteRoute
     }
+    '/app/$topicId/rain-gardens-leaderboard': {
+      id: '/app/$topicId/rain-gardens-leaderboard'
+      path: '/rain-gardens-leaderboard'
+      fullPath: '/app/$topicId/rain-gardens-leaderboard'
+      preLoaderRoute: typeof AppTopicIdRainGardensLeaderboardRouteImport
+      parentRoute: typeof AppTopicIdRouteRoute
+    }
     '/app/$topicId/locals-in-the-naturehood': {
       id: '/app/$topicId/locals-in-the-naturehood'
       path: '/locals-in-the-naturehood'
@@ -214,6 +254,7 @@ interface AppTopicIdRouteRouteChildren {
   AppTopicIdTabIdRoute: typeof AppTopicIdTabIdRoute
   AppTopicIdInitiativesRoute: typeof AppTopicIdInitiativesRoute
   AppTopicIdLocalsInTheNaturehoodRoute: typeof AppTopicIdLocalsInTheNaturehoodRoute
+  AppTopicIdRainGardensLeaderboardRoute: typeof AppTopicIdRainGardensLeaderboardRoute
   AppTopicIdSubmitCompletedCardRoute: typeof AppTopicIdSubmitCompletedCardRoute
   AppTopicIdIndexRoute: typeof AppTopicIdIndexRoute
 }
@@ -222,6 +263,7 @@ const AppTopicIdRouteRouteChildren: AppTopicIdRouteRouteChildren = {
   AppTopicIdTabIdRoute: AppTopicIdTabIdRoute,
   AppTopicIdInitiativesRoute: AppTopicIdInitiativesRoute,
   AppTopicIdLocalsInTheNaturehoodRoute: AppTopicIdLocalsInTheNaturehoodRoute,
+  AppTopicIdRainGardensLeaderboardRoute: AppTopicIdRainGardensLeaderboardRoute,
   AppTopicIdSubmitCompletedCardRoute: AppTopicIdSubmitCompletedCardRoute,
   AppTopicIdIndexRoute: AppTopicIdIndexRoute,
 }
@@ -233,6 +275,7 @@ const AppTopicIdRouteRouteWithChildren = AppTopicIdRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  LbadminRoute: LbadminRoute,
   AppTopicIdRouteRoute: AppTopicIdRouteRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
 }
