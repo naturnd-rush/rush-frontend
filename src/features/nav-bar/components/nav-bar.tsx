@@ -112,7 +112,7 @@ const NavLinks = Pages.map((page) => {
 
 export default function NavBar() {
   const { down } = useTheme().breakpoints
-  const isMobile = useMediaQuery(down('sm'))
+  const isMobile = useMediaQuery(down('md'))
 
   return (
     <Nav>
