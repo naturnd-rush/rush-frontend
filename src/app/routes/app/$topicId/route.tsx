@@ -11,6 +11,7 @@ import { PlacesAutocomplete } from '@/features/search/components/places-autocomp
 import { useTheme } from '@/theme'
 import { useMediaQuery } from 'styled-breakpoints/use-media-query'
 import Control from 'react-leaflet-custom-control'
+import ShareModalButton from '@/features/map/components/share-modal-button'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
@@ -72,6 +73,7 @@ function RouteComponent() {
               {error?.message}
               { groups }
             </Legend>
+            <ShareModalButton />
         </MapControl>
         </MapControlOverlay>
       </Control>
