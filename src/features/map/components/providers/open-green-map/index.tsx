@@ -45,10 +45,9 @@ const pointToLayer = (f: Feature<Point, { icons: string[], name: string }>, l: L
   const iconId = f.properties.icons.find(i => i && i !== '')
   const icon = iconId ? (
     <img
-      width="26px"
-      height="26px"
       src={`https://greenmap.org/api-v1/icons/${iconId}/image/value`}
       alt={f.properties?.name ?? ''}
+      style={{ width: '100%', height: '100%' }}
     />
   ) : null
   return marker(l, {
