@@ -14,6 +14,7 @@ export default function ShareModalButton() {
         <Button
           colorPalette='teal'
           onClick={() => { if (map) setUrl(getShareUrl(map)) }}
+          style={{ pointerEvents: 'all' }}
         >
           <FiShare /> Share
         </Button>
