@@ -73,6 +73,7 @@ function RouteComponent() {
               {error?.message}
               { groups }
             </Legend>
+            <Spacer />
             <ShareModalButton />
         </MapControl>
         </MapControlOverlay>

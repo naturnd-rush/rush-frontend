@@ -9,10 +9,12 @@ export default function ShareModalButton() {
   const map = useMap()
 
   return (
-    <Dialog.Root>
+    <Dialog.Root placement='center'>
       <Dialog.Trigger asChild>
         <Button
           colorPalette='teal'
+          textStyle='md'
+          fontFamily='body'
           onClick={() => { if (map) setUrl(getShareUrl(map)) }}
           style={{ pointerEvents: 'all' }}
         >
@@ -22,19 +24,33 @@ export default function ShareModalButton() {
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content>
+          <Dialog.Content color='fg'>
             <Dialog.Header>
-              <Dialog.Title>Dialog Title</Dialog.Title>
+              <Dialog.Title color='teal'>Share this map</Dialog.Title>
             </Dialog.Header>
-            <Dialog.Body>
-              <ClipboardInput value={url} />
-            </Dialog.Body>
-            <Dialog.Footer>
-              <Dialog.ActionTrigger asChild>
-                <Button variant="outline">Cancel</Button>
-              </Dialog.ActionTrigger>
-              <Button>Save</Button>
-            </Dialog.Footer>
+            <Clipboard.Root value={url}>
+              <Dialog.Body>
+                <Clipboard.Label textStyle="label">
+                  Use this link to share the current map view
+                </Clipboard.Label>
+                <InputGroup marginTop='4px' endElement={<ClipboardIconButton />}>
+                  <Clipboard.Input asChild>
+                    <Input />
+                  </Clipboard.Input>
+                </InputGroup>
+              </Dialog.Body>
+              <Dialog.Footer>
+                <Dialog.ActionTrigger asChild>
+                  <Button variant='outline'>Cancel</Button>
+                </Dialog.ActionTrigger>
+                <Clipboard.Trigger asChild>
+                  <Button colorPalette='teal'>
+                    <Clipboard.Indicator />
+                    Copy Link
+                  </Button>
+                </Clipboard.Trigger>
+              </Dialog.Footer>
+            </Clipboard.Root>
             <Dialog.CloseTrigger asChild>
               <CloseButton size="sm" />
             </Dialog.CloseTrigger>
@@ -44,19 +60,6 @@ export default function ShareModalButton() {
     </Dialog.Root>
   )
 }
-
-const ClipboardInput = (props: { value: string }) => (
-  <Clipboard.Root maxW="300px" value={props.value}>
-    <Clipboard.Label textStyle="label">
-      Use this link to share the current question and map view
-    </Clipboard.Label>
-    <InputGroup endElement={<ClipboardIconButton />}>
-      <Clipboard.Input asChild>
-        <Input />
-      </Clipboard.Input>
-    </InputGroup>
-  </Clipboard.Root>
-)
 
 const ClipboardIconButton = () => (
   <Clipboard.Trigger asChild>
