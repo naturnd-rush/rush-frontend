@@ -4,16 +4,15 @@ import {
   FaInstagram,
   FaRegMap,
   FaRegQuestionCircle,
-  FaRegShareSquare,
 } from "react-icons/fa";
 import {
   FaRegMessage,
 } from "react-icons/fa6";
 import Button from "@/components/button";
-import copyUrlToClipboard from "@/utils/copy-url-to-clipboard";
 import { useTheme } from "@/theme";
 import { useMediaQuery } from "styled-breakpoints/use-media-query";
 import Dropdown from "./mobile-dropdown";
+import { ColorModeButton } from "@/components/ui/color-mode";
 
 /** Mocked up data */
 const Pages = [
@@ -46,14 +45,7 @@ const Pages = [
     color: 'rgb(49, 151, 149)',
     bold: false,
     external: true
-  },
-  {
-    title: 'Share',
-    onClick: copyUrlToClipboard,
-    icon: <FaRegShareSquare />,
-    color: undefined,
-    bold: false
-  },
+  }
 ]
 
 const Nav = styled.nav`
@@ -112,7 +104,7 @@ const NavLinks = Pages.map((page) => {
 
 export default function NavBar() {
   const { down } = useTheme().breakpoints
-  const isMobile = useMediaQuery(down('sm'))
+  const isMobile = useMediaQuery(down('md'))
 
   return (
     <Nav>
@@ -123,7 +115,13 @@ export default function NavBar() {
         </SiteTitle>
       </Link>
       <Spacer />
-      { isMobile ? <Dropdown>{NavLinks}</Dropdown> : NavLinks }
+      { isMobile ? (
+          <>
+            <ColorModeButton display='none' />
+            <Dropdown>{NavLinks}</Dropdown>
+          </>
+        ) : [...NavLinks, <ColorModeButton key='color-mode' display='none' />]
+      }
     </Nav>
   )
 }

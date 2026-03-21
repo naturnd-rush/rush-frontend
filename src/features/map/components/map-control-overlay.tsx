@@ -9,7 +9,7 @@ export const MapControl = styled.div`
   gap: 10px;
 
   min-width: 18rem;
-  max-height: calc(100svh - 60px);
+  max-height: calc(100svh - 76px);
 `
 
 type ControlOverlayProps = {

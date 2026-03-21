@@ -4,6 +4,7 @@ import GraphQLProvider from '@/lib/GraphQLProvider'
 import RouterProvider from '@/lib/RouterProvider'
 import { FirebaseProvider } from '@/lib/FirebaseProvider'
 import { Provider as ChakraProvider } from '@/components/ui/provider'
+import { ColorModeProvider } from '@/components/ui/color-mode'
 import './reset.css'
 import './index.css'
 import '@/theme/fonts.css'
@@ -17,7 +18,9 @@ if (!rootElement.innerHTML) {
       <GraphQLProvider>
         <FirebaseProvider>
           <ChakraProvider>
-            <RouterProvider />
+            <ColorModeProvider>
+              <RouterProvider />
+            </ColorModeProvider>
           </ChakraProvider>
         </FirebaseProvider>
       </GraphQLProvider>

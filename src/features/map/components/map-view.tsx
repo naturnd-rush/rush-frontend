@@ -21,12 +21,13 @@ type MapViewOptions = MapOptions & {
   style?: CSSProperties,
 }
 
-export default function MapView({ children, style }: PropsWithChildren<MapViewOptions>) {
-  
+export default function MapView(props: PropsWithChildren<MapViewOptions>) {
+  const { children, ...otherProps } = props
+
   return (
     <MapContainer
       {...initialMapOptions}
-      style={style}
+      {...otherProps}
     >
       <MapBasemap />
       <GeoRasterContextProvider>
