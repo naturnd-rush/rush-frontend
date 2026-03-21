@@ -71,10 +71,14 @@ const ClipboardIconButton = () => (
 
   // Function to get map state for URL sharing mode
   const getShareUrl = (map: Map) => {
-    const currHost = `${window.location.href}`;
     const zoom = map.getZoom().toString();
     const center = map.getCenter();
     const lat = center.lat.toFixed(6);
     const lng = center.lng.toFixed(6);
-    return `${currHost}/${zoom}/${lat},${lng}`;
+    const mapParams = new URLSearchParams({
+      zoom: zoom,
+      lat: lat,
+      lng: lng,
+    })
+    return new URL(`${window.location.href}?${mapParams.toString()}`).toString()
   }

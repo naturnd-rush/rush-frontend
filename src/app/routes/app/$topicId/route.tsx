@@ -15,9 +15,9 @@ import ShareModalButton from '@/features/map/components/share-modal-button'
 import { latLng } from 'leaflet'
 
 type MapSearch = {
-  zoom: number,
-  lat: number,
-  lng: number
+  zoom?: number,
+  lat?: number,
+  lng?: number
 }
 
 const defaultMapSearchValues = {
@@ -49,7 +49,7 @@ export const Route = createFileRoute('/app/$topicId')({
 function RouteComponent() {
   const { topicId } = Route.useParams()
   const { zoom, lat, lng } = Route.useSearch()
-  const center = latLng(lat, lng)
+  const center = latLng(lat ?? 0, lng ?? 0)
   
   // Map Layer API Call
   const [ loading, error, layerGroups ] = useTopicLayers(topicId)
