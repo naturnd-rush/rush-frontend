@@ -117,10 +117,10 @@ export default function NavBar() {
       <Spacer />
       { isMobile ? (
           <>
-            <ColorModeButton />
+            <ColorModeButton display='none' />
             <Dropdown>{NavLinks}</Dropdown>
           </>
-        ) : [...NavLinks, <ColorModeButton key='color-mode'/>]
+        ) : [...NavLinks, <ColorModeButton key='color-mode' display='none' />]
       }
     </Nav>
   )
