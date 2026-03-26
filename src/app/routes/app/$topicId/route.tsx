@@ -107,7 +107,7 @@ function RouteComponent() {
               { groups }
             </Legend>
             <Spacer />
-            <ShareModalButton />
+            { isMobileOrTablet ? null : <ShareModalButton /> }
         </MapControl>
         </MapControlOverlay>
       </Control>
