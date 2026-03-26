@@ -3,7 +3,6 @@ import parse from 'html-react-parser';
 import type { LayerDetails, LayerMapData } from "../../../types/layers";
 import type { StyleOnLayer } from "@/types/styles";
 import { expandBackendLink } from "@/utils/expand-backend-link";
-//import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_LAYER = gql`
   query LayerQuery($id: UUID!) {
@@ -17,18 +16,30 @@ const GET_LAYER = gql`
       displayOrder
       style {
         id
+        circleFillColor
+        circleFillOpacity
+        circleRadius
+        circleStrokeColor
+        circleStrokeDashArray
+        circleStrokeDashOffset
+        circleStrokeLineCap
+        circleStrokeOpacity
+        circleStrokeWeight
+        drawCircle
         drawFill
         drawMarker
         drawStroke
         fillColor
         fillOpacity
         markerBackgroundColor
-        markerIconOpacity
+        markerBackgroundOpacity
         markerIcon
+        markerIconOpacity
+        markerSize
         name
         strokeColor
-        strokeDashOffset
         strokeDashArray
+        strokeDashOffset
         strokeLineCap
         strokeLineJoin
         strokeOpacity
