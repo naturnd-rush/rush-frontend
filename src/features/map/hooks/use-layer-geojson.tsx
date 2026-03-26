@@ -39,11 +39,9 @@ export function useLayerGeoJSON(id: string): QUERY_RESULTS {
     // circle specific
     const drawCircle = data.layer.stylesOnLayer.some(
       (styleOnLayer: StyleOnLayer) => {
-        console.log("StyleOnLayer: " + styleOnLayer.toString())
         return (styleOnLayer.style.drawCircle === true)
       }
     )
-    console.log('drawCircle: ' + drawCircle)
     const circleCanvas = canvas()
 
     geoJSON = (

@@ -12,6 +12,8 @@ export function pointToLayer(feature: Feature<Point>, coords: LatLngExpression) 
 export function pointToCircleLayer(feature: Feature<Point>, coords: LatLngExpression, canvas: Canvas) {
   const circleOpts = feature?.properties?.__circleOptions ?? { opacity: 0 }
 
+  console.log('Circle Options: ', JSON.parse(JSON.stringify(circleOpts)))
+
   return circle(coords, {...circleOpts, renderer: canvas})
 }
 
