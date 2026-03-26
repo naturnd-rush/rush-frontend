@@ -37,8 +37,12 @@ export function useLayerGeoJSON(id: string): QUERY_RESULTS {
     const fixedJSON = data.layer.serializedLeafletJson.replace(/\\\\\"/g, '\\\"')
     const layerJSON = JSON.parse(fixedJSON ?? '')
     // circle specific
+    console.log("StylesOnLayer: " + data.layer.stylesOnLayer)
     const drawCircle = data.layer.stylesOnLayer.some(
-      (styleOnLayer: StyleOnLayer) => styleOnLayer.style.drawCircle === true
+      (styleOnLayer: StyleOnLayer) => {
+        console.log("StyleOnLayer: " + styleOnLayer)
+        return (styleOnLayer.style.drawCircle === true)
+      }
     )
     const circleCanvas = canvas()
 
