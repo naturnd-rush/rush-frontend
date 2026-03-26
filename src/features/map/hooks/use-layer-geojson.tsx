@@ -1,12 +1,19 @@
 import { ApolloError, gql, useLazyQuery, type LazyQueryExecFunction, type OperationVariables } from "@apollo/client";
+import { canvas } from "leaflet";
 import { GeoJSON } from 'react-leaflet';
-import { onEachFeature, pointToLayer } from "../utils/leaflet-functions";
+import { onEachFeature, pointToCircleLayer, pointToLayer } from "../utils/leaflet-functions";
+import type { StyleOnLayer } from "@/types/styles";
 
 const GET_LAYER_GEOJSON = gql`
   query LayerQuery($id: UUID!) {
   layer(id: $id) {
     id
     serializedLeafletJson
+    stylesOnLayer {
+      style {
+        drawCircle
+      }
+    }
   }
 }
 `
@@ -29,11 +36,20 @@ export function useLayerGeoJSON(id: string): QUERY_RESULTS {
     // TODO: Fix double-escaped JSON on backend.
     const fixedJSON = data.layer.serializedLeafletJson.replace(/\\\\\"/g, '\\\"')
     const layerJSON = JSON.parse(fixedJSON ?? '')
+    // circle specific
+    const drawCircle = data.layer.stylesOnLayer.some(
+      (styleOnLayer: StyleOnLayer) => styleOnLayer.style.drawCircle === true
+    )
+    const circleCanvas = canvas()
+
     geoJSON = (
       <GeoJSON
         data={layerJSON.featureCollection}
         style={(f) => f?.properties.__style}
-        pointToLayer={pointToLayer}
+        pointToLayer={ drawCircle
+          ? (f,l) => pointToCircleLayer(f,l,circleCanvas)
+          : pointToLayer
+        }
         onEachFeature={onEachFeature}
       />
     )
