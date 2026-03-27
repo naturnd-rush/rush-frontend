@@ -6,22 +6,35 @@ import { expandBackendLink } from "@/utils/expand-backend-link";
 const GET_ALL_LAYERS = gql`
   query AllLayersQuery() {
   allLayers {
-    description
     id
     name
+    description
     stylesOnLayer {
+      id
       legendDescription
       displayOrder
       style {
+        id
+        circleFillColor
+        circleFillOpacity
+        circleRadius
+        circleStrokeColor
+        circleStrokeDashArray
+        circleStrokeDashOffset
+        circleStrokeLineCap
+        circleStrokeOpacity
+        circleStrokeWeight
+        drawCircle
         drawFill
         drawMarker
         drawStroke
         fillColor
         fillOpacity
-        id
         markerBackgroundColor
+        markerBackgroundOpacity
         markerIcon
         markerIconOpacity
+        markerSize
         name
         strokeColor
         strokeDashArray
@@ -31,6 +44,14 @@ const GET_ALL_LAYERS = gql`
         strokeOpacity
         strokeWeight
       }
+    }
+    mapData {
+      campaignLink
+      geotiffLink
+      ogmMapId
+      mapLink
+      name
+      providerState
     }
   }
 }

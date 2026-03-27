@@ -20,7 +20,6 @@ export default function LegendPatch(props: LegendPatchProps & {onClick?: () => v
   const polygonStyles = props.styles.filter((style) => style.drawFill || style.drawStroke)
   const markerStyles = props.styles.filter((style) => style.drawMarker)
   const circleStyles = props.styles.filter((style) => style.drawCircle)
-  console.log(circleStyles)
 
   patches.push(<PatchPolygon styles={polygonStyles} key='polygons'/>)
   patches.push(<PatchMarker styles={markerStyles} key='markers' />)
