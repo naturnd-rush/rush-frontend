@@ -1,5 +1,6 @@
 import { styled } from "@linaria/react"
 import type { Style } from "../../../../types/styles"
+import DotPatchSVG from "@/assets/DotPatch.svg?react"
 
 const PATCH_WIDTH_PX = 50
 const PATCH_HEIGHT_PX = 32
@@ -18,9 +19,11 @@ export default function LegendPatch(props: LegendPatchProps & {onClick?: () => v
   // separate styles by patch type
   const polygonStyles = props.styles.filter((style) => style.drawFill || style.drawStroke)
   const markerStyles = props.styles.filter((style) => style.drawMarker)
+  const circleStyles = props.styles.filter((style) => style.drawCircle)
 
   patches.push(<PatchPolygon styles={polygonStyles} key='polygons'/>)
   patches.push(<PatchMarker styles={markerStyles} key='markers' />)
+  patches.push(<PatchDotDensity styles={circleStyles} key='circles' />)
 
   return (
     <PatchContainer onClick={props.onClick}>
@@ -128,4 +131,10 @@ function PatchMarker(props: LegendPatchProps) {
       )}
     </PatchMarkerContainer>
   )
+}
+
+function PatchDotDensity(props: LegendPatchProps) {
+  const dotColor = props.styles.at(0)?.circleFillColor ?? 'black'
+
+  return <DotPatchSVG fill={dotColor} />
 }
