@@ -1,20 +1,18 @@
-import { Canvas, circle, divIcon, Layer, marker, tooltip, type LatLngExpression } from "leaflet";
+import { circle, divIcon, Layer, marker, tooltip, type LatLngExpression } from "leaflet";
 import type { Feature, Point } from "geojson";
 
 export function pointToLayer(feature: Feature<Point>, coords: LatLngExpression) {
+  if (feature?.properties?.__circleOptions) {
+    const circleOpts = feature?.properties?.__circleOptions
+
+    return circle(coords, circleOpts)
+  }
+  
   const markerOpts = feature?.properties?.__pointDivIconStyleProps
     ? { icon: divIcon(feature.properties.__pointDivIconStyleProps) }
     : { opacity: 0 }
 
   return marker(coords, markerOpts)
-}
-
-export function pointToCircleLayer(feature: Feature<Point>, coords: LatLngExpression, canvas: Canvas) {
-  const circleOpts = feature?.properties?.__circleOptions ?? { opacity: 0 }
-
-  console.log('Circle Options: ', JSON.parse(JSON.stringify(circleOpts)))
-
-  return circle(coords, {...circleOpts, renderer: canvas})
 }
 
 export function bindFeaturePopup(feature: Feature<Point>, layer: Layer) {
