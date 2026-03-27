@@ -160,6 +160,7 @@ const LegendItemOGM = (props: LegendItemProps & { mapId: string, campaignLink?: 
         .then((json) => {
           const styles = json.icons.map((i: Icon) => {
             const style: Style = {
+              drawCircle: false,
               drawFill: false,
               drawMarker: true,
               drawStroke: false,

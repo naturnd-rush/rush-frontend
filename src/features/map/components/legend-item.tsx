@@ -110,7 +110,7 @@ export default function LegendItem(props: LegendItemProps) {
   const layerStyles = props.layer.stylesOnLayer
     .slice()
     .filter((s) => s.legendDescription !== '#hide' ) // hack to allow admin secret style
-    .filter((s) => s.style.drawFill || s.style.drawMarker || s.style.drawStroke)
+    .filter((s) => s.style.drawFill || s.style.drawMarker || s.style.drawStroke || s.style.drawCircle)
     .sort((a, b) => a.legendOrder - b.legendOrder)
 
   return (
