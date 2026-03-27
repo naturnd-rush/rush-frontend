@@ -17,6 +17,7 @@ export default function LegendPatch(props: LegendPatchProps & {onClick?: () => v
   const patches: React.ReactElement[] = []
 
   // separate styles by patch type
+  console.log(props.styles)
   const polygonStyles = props.styles.filter((style) => style.drawFill || style.drawStroke)
   const markerStyles = props.styles.filter((style) => style.drawMarker)
   const circleStyles = props.styles.filter((style) => style.drawCircle)
@@ -135,7 +136,6 @@ function PatchMarker(props: LegendPatchProps) {
 
 function PatchDotDensity(props: LegendPatchProps) {
   const firstStyle = props.styles.shift()
-  console.log(firstStyle)
   if (!firstStyle) return null
 
   const dotColor = firstStyle.circleFillColor ?? 'black'
