@@ -134,7 +134,10 @@ function PatchMarker(props: LegendPatchProps) {
 }
 
 function PatchDotDensity(props: LegendPatchProps) {
-  const dotColor = props.styles.at(0)?.circleFillColor ?? 'black'
+  const firstStyle = props.styles.shift()
+  console.log(firstStyle)
+  if (!firstStyle) return null
 
+  const dotColor = firstStyle.circleFillColor ?? 'black'
   return <DotPatchSVG fill={dotColor} />
 }
