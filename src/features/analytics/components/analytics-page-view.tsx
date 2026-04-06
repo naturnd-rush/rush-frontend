@@ -11,7 +11,6 @@ type PageView = {
 }
 
 function logPageView(analytics: Analytics, page: PageView) {
-  console.log('page_view: ', JSON.parse(JSON.stringify(page)))
   logEvent(analytics, 'page_view', page)
 }
 
