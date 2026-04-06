@@ -2,7 +2,7 @@ import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { Toaster } from 'react-hot-toast'
 import NavBar from '@/features/nav-bar/components/nav-bar'
-import AnalyticsPageView from '@/features/analytics/components/AnalyticsPageView'
+import AnalyticsPageView from '@/features/analytics/components/analytics-page-view'
 
 export const Route = createRootRoute({
   component: () => (
