@@ -31,8 +31,12 @@ type FirebaseContextType = {
 const FirebaseContext = createContext<FirebaseContextType>({ analytics: undefined, database: undefined })
 
 export function FirebaseProvider({ children }: React.PropsWithChildren) {
-  // Initialize Analytics without automatic page view on first load, manually sent in '@/app/routes/app/__root.tsx'
-  const analytics = initializeAnalytics(app, {config: { send_page_view: 'false' }});
+  const analytics = initializeAnalytics(app, {config: {
+    // Initialize Analytics without automatic page view on first load, manually sent in '@/app/routes/app/__root.tsx'
+    send_page_view: 'false',
+    // set analytics to debug channel for vite dev server
+    debug_mode: import.meta.env.DEV,
+  }});
   const database = getDatabase(app);
 
   return (
