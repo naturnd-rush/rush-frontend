@@ -236,7 +236,7 @@ const LegendItemOGM = (props: LegendItemProps & { mapId: string, campaignLink?: 
           <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Plot that Spot'}</Button>
         </a>
         <a
-          href={`https://greenmap.org/browse/sites?map=${props.mapId}`}
+          href={`https://greenmap.org/explore/maps/${props.mapId}`}
           rel='external'
         >
           <Button bold color='white' bgColor="rgb(39, 103, 73)">{'Visit Campaign'}</Button>

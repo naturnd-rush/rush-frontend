@@ -60,7 +60,7 @@ const pointToLayer = (f: Feature<Point, { icons: string[], name: string }>, l: L
   });
 }
 const popupOnEachFeature = (f: Feature<Point, any>, l: Layer) => {
-  const linkURL = `https://greenmap.org/browse/sites/${f.properties._id}`
+  const linkURL = `https://greenmap.org/explore/maps/${f.properties._id}`
   const imageURL = f.properties.pictures[0]
     ? `https://greenmap.org/api-v1/pictures/${f.properties.pictures[0]}/picture/sm`
     : null;
