@@ -13,11 +13,30 @@ const defaultMapSearchValues = {
   activeLayers: [] as string[],
 }
 
+// Function to omit invalid elements of an array in zod instead of 
+// replacing entire array with default if one element is invalid.
+// https://github.com/colinhacks/zod/discussions/672#discussioncomment-11878465
+const makeFilteredSchema = <S extends z.ZodTypeAny>(s: S) => {
+  return z.preprocess((as) => {
+    const result: S[] = [];
+    if (!Array.isArray(as)) {
+      return result;
+    }
+    for (const a of as) {
+      const parsed = s.safeParse(a);
+      if (parsed.success) {
+        result.push(parsed.data as S);
+      }
+    }
+    return result;
+  }, z.array(s));
+};
+
 const mapSearchSchema = z.object({
   zoom: z.number().min(0).max(20).catch(defaultMapSearchValues.zoom),
   lat: z.number().min(-90).max(90).catch(defaultMapSearchValues.lat),
   lng: z.number().min(-180).max(180).catch(defaultMapSearchValues.lng),
-  activeLayers: z.array(z.string()).catch([]),
+  activeLayers: makeFilteredSchema(z.uuid()),
 })
 
 export const Route = createRootRoute({
