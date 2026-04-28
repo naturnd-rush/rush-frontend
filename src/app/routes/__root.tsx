@@ -26,6 +26,8 @@ const makeFilteredSchema = <S extends z.ZodTypeAny>(s: S) => {
       const parsed = s.safeParse(a);
       if (parsed.success) {
         result.push(parsed.data as S);
+      } else {
+        // TODO: log and handle layerId parse errors
       }
     }
     return result;

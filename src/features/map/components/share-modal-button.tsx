@@ -1,12 +1,14 @@
 import { Button, Clipboard, CloseButton, Dialog, IconButton, Input, InputGroup, Portal } from "@chakra-ui/react";
 import type { Map } from "leaflet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiShare } from 'react-icons/fi'
 import { useMap } from "react-leaflet/hooks";
+import { useActiveLayers } from "../providers/ActiveLayerProvider";
 
 export default function ShareModalButton() {
   const [ url, setUrl ] = useState(location.href)
   const map = useMap()
+  const layers = useActiveLayers()
 
   return (
     <Dialog.Root placement='center'>
@@ -15,7 +17,7 @@ export default function ShareModalButton() {
           colorPalette='teal'
           textStyle='md'
           fontFamily='body'
-          onClick={() => { if (map) setUrl(getShareUrl(map)) }}
+          onClick={() => { if (map) setUrl(getShareUrl(map, layers)) }}
           style={{ pointerEvents: 'all' }}
         >
           <FiShare /> Share
@@ -70,7 +72,7 @@ const ClipboardIconButton = () => (
 )
 
   // Function to get map state for URL sharing mode
-  const getShareUrl = (map: Map) => {
+  const getShareUrl = (map: Map, layers?: string[]) => {
     const zoom = map.getZoom().toString();
     const center = map.getCenter();
     const lat = center.lat.toFixed(6);
@@ -79,6 +81,9 @@ const ClipboardIconButton = () => (
       zoom: zoom,
       lat: lat,
       lng: lng,
+      ...layers !== undefined && { activeLayers: JSON.stringify(layers) }
     })
-    return new URL(`${window.location.href}?${mapParams.toString()}`).toString()
+    const shareURL = new URL(window.location.href)
+    shareURL.search = mapParams.toString()
+    return shareURL.toString()
   }

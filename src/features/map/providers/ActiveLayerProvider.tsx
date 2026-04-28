@@ -22,7 +22,8 @@ export const ActiveLayerProvider = (
     createStore<ActiveLayerState>((set) => ({
       layers: initialActiveLayers,
       actions: {
-        addLayer: (id) => set((state) => ({ layers: [...state.layers, id] })),
+        addLayer: (id) => 
+          set((state) => ({ layers: [...state.layers.filter((i) => i != id), id] })),
         removeLayer: (id) =>
           set((state) => ({ layers: state.layers.filter((layer) => layer !== id) }))
       },
@@ -36,10 +37,16 @@ export const ActiveLayerProvider = (
   )
 }
 
-export const useActiveLayerStore = (selector: (state: ActiveLayerState) => void) => {
+const useActiveLayerStore = (
+  selector: (state: ActiveLayerState) => 
+    Partial<ActiveLayerState> | ActiveLayerState[keyof ActiveLayerState]
+) => {
   const store = useContext(ActiveLayerContext)
   if (!store) {
     throw new Error('Missing ActiveLayerProvider')
   }
   return useStore(store, selector)
 }
+
+export const useActiveLayerActions = () => useActiveLayerStore((s) => s.actions) as ActiveLayerState['actions']
+export const useActiveLayers = () => useActiveLayerStore((s) => s.layers) as ActiveLayerState['layers']

@@ -6,6 +6,8 @@ import GeoRasterProvider from "./providers/georaster/georaster";
 import Toggleable from "@/components/toggleable";
 import OpenGreenMapProvider from "./providers/open-green-map";
 import LegendItemOGM from "./providers/open-green-map/legend-item";
+import { useActiveLayerActions } from "../providers/ActiveLayerProvider";
+import { useEffect } from "react";
 
 const MapProvider = {
   GeoJSON: "GEOJSON",
@@ -22,6 +24,20 @@ export default function LayerController(props: LayerControllerProps) {
   
   const [on, toggle] = useToggle(props.activeByDefault);
   const provider = layerQuery.layer?.mapData.providerState
+
+  const { addLayer, removeLayer } = useActiveLayerActions()
+
+  useEffect(() => {
+    if (on) {
+      addLayer(props.layerId)
+    } else {
+      removeLayer(props.layerId)
+    }
+    
+    return () => {
+      removeLayer(props.layerId)
+    }
+  }, [on])
 
   return (
     <>
