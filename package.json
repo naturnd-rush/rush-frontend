@@ -21,6 +21,7 @@
     "@reactuses/core": "^6.0.6",
     "@tanstack/react-router": "^1.124.0",
     "@tanstack/react-router-devtools": "^1.124.0",
+    "@tanstack/router-zod-adapter": "^1.81.5",
     "chroma-js": "^3.1.2",
     "firebase": "^12.9.0",
     "georaster": "^1.6.0",

@@ -2,6 +2,7 @@ import { createRootRoute, Outlet, stripSearchParams } from '@tanstack/react-rout
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { Toaster } from 'react-hot-toast'
 import { z } from 'zod'
+import { fallback, zodSearchValidator } from '@tanstack/router-zod-adapter'
 import NavBar from '@/features/nav-bar/components/nav-bar'
 import AnalyticsPageView from '@/features/analytics/components/analytics-page-view'
 import { ActiveLayerProvider } from '@/features/map/providers/ActiveLayerProvider'
@@ -35,15 +36,15 @@ const makeFilteredSchema = <S extends z.ZodTypeAny>(s: S) => {
 };
 
 const mapSearchSchema = z.object({
-  zoom: z.number().min(0).max(20).catch(defaultMapSearchValues.zoom),
-  lat: z.number().min(-90).max(90).catch(defaultMapSearchValues.lat),
-  lng: z.number().min(-180).max(180).catch(defaultMapSearchValues.lng),
+  zoom: fallback(z.number().min(0).max(20), defaultMapSearchValues.zoom),
+  lat: fallback(z.number().min(-90).max(90), defaultMapSearchValues.lat),
+  lng: fallback(z.number().min(-180).max(180), defaultMapSearchValues.lng),
   activeLayers: makeFilteredSchema(z.uuid()),
 })
 
 export const Route = createRootRoute({
   component: RouteComponent,
-  validateSearch: mapSearchSchema,
+  validateSearch: zodSearchValidator(mapSearchSchema),
     search: {
       middlewares: [stripSearchParams(defaultMapSearchValues)]
     }
