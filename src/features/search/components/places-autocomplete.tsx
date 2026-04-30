@@ -70,7 +70,7 @@ export const PlacesAutocomplete = () => {
   };
 
   return (
-    <div style={{ pointerEvents: "auto", minWidth: "24rem" }}>
+    <div style={{ pointerEvents: "auto", width: "100%" }}>
       <SearchBox
         accessToken="pk.eyJ1IjoicnVzaGFkbWluIiwiYSI6ImNtYzJudWd6czBhNTkybHEzNHdpNGE1MTUifQ.T-8P_6hh3kai9tTzjtvcTQ"
         placeholder={placeholderText}
