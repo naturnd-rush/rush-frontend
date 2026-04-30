@@ -1,26 +1,32 @@
 import { Button, Clipboard, CloseButton, Dialog, IconButton, Input, InputGroup, Portal } from "@chakra-ui/react";
 import type { Map } from "leaflet";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiShare } from 'react-icons/fi'
 import { useMap } from "react-leaflet/hooks";
 import { useActiveLayers } from "../providers/ActiveLayerProvider";
+import { useMediaQuery } from "styled-breakpoints/use-media-query";
+import { useTheme } from "@/theme";
 
 export default function ShareModalButton() {
   const [ url, setUrl ] = useState(location.href)
   const map = useMap()
   const layers = useActiveLayers()
+  
+  const { down } = useTheme().breakpoints
+  const isMobileOrTablet = useMediaQuery(down('lg'))
 
   return (
     <Dialog.Root placement='center'>
       <Dialog.Trigger asChild>
         <Button
           colorPalette='teal'
+          borderRadius='lg'
           textStyle='md'
           fontFamily='body'
           onClick={() => { if (map) setUrl(getShareUrl(map, layers)) }}
           style={{ pointerEvents: 'all' }}
         >
-          <FiShare /> Share
+          <FiShare />{ isMobileOrTablet ? null : ' Share'}
         </Button>
       </Dialog.Trigger>
       <Portal>

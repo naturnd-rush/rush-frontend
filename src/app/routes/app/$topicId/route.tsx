@@ -75,7 +75,8 @@ function RouteComponent() {
           </MapControl>
           <Spacer />
           <MapControl style={{
-            minWidth: '24rem',
+            minWidth: 'min(24rem, 100%)',
+            maxWidth: '100%',
             alignSelf: isMobileOrTablet ? 'flex-end' : 'unset',
             alignItems: 'flex-end'
           }}>
@@ -84,8 +85,8 @@ function RouteComponent() {
               {error?.message}
               { groups }
             </Legend>
-            <Spacer />
-            { isMobileOrTablet ? null : <ShareModalButton /> }
+            { isMobileOrTablet ? null : <Spacer /> }
+            <ShareModalButton />
         </MapControl>
         </MapControlOverlay>
       </Control>
