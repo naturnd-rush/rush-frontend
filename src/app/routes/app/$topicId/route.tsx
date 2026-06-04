@@ -69,7 +69,7 @@ function RouteComponent() {
         <MapControlOverlay>
           <MapControl style={{
             minHeight: '30%',
-            maxHeight: isMobileOrTablet ? '40%' : undefined,
+            //maxHeight: isMobileOrTablet ? '40%' : undefined,
           }}>
             <Outlet />
           </MapControl>
