@@ -1,4 +1,4 @@
-import { useRef, useState, type PropsWithChildren, type ReactNode } from "react"
+import { useRef, useState, type JSXElementConstructor, type PropsWithChildren, type ReactElement } from "react"
 import { Link } from "@tanstack/react-router"
 import { styled } from "@linaria/react"
 import { Sheet, type SheetRef } from 'react-modal-sheet'
@@ -8,6 +8,7 @@ import type { TopicContent } from "@/types/topic"
 import Dropdown from "@/components/dropdown"
 import type { LoadingProps } from "@/types/backend"
 import { useTheme } from "@/theme"
+import { Tabs } from "@chakra-ui/react"
 
 const padding = 8
 const indicatorHeight = 4
@@ -44,7 +45,7 @@ const ContentText = styled.div`
 
 export default function Content({
   children, title, tabs, loading, activeTab
-}: PropsWithChildren<TopicContent & LoadingProps & {activeTab?: { link: string, label: string, icon: ReactNode}}>) {
+}: PropsWithChildren<TopicContent & LoadingProps & {activeTab?: { link: string, label: string, icon: ReactElement<unknown, string | JSXElementConstructor<any>>}}>) {
   const { down } = useTheme().breakpoints
   const isMobileOrTablet = useMediaQuery(down('lg'))
 
@@ -52,6 +53,9 @@ export default function Content({
   const scrollRef = useRef<HTMLDivElement>(null)
   const [snapPoint, setSnapPoint] = useState(initialSnap)
   const snapTo = (i: number) => sheetRef.current?.snapTo(i)
+
+  const tabList = tabs.map((tab) => ({ link: tab.id, label: tab.title, icon: tab.icon }))
+  if (activeTab) tabList.push({ link: activeTab.link, label: activeTab.label, icon: activeTab.icon })
 
   return isMobileOrTablet ?
     (
@@ -82,18 +86,26 @@ export default function Content({
             <CustomHeader style={{ textAlign: 'left' }}>
               <Sheet.DragIndicator style={{ justifyContent: 'center' }} />
               <ContentTitle>{title}</ContentTitle>
-              <Dropdown
-                activeItem={activeTab}
-                items={
-                  tabs.map((tab) => {return { link: tab?.id, label: tab?.title, icon: tab?.icon}})
-                }
-              />
+              <Tabs.Root
+                value={activeTab?.link}
+              >
+                <Tabs.List overflowX='scroll'>
+                  { tabList.map((tab) => 
+                    <Tabs.Trigger key={tab.link} value={tab.link} flexShrink='0' asChild>
+                      <Link to='/app/$topicId/$tabId' params={{ tabId: tab.link }}>
+                        {tab.icon}
+                        {tab.label}
+                      </Link>
+                    </Tabs.Trigger>
+                  )}
+                </Tabs.List>
+              </Tabs.Root>
             </CustomHeader>
           </Sheet.Header>
           <Sheet.Content
             // Allow scroll and drag for content when at the upmost snap point (full screen)
             disableScroll={(state) => state.currentSnap !== lastSnap}
-            disableDrag={(state) => state.currentSnap == lastSnap}
+            disableDrag={(state) => state.currentSnap === lastSnap && state.scrollPosition !== 'top'}
             scrollRef={scrollRef}
           >
             <ContentText>

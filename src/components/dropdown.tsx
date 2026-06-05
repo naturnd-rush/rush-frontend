@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 
 const StyledDropdown = styled.div`
   position: relative;
+  z-index: 9;
   
   ul {
     list-style-type: none;
