@@ -37,6 +37,8 @@ import scbc from '@/assets/logos/SCBC_COL_2019.png'
 import fbc from '@/assets/logos/19. Friends of Bowker Creek.jpg'
 import fmlws from '@/assets/logos/20. Friends of Maltby Lake Watershed Society.jpg'
 import vicdrains from '@/assets/logos/21. Victoria Drains.png'
+import powertobe from '@/assets/logos/PTB_HorizontalTagline_Blue_HighRes.png'
+import uvicsustain from '@/assets/logos/UVic Sustainability Project.png'
 import Scrollable from '@/components/scrollable'
 
 export const Route = createFileRoute('/about')({
@@ -132,6 +134,11 @@ const logos = [
     url: 'https://stewardshipcentrebc.ca/'
   },
   { 
+    src: powertobe,
+    alt: 'Power To Be',
+    url: 'https://www.powertobe.ca'
+  },
+  { 
     src: d4gv,
     alt: 'Data for Good Vancouver',
     url: 'https://vancouver.dataforgood.ca/'
@@ -145,6 +152,11 @@ const logos = [
     src: uviccel,
     alt: 'The University of Victoria Community-Engaged Learning',
     url: 'https://www.uvic.ca/career-services/build-your-career/community-engaged-learning/index.php#ipn-community-engaged-learning'
+  },
+  { 
+    src: uvicsustain,
+    alt: 'UVic Sustainability Project',
+    url: 'https://www.uvsp.ca'
   },
   { 
     src: fbc,
@@ -303,11 +315,14 @@ function About() {
           <List key='pre-list-paragraphs'>
             { PreListParagraphs }
           </List>
-          <ul key='bullet-list' style={{ paddingBlock: '0.5em', paddingInlineStart: '2em'}}>
+          <ul key='bullet-list' style={{ paddingInlineStart: '2em', listStyle: 'disc' }}>
             { BulletList }
           </ul>
           <List key='post-list-paragraphs'>
             { PostListParagraphs }
+            <ListItem>
+              Keep up to date with RUSH by joining <a href='http://eepurl.com/jAqKjg'>our mailing list</a>. If you see an opportunity for RUSH to support your community, please get in touch at <a href='mailto:rushinitiativeoutreach@gmail.com'>rushinitiativeoutreach@gmail.com</a>.
+            </ListItem>
           </List> 
           <AboutPageLogoContainer key='logos'>
             { LogoComponents }

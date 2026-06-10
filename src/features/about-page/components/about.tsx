@@ -116,6 +116,14 @@ export const ListItem = styled.li`
   font-weight: 500;
   color: rgba(0,0,0,0.6);
   margin-top: 0.5rem;
+
+  a {
+    font-weight: 700;
+    color: rgb(49, 151, 149);
+  }
+  a:hover {
+    color: #D8D5AB;
+  }
 `
 
 type ImageProps = {
