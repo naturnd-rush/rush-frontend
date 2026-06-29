@@ -1,5 +1,5 @@
 import Spinner from '@/components/spinner'
-import Content from '@/features/content/components/content-panel'
+import Content from '@/features/content/components/content-container'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { createFileRoute, Navigate } from '@tanstack/react-router'
 import { useState } from 'react'

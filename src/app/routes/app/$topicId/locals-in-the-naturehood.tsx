@@ -1,4 +1,4 @@
-import Content from '@/features/content/components/content-panel'
+import Content from '@/features/content/components/content-container'
 import ChecklistCard from '@/features/custom/components/checklist-card'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { createFileRoute, Navigate } from '@tanstack/react-router'

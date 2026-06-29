@@ -1,4 +1,4 @@
-import Content from '@/features/content/components/content-panel'
+import Content from '@/features/content/components/content-container'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { useTopicTab } from '@/features/topic/hooks/use-topic-tab'
 import { createFileRoute } from '@tanstack/react-router'

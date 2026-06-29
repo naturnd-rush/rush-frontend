@@ -1,4 +1,4 @@
-import Content from '@/features/content/components/content-panel'
+import Content from '@/features/content/components/content-container'
 import InitiativeCard from '@/features/initiatives/components/initiative-card'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { useTopicInitiatives } from '@/features/topic/hooks/use-topic-initiatives'

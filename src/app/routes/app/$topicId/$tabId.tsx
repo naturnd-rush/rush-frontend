@@ -1,9 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ErrorBoundary, type FallbackProps } from 'react-error-boundary'
 import { FaLink } from 'react-icons/fa'
-import { useTopic } from '@/features/topic/hooks/use-topic'
 import { useTopicTab } from '@/features/topic/hooks/use-topic-tab'
-import Content from '@/features/content/components/content-panel'
+import Content from '@/features/content/components/content-container'
 
 export const Route = createFileRoute('/app/$topicId/$tabId')({
   component: RouteComponent,
@@ -12,7 +11,7 @@ export const Route = createFileRoute('/app/$topicId/$tabId')({
 function fallbackRenderer({ error }: FallbackProps) {
   return (
     <Content
-      loading={false}
+      isContentLoading={false}
       title='Error'
       tabs={[]}
     >
@@ -24,40 +23,15 @@ function fallbackRenderer({ error }: FallbackProps) {
 
 function RouteComponent() {
   const { topicId, tabId } = Route.useParams()
-  
-  // TODO: Refactor to one API call, use future endpoint useTab(tabId)
-  const [loadingTopic, errorTopic, topic] = useTopic(topicId)
+
   const [loadingTab, errorTab, tab] = useTopicTab(topicId, tabId)
-  
-  // Extract currently active tab from list of tabs for dropdown menu
-  let otherTabs = topic?.tabs.slice() ?? []
-  const activeTabIndex = otherTabs.findIndex((tab) => tab.id == tabId)
-  const activeTab = otherTabs?.splice(Math.max(activeTabIndex, 0), 1)[0]
-  otherTabs.sort((a, b) => a.displayOrder - b.displayOrder)
-  // Add the initiatives tab to the end
-  if (topic?.hasInitiatives) {
-    otherTabs.push({
-      id: 'initiatives',
-      title: 'Check Out',
-      displayOrder: otherTabs.length,
-      icon: <FaLink />,
-    })
-  }
 
   // TODO: handle and display loading and error states.
 
   return (
     <ErrorBoundary fallbackRender={fallbackRenderer}>
-      <Content
-        loading={loadingTopic || loadingTab}
-        title={topic?.title ?? 'Topic'}
-        tabs={otherTabs}
-        activeTab={{link: '', label: activeTab?.title, icon: activeTab?.icon}}
-      >
-        {tab?.content}
-        {errorTopic ? errorTopic.message : null}
-        {errorTab ? errorTab.message : null}
-      </Content>
+      {tab?.content}
+      {errorTab ? errorTab.message : null}
     </ErrorBoundary>
   )
 }

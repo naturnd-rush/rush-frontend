@@ -1,5 +1,5 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router'
-import Content from '@/features/content/components/content-panel'
+import Content from '@/features/content/components/content-container'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { FaLink } from 'react-icons/fa'
 import { FaCloudShowersWater } from 'react-icons/fa6'
