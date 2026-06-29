@@ -7,6 +7,10 @@ permissions:
   checks: write
   contents: read
   pull-requests: write
+env:
+  VITE_BACKEND_BASE_URL: ${{ vars.VITE_BACKEND_BASE_URL }}
+  VITE_GRAPHQL_PATH: ${{ vars.VITE_GRAPHQL_PATH }}
+  VITE_MEDIA_PATH: ${{ vars.VITE_MEDIA_PATH }}
 jobs:
   build_and_preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
