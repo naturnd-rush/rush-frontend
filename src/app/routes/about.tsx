@@ -320,7 +320,7 @@ function About() {
           <List key='post-list-paragraphs'>
             { PostListParagraphs }
             <ListItem>
-              Please contact us at <a href='mailto:rushinitiative.earth@gmail.com'>rushinitiative.earth@gmail.com</a> or use the feedback button at the top to let us know what you think and any suggestions you have.
+              Please contact us at <a href='mailto:rushinitiative.earth@gmail.com'>rushinitiative.earth@gmail.com</a> or use the feedback button at the top to let us know what you think or any suggestions you have.
             </ListItem>
             <ListItem>
               Keep up to date with RUSH by joining <a href='http://eepurl.com/jAqKjg'>our mailing list</a>. If you see an opportunity for RUSH to support your community, please get in touch at <a href='mailto:rushinitiativeoutreach@gmail.com'>rushinitiativeoutreach@gmail.com</a>.
