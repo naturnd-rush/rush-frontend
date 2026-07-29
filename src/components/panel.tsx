@@ -93,11 +93,10 @@ export function PanelContent({loading, children, ...props}: PropsWithChildren<Pa
   return loading
     ? <PanelLoading><Spinner size='2rem' /></PanelLoading>
     : (
-    <>
       <Scrollable {...props} style={{
+        height: '100%',
         //marginRight: '-0.75rem',
       }}>{children}</Scrollable>
-    </>
     )
 }
 

@@ -1,10 +1,11 @@
-import { Link, useNavigate } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router"
 import { styled } from "@linaria/react"
+import { Flex, IconButton, Spacer } from "@chakra-ui/react"
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi"
 import Panel, { PanelCloseButton, PanelContent } from "@/components/panel"
 import type { ContentProps } from "./content-container"
-import { Tabs, Link as ChakraLink } from "@chakra-ui/react"
 import Loadable from "@/components/loadable"
-import React, { useRef } from "react"
+import ContentTabsMenu, { handleTabChange } from "./content-tabs-menu"
 
 const ContentText = styled.div`
   color: black;
@@ -12,10 +13,19 @@ const ContentText = styled.div`
   font-weight: 400;
   padding: 8px;
   padding-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
 `
 
 export default function ContentPanel(props: ContentProps) {
   // Component assumed to be isMobileOrTablet = false
+  const activeTabIndex = props.tabs.findIndex((tab) => tab.id === props.activeTabId)
+  const prevTab = activeTabIndex-1 < 0 || activeTabIndex-1 >= props.tabs.length
+    ? null
+    : props.tabs[activeTabIndex-1].id
+  const nextTab = activeTabIndex+1 < 0 || activeTabIndex+1 >= props.tabs.length
+    ? null
+    : props.tabs[activeTabIndex+1].id
 
   return (
     <Panel
@@ -30,10 +40,20 @@ export default function ContentPanel(props: ContentProps) {
 
       <ContentTabsMenu tabs={props.tabs} activeTabId={props.activeTabId} />
       
-      <PanelContent>
+      <PanelContent id='content-panel-scrollarea'>
         <Loadable loading={props.isContentLoading} >
           <ContentText>
             { props.children }
+            <Spacer />
+            <Flex
+              direction='row'
+              justifyContent='space-between'
+              paddingTop='0.5rem'
+              paddingBottom='2px'
+            >
+              <PrevNextButton direction="prev" tabId={prevTab} />
+              <PrevNextButton direction="next" tabId={nextTab} />
+            </Flex>
           </ContentText>
         </Loadable>
       </PanelContent>
@@ -41,87 +61,25 @@ export default function ContentPanel(props: ContentProps) {
   )
 }
 
-type ContentTabsMenuProps = Pick<ContentProps, 'tabs' | 'activeTabId'>
-
-function ContentTabsMenu(props: ContentTabsMenuProps) {
-  const activeTab = props.tabs.find((tab) => tab.id === props.activeTabId) ?? props.tabs[0]
-  if (activeTab === undefined) return
-  console.log(activeTab.id)
-
-  // TODO: handle empty tabs list
-
-  const navigate = useNavigate({ from: '/app/$topicId/$tabId' })
-
-  // scroll panel tab contents to top on tab change
-  const tabMenuRef = useRef<HTMLDivElement | null>(null);
-  const handleTabChangeScroll = () => {
-    const currentTabMenu = tabMenuRef.current
-    if (currentTabMenu) {
-      const nextSibling = currentTabMenu.nextElementSibling
-      if (nextSibling) nextSibling.scrollTo(0,0)
-    }
+function PrevNextButton(props: { direction: 'prev' | 'next', tabId: string | null }) {
+  const ariaLabel = {
+    prev: 'Previous tab',
+    next: 'Next tab'
   }
-
   return (
-    <Tabs.Root
-      ref={tabMenuRef}
-      value={activeTab.id}
-      onValueChange={({ value }) => navigate({ to: '/app/$topicId/$tabId', params: { tabId: value }})}
-      variant='enclosed'
-      display='inline-flex'
-      paddingY='0.5rem'
-      className="light"
-    >
-      <Tabs.List flex='1' overflowY='hidden' scrollbarWidth='none' css={{'::-webkit-scrollbar': { display: 'none'}}}>
-        { props.tabs.map((tab) => {
-          // handle bringing tab into view on click
-          const ref = React.createRef<HTMLButtonElement | null>();
-          const handleTabClick = () => {
-            if (ref.current !== null) {
-              ref.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'end',
-                inline: 'center',
-              })
-            }
-
-            handleTabChangeScroll()
-          }
-
-          return (
-            <Tabs.Trigger
-              key={tab.id}
-              value={tab.id}
-              ref={ref}
-              onClick={handleTabClick}
-              flex='1 0 auto'
-              asChild
-            >
-              <ChakraLink
-                focusRing='none' 
-                focusVisibleRing='mixed'
-                fontFamily='Figtree, sans-serif'
-                fontSize='1rem'
-                fontWeight='500'
-              >
-                {tab.icon}
-                {tab.title}
-              </ChakraLink>
-            </Tabs.Trigger>
-          )
-        }
-        )}
-      </Tabs.List>
-    </Tabs.Root>
+    props.tabId 
+      ? (
+        <Link to='/app/$topicId/$tabId' params={{tabId: props.tabId}}>
+          <IconButton
+            onClick={() => handleTabChange(props.tabId)}
+            aria-label={ariaLabel[props.direction]}
+            variant='surface'
+          >
+            {props.direction === 'prev' ? <FiChevronLeft /> : <FiChevronRight />}
+          </IconButton>
+        </Link>
+      ) : (
+        <Spacer />
+      )
   )
 }
-
-//<ActiveTabButton icon={activeTab.icon} title={activeTab.title} />
-
-/*
-            props.tabs.map((tab) => (
-              <Menu.Item key={tab.id} asChild value={tab.title}>
-                <Link to={tab.id} from='/app/$topicId'>{tab.title}</Link>
-              </Menu.Item>
-            ))
-            */
