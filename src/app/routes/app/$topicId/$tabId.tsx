@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ErrorBoundary, type FallbackProps } from 'react-error-boundary'
-import { FaLink } from 'react-icons/fa'
 import { useTopicTab } from '@/features/topic/hooks/use-topic-tab'
 import Content from '@/features/content/components/content-container'
+import { SkeletonText } from '@chakra-ui/react'
 
 export const Route = createFileRoute('/app/$topicId/$tabId')({
   component: RouteComponent,
@@ -11,7 +11,7 @@ export const Route = createFileRoute('/app/$topicId/$tabId')({
 function fallbackRenderer({ error }: FallbackProps) {
   return (
     <Content
-      isContentLoading={false}
+      isTopicLoading={false}
       title='Error'
       tabs={[]}
     >
@@ -30,7 +30,10 @@ function RouteComponent() {
 
   return (
     <ErrorBoundary fallbackRender={fallbackRenderer}>
-      {tab?.content}
+      { loadingTab
+          ? <SkeletonText noOfLines={5} loading />
+          : tab?.content
+      }
       {errorTab ? errorTab.message : null}
     </ErrorBoundary>
   )

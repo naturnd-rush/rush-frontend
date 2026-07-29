@@ -27,7 +27,7 @@ type ContentContainerProps = {
   activeTabId?: Tab['id']
   tabs: Omit<Tab, 'content'>[]
   title: string,
-  isContentLoading: boolean,
+  isTopicLoading: boolean,
 }
 
 export type ContentProps = PropsWithChildren<ContentContainerProps>

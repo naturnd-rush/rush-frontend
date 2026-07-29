@@ -1,8 +1,7 @@
-import Content from '@/features/content/components/content-container'
 import ChecklistCard from '@/features/custom/components/checklist-card'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { createFileRoute, Navigate } from '@tanstack/react-router'
-import { FaBinoculars, FaLink } from 'react-icons/fa'
+import { FaLink } from 'react-icons/fa'
 import { LuInfo } from 'react-icons/lu'
 import Arbutus from "@/assets/LocalsNatureHood/Arbutus.jpg"
 import AmericanWigeon from "@/assets/LocalsNatureHood/AmericanWigeon.jpg"
@@ -273,7 +272,7 @@ function RouteComponent() {
   const { topicId } = Route.useParams()
   
   // TODO: Refactor to one API call, use future endpoint useTab(tabId)
-  const [loadingTopic, errorTopic, topic] = useTopic('nature-in-the-city-map')
+  const [_, errorTopic, topic] = useTopic('nature-in-the-city-map')
   
   // Extract currently active tab from list of tabs for dropdown menu
   let otherTabs = topic?.tabs.slice() ?? []
@@ -291,14 +290,9 @@ function RouteComponent() {
   // TODO: handle and display loading and error states.
 
   return topicId !== 'nature-in-the-city-map' ? (
-        <Navigate to="/app/$topicId" params={{ topicId: topicId }} />
-      ) : (
-    <Content
-      loading={loadingTopic}
-      title={topic?.title ?? 'Topic'}
-      tabs={otherTabs}
-      activeTab={{link: '', label: 'Locals in the NatureHood', icon: <FaBinoculars />}}
-    >
+    <Navigate to="/app/$topicId" params={{ topicId: topicId }} />
+  ) : (
+    <>
       <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: '500', lineHeight: '130%', textShadow: 'rgba(0,0,0,0.3) 1px 1px 4px', marginTop: '.25rem', marginBottom: '1rem'}}>
         Use this handy checklist to track the Locals you have seen in the
         NatureHood. Artwork by{" "}
@@ -343,6 +337,6 @@ function RouteComponent() {
         ))}
       </div>
       {errorTopic ? errorTopic.message : null}
-    </Content>
+    </>
   )
 }

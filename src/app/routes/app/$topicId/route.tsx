@@ -37,13 +37,13 @@ function RouteComponent() {
           const { layers, ...groupDetails } = group
 
           return (
-            <LegendGroup {...groupDetails}>
+            <LegendGroup key={group.groupName} {...groupDetails}>
               { [...layers].sort(byDisplayOrder).map((layer) => {
                 const activeByDefault = searchHasActiveLayers
                   ? activeLayers.includes(layer.layerId)
                   : layer.activeByDefault
                 return (
-                  <LayerController {...layer} activeByDefault={activeByDefault} />
+                  <LayerController key={layer.layerId} {...layer} activeByDefault={activeByDefault} />
                 )
               })}
             </LegendGroup>
@@ -80,10 +80,11 @@ function RouteComponent() {
           }}>
             <ContentContainer
               activeTabId={tabId}
-              isContentLoading={loadingTopic}
+              isTopicLoading={loadingTopic}
               {...topicContent}
             >
               <Outlet />
+              { errorTopic?.message }
             </ContentContainer>
           </MapControl>
           <Spacer />

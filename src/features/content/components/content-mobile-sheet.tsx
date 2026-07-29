@@ -3,7 +3,7 @@ import { styled } from "@linaria/react"
 import { Sheet, type SheetRef } from 'react-modal-sheet'
 import ContentTabsMenu, { ContentTabsPrevNextFooter } from "./content-tabs-menu"
 import { ContentText, type ContentProps } from "./content-container"
-import { Spacer } from "@chakra-ui/react"
+import { Skeleton, Spacer } from "@chakra-ui/react"
 
 const padding = 8
 const indicatorHeight = 4
@@ -26,6 +26,7 @@ const ContentTitle = styled.h2`
   font-size: 24px;
   font-weight: 500;
   line-height: 130%;
+  height: 2.7rem;
   text-align: center;
   text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
   padding-top: 12px; // gap from drag indicator
@@ -65,7 +66,9 @@ export default function ContentMobileSheet(props: ContentProps) {
         <Sheet.Header>
           <CustomHeader>
             <Sheet.DragIndicator style={{ justifyContent: 'center' }} />
-            <ContentTitle>{props.title}</ContentTitle>
+            <Skeleton asChild loading={props.isTopicLoading}>
+              <ContentTitle>{props.title}</ContentTitle>
+            </Skeleton>
             <ContentTabsMenu tabs={props.tabs} activeTabId={props.activeTabId} />
           </CustomHeader>
         </Sheet.Header>

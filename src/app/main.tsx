@@ -18,7 +18,7 @@ if (!rootElement.innerHTML) {
       <GraphQLProvider>
         <FirebaseProvider>
           <ChakraProvider>
-            <ColorModeProvider>
+            <ColorModeProvider forcedTheme='light'>
               <RouterProvider />
             </ColorModeProvider>
           </ChakraProvider>
