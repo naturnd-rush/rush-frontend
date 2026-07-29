@@ -15,6 +15,7 @@ import ShareModalButton from '@/features/map/components/share-modal-button'
 import { latLng } from 'leaflet'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import ContentContainer from '@/features/content/components/content-container'
+import { FaLink } from 'react-icons/fa'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
@@ -22,7 +23,7 @@ export const Route = createFileRoute('/app/$topicId')({
 
 function RouteComponent() {
   const { topicId } = Route.useParams()
-  const { tabId } = useParams({ strict: false }) // Get child tabId from loose params for setting active tab
+  let { tabId } = useParams({ strict: false }) // Get child tabId from loose params for setting active tab
   const { zoom, lat, lng, activeLayers } = Route.useSearch()
   const center = latLng(lat, lng)
   const searchHasActiveLayers = activeLayers.length > 0
@@ -56,6 +57,27 @@ function RouteComponent() {
 
   const [ loadingTopic, errorTopic, topic ] = useTopic(topicId)
   const { hasInitiatives, ...topicContent } = { hasInitiatives: false, tabs: [], title: '', ...topic }
+  topicContent.tabs.sort((a, b) => a.displayOrder - b.displayOrder)
+  // Add the initiatives tab to the end
+  if (hasInitiatives) {
+    topicContent.tabs.push({
+      id: 'initiatives',
+      title: 'Check Out',
+      displayOrder: topicContent.tabs.length,
+      icon: <FaLink />,
+    })
+  }
+  // Determine hardcoded tabIds
+  if (!tabId) {
+    const pathParts = location.pathname
+      .split('/')
+      .filter(Boolean)
+    const pathTabId = pathParts
+      .findIndex((pathPart) => pathPart === topicId) + 1
+    if (pathTabId > 0) {
+      tabId = pathParts[pathTabId]
+    }
+  }
   
   // TODO: handle and display loading and error states.
 
