@@ -66,16 +66,16 @@ const PanelLoading = styled.div`
 
 type PanelProps = PropsWithChildren<
   HTMLAttributes<HTMLElement>
-  & { title?: string, titleLoading: boolean, resize?: boolean }
+  & { title?: string, titleLoading?: boolean, resize?: boolean }
 >
-export default function Panel({children, title, ...props}: PanelProps) {
+export default function Panel({children, title, titleLoading = false, ...props}: PanelProps) {
   return (
     <StyledPanel {...props}>
       { props.resize
         ? <PanelResizeHandle><TbRadiusBottomRight /></PanelResizeHandle>
         : null
       }
-      <Skeleton asChild loading={props.titleLoading}>
+      <Skeleton asChild loading={titleLoading}>
         <PanelTitle>{title}</PanelTitle>
       </Skeleton>
       { children }
