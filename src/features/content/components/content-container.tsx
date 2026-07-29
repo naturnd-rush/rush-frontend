@@ -6,11 +6,22 @@
  */
 
 import type { PropsWithChildren } from "react"
-import type { Tab } from "@/types/topic"
+import { styled } from "@linaria/react"
 import { useMediaQuery } from "styled-breakpoints/use-media-query"
+import type { Tab } from "@/types/topic"
 import { useTheme } from "@/theme"
 import ContentMobileSheet from "./content-mobile-sheet"
 import ContentPanel from "./content-panel"
+
+export const ContentText = styled.div`
+  color: black;
+  font-family: Bitter, sans-serif;
+  font-weight: 400;
+  padding: 8px;
+  padding-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+`
 
 type ContentContainerProps = {
   activeTabId?: Tab['id']
@@ -27,12 +38,7 @@ export default function ContentContainer(
   const { down } = useTheme().breakpoints
   const isMobileOrTablet = useMediaQuery(down('lg'))
 
-
-  return <ContentPanel {...props} />
+  return isMobileOrTablet
+    ? <ContentMobileSheet {...props} />
+    : <ContentPanel {...props} />
 }
-
-/**
-isMobileOrTablet
-  ? <ContentMobileSheet {...props} />
-  : 
- */

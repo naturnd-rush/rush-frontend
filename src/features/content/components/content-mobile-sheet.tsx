@@ -1,11 +1,9 @@
-import { useRef, useState, type JSXElementConstructor, type PropsWithChildren, type ReactElement } from "react"
-import { Link } from "@tanstack/react-router"
+import { useRef, useState } from "react"
 import { styled } from "@linaria/react"
 import { Sheet, type SheetRef } from 'react-modal-sheet'
-import type { TopicContent } from "@/types/topic"
-import type { LoadingProps } from "@/types/backend"
-import { Tabs } from "@chakra-ui/react"
-import Loadable from "@/components/loadable"
+import ContentTabsMenu, { ContentTabsPrevNextFooter } from "./content-tabs-menu"
+import { ContentText, type ContentProps } from "./content-container"
+import { Spacer } from "@chakra-ui/react"
 
 const padding = 8
 const indicatorHeight = 4
@@ -18,7 +16,8 @@ const lastSnap = snapPoints.length - 1
 
 const CustomHeader = styled.div`
   padding: ${padding}px;
-  text-align: center;
+  padding-bottom: 0;
+  text-align: left;
 `
 
 const ContentTitle = styled.h2`
@@ -32,25 +31,12 @@ const ContentTitle = styled.h2`
   padding-top: 12px; // gap from drag indicator
 `
 
-const ContentText = styled.div`
-  color: black;
-  font-family: Bitter, sans-serif;
-  font-weight: 400;
-  padding: ${padding}px;
-  padding-top: 0.5rem;
-`
-
-export default function ContentMobileSheet({
-  children, title, tabs, loading, activeTab
-}: PropsWithChildren<TopicContent & LoadingProps & {activeTab?: { link: string, label: string, icon: ReactElement<unknown, string | JSXElementConstructor<any>>}}>) {
+export default function ContentMobileSheet(props: ContentProps) {
 
   const sheetRef = useRef<SheetRef>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const [snapPoint, setSnapPoint] = useState(initialSnap)
   const snapTo = (i: number) => sheetRef.current?.snapTo(i)
-
-  const tabList = tabs.map((tab) => ({ link: tab.id, label: tab.title, icon: tab.icon }))
-  if (activeTab) tabList.push({ link: activeTab.link, label: activeTab.label, icon: activeTab.icon })
 
   return (
     <Sheet
@@ -77,23 +63,10 @@ export default function ContentMobileSheet({
     >
       <Sheet.Container style={{ borderRadius: '16px 16px 0 0'}}>
         <Sheet.Header>
-          <CustomHeader style={{ textAlign: 'left' }}>
+          <CustomHeader>
             <Sheet.DragIndicator style={{ justifyContent: 'center' }} />
-            <ContentTitle>{title}</ContentTitle>
-            <Tabs.Root
-              value={activeTab?.link}
-            >
-              <Tabs.List overflowX='scroll' overflowY='hidden'>
-                { tabList.map((tab) => 
-                  <Tabs.Trigger key={tab.link} value={tab.link} flexShrink='0' asChild>
-                    <Link to='/app/$topicId/$tabId' params={{ tabId: tab.link }}>
-                      {tab.icon}
-                      {tab.label}
-                    </Link>
-                  </Tabs.Trigger>
-                )}
-              </Tabs.List>
-            </Tabs.Root>
+            <ContentTitle>{props.title}</ContentTitle>
+            <ContentTabsMenu tabs={props.tabs} activeTabId={props.activeTabId} />
           </CustomHeader>
         </Sheet.Header>
         <Sheet.Content
@@ -102,11 +75,11 @@ export default function ContentMobileSheet({
           disableDrag={(state) => state.currentSnap === lastSnap && state.scrollPosition !== 'top'}
           scrollRef={scrollRef}
         >
-          <Loadable loading={loading}>
-            <ContentText>
-              { children }
-            </ContentText>
-          </Loadable>
+          <ContentText>
+            { props.children }
+            <Spacer />
+            <ContentTabsPrevNextFooter tabs={props.tabs} activeTabId={props.activeTabId} />
+          </ContentText>
         </Sheet.Content>
       </Sheet.Container>
     </Sheet>
