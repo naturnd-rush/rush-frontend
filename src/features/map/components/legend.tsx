@@ -1,8 +1,9 @@
-import { useEffect, useState, type ComponentPropsWithRef, type PropsWithChildren } from "react";
+import { useEffect, useState, type ComponentPropsWithRef, type Dispatch, type PropsWithChildren, type SetStateAction } from "react";
 import { styled } from "@linaria/react";
 import Panel, { PanelCloseButton, PanelContent } from "@/components/panel";
 import { useTheme } from "@/theme";
 import { useMediaQuery } from "styled-breakpoints/use-media-query";
+import { CloseButton, Drawer, Portal } from "@chakra-ui/react";
 import Button from "@/components/button";
 
 const LegendHintText = styled.h3`
@@ -43,45 +44,96 @@ export default function Legend({
 }: PropsWithChildren<LegendOpts> & ComponentPropsWithRef<"div">) {
   const { down } = useTheme().breakpoints
   const isMobileOrLaptop = useMediaQuery(down('lg'))
-  const isMobile = useMediaQuery(down('sm'))
+  const isMobile = useMediaQuery(down('md'))
 
   const [ isOpen, setIsOpen ] = useState(false)
   const toggleIsOpen = () => setIsOpen(!isOpen)
   // set state on viewport change that crosses mobile breakpoint
   useEffect(() => { setIsOpen(!isMobileOrLaptop) }, [ isMobileOrLaptop ])
-
-  const mobileLegendButton = !isOpen
-    ? <LegendButton onClick={toggleIsOpen} />
-    : null
   
   return (
     <>
-      <Panel title='Legend' style={{
-        display: isOpen ? undefined : 'none',
-        position: isMobileOrLaptop ? 'absolute' : 'relative',
-        width: isMobile ? 'calc(100% - 8px)' : undefined,
-        maxHeight: isMobileOrLaptop ? 'calc(100% - 48px)' : undefined,
-        top: isMobileOrLaptop ? '44px' : undefined,
-        //right: isMobileOrLaptop ? '4px' : undefined,
-        alignSelf: isMobileOrLaptop ? 'flex-end' : 'stretch',
-        boxShadow: isMobileOrLaptop ? '-8px 8px 12px -8px rgb(0 0 0 / 0.75), 8px 8px 12px -8px rgb(0 0 0 / 0.75)' : 'none',
-        resize: 'both',
-        maxWidth: '100%',
-      }}>
-        { showHint && 
-          <LegendHintText>
-            Click here for information about each layer ⤵
-          </LegendHintText>
-        }
-        <PanelContent
-          id='legend'
-          loading={loading}
+        <LegendContainer
+          isOpen={isOpen}
+          isMobileOrLaptop={isMobileOrLaptop}
+          isMobile={isMobile}
+          setIsOpen={setIsOpen}
+          toggleIsOpen={toggleIsOpen}
         >
-          <div ref={ref}>{ children }</div>
-        </PanelContent>
-        <PanelCloseButton onClick={toggleIsOpen}/>
-      </Panel>
-      { mobileLegendButton }
+          { showHint && 
+            <LegendHintText>
+              Click here for information about each layer ⤵
+            </LegendHintText>
+          }
+          <PanelContent
+            id='legend'
+            loading={loading}
+          >
+            <div ref={ref}>{ children }</div>
+          </PanelContent>
+        </LegendContainer>
+        { !isOpen || isMobileOrLaptop ? <LegendButton onClick={toggleIsOpen} /> : null }
     </>
   )
 }
+
+function LegendContainer(props:
+  PropsWithChildren<{
+    isOpen: boolean,
+    isMobileOrLaptop: boolean,
+    isMobile: boolean,
+    setIsOpen: Dispatch<SetStateAction<boolean>>
+    toggleIsOpen: () => void,
+  }>
+) {
+  return !props.isMobileOrLaptop ? (
+    <Panel title='Legend' style={{
+      display: props.isOpen ? undefined : 'none',
+      position: props.isMobileOrLaptop ? 'absolute' : 'relative',
+      width: props.isMobile ? 'calc(100% - 8px)' : undefined,
+      maxHeight: props.isMobileOrLaptop ? 'calc(100% - 48px)' : undefined,
+      top: props.isMobileOrLaptop ? '44px' : undefined,
+      //right: isMobileOrLaptop ? '4px' : undefined,
+      alignSelf: props.isMobileOrLaptop ? 'flex-end' : 'stretch',
+      boxShadow: props.isMobileOrLaptop ? '-8px 8px 12px -8px rgb(0 0 0 / 0.75), 8px 8px 12px -8px rgb(0 0 0 / 0.75)' : 'none',
+      resize: 'both',
+      maxWidth: '100%',
+    }}>
+      { props.children }
+      <PanelCloseButton onClick={props.toggleIsOpen}/>
+    </Panel>
+  ) : (
+    <Portal>
+      <Drawer.Root
+        size='sm'
+        open={props.isOpen}
+        onOpenChange={(e) => props.setIsOpen(e.open)}
+        lazyMount={false}
+        unmountOnExit={false}
+      >
+        <Drawer.Backdrop/>
+        <Drawer.Positioner>
+          <Drawer.Content className="light">
+            <Drawer.CloseTrigger>
+              <CloseButton size='sm' />
+            </Drawer.CloseTrigger>
+            <Drawer.Body>
+              <PanelTitle>Legend</PanelTitle>
+              { props.children }
+            </Drawer.Body>
+          </Drawer.Content>
+        </Drawer.Positioner>
+      </Drawer.Root>
+    </Portal>
+  )
+}
+
+const PanelTitle = styled.h2`
+  color: black;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 130%;
+  text-align: center;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+`

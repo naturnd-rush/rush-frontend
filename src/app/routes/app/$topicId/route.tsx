@@ -116,7 +116,8 @@ function RouteComponent() {
             minWidth: 'min(24rem, 100%)',
             maxWidth: '100%',
             alignSelf: isMobileOrTablet ? 'flex-end' : 'unset',
-            alignItems: 'flex-end'
+            alignItems: 'flex-end',
+            paddingLeft: '3rem',
           }}>
             <PlacesAutocomplete />
             <Legend loading={loading}>
