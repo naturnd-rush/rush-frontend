@@ -21,6 +21,7 @@ export const ContentText = styled.div`
   padding-top: 0.5rem;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 `
 
 type ContentContainerProps = {
