@@ -1,5 +1,5 @@
 import { styled } from "@linaria/react";
-import type { ComponentPropsWithoutRef, PropsWithChildren, ReactNode } from "react";
+import { type ComponentPropsWithoutRef, type PropsWithChildren, type ReactNode } from "react";
 
 type _ButtonProps = {
   bold: boolean;

@@ -1,4 +1,4 @@
-type LoadingProps = {
+type Loadable = {
   loading: boolean
 }
 
@@ -7,6 +7,6 @@ type Orderable = {
 }
 
 export type {
-  LoadingProps,
-  Orderable
+  Loadable,
+  Orderable,
 }

@@ -2,6 +2,8 @@ import { styled } from "@linaria/react"
 import { Link } from "@tanstack/react-router"
 import type { Initiative } from "@/types/topic"
 import Badge from "@/components/badge"
+import type { Loadable } from "@/types/backend"
+import { Skeleton, SkeletonText } from "@chakra-ui/react"
 
 type Flippable = {
   flip: boolean
@@ -56,21 +58,22 @@ const Description = styled.section`
   font-size: 0.75rem;
 `
 
-type InitiativeProps = { initiative: Initiative } & Flippable
-export default function InitiativeCard({initiative, flip = false}: InitiativeProps) {
+type InitiativeProps = { initiative?: Initiative } & Flippable & Loadable
+export default function InitiativeCard({initiative, flip = false, loading}: InitiativeProps) {
   return (
     <Container>
-      { initiative.image !== ''
-          ? <Image src={initiative?.image} alt={initiative?.title} flip={flip} />
-          : null
-      }
-      <Link to={initiative.link} target="_blank">
-        <Heading flip={flip}>{initiative?.title}</Heading>
+      <Skeleton asChild loading={loading} >
+        <Image src={initiative?.image} alt={initiative?.title} flip={flip} />
+      </Skeleton>
+      <Link to={initiative?.link} target="_blank">
+        <Skeleton asChild loading={loading} >
+          <Heading flip={flip}>{initiative?.title}</Heading>
+        </Skeleton>
       </Link>
-      {initiative.tags.length > 0
+      {(initiative?.tags.length ?? 0) > 0
         ? (
           <InitiativeTags>
-            {initiative.tags.map((tag) => (
+            {initiative?.tags.map((tag) => (
               <Badge
                 key={tag.name}
                 textColor={tag.textColor}
@@ -80,9 +83,11 @@ export default function InitiativeCard({initiative, flip = false}: InitiativePro
           </InitiativeTags>
         ) : null
       }
-      <Description>
-        {initiative.content}
-      </Description>
+      {
+        loading
+          ? <SkeletonText noOfLines={4} loading />
+          : <Description>{initiative?.content}</Description>
+      }
     </Container>
   )
 }

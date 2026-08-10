@@ -1,8 +1,6 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router'
-import Content from '@/features/content/components/content-panel'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { FaLink } from 'react-icons/fa'
-import { FaCloudShowersWater } from 'react-icons/fa6'
 import Leaderboard, { type LeaderboardContent } from '@/features/custom/components/leaderboard'
 
 export const Route = createFileRoute('/app/$topicId/rain-gardens-leaderboard')({
@@ -32,7 +30,7 @@ function RouteComponent() {
     return <Navigate to="/app/$topicId" params={{ topicId: topicId }} />
   }
 
-  const [loadingTopic, errorTopic, topic] = useTopic(TOPIC_ID_TO_OVERRIDE)
+  const [_, errorTopic, topic] = useTopic(TOPIC_ID_TO_OVERRIDE)
   
   // Extract currently active tab from list of tabs for dropdown menu
   let otherTabs = topic?.tabs.slice() ?? []
@@ -48,16 +46,9 @@ function RouteComponent() {
   }
 
   return (
-    <Content
-      loading={loadingTopic}
-      title={topic?.title ?? 'Topic'}
-      tabs={otherTabs}
-      activeTab={{link: '', label: '1000 Rain Gardens', icon: <FaCloudShowersWater />}}
-    >
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-        <Leaderboard initContent={lbContent} />
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+      <Leaderboard initContent={lbContent} />
       {errorTopic ? errorTopic.message : null}
-    </Content>
+    </div>
   )
 }

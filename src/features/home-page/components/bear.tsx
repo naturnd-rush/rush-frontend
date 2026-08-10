@@ -6,9 +6,9 @@ const BearWrapper = styled.div`
   position: relative;
 `
 
-const _Bear = styled.div`
+const _Bear = styled.div<{size: string}>`
   position: absolute;
-  bottom: -4rem;
+  bottom: ${(props) => props.size === 'mobile' ? '-19.5rem' : '-4rem'};
   right: -4.5rem;
   height: 26rem;
   width: 23.5rem;
@@ -17,6 +17,7 @@ const _Bear = styled.div`
   background-size: 20rem 20rem;
   background-position: bottom 0 right 0;
   background-repeat: no-repeat;
+  pointer-events: none;
 `
 
 const SpeechBubble = styled.div`
@@ -44,11 +45,11 @@ const Speech = styled.div`
   //transform: scale(-1, 1);
 `
 
-export default function Bear({children}: {children: any}) {
+export default function Bear({children, size}: {children: any, size: "desktop" | "laptop" | "mobile"}) {
   return (
     <BearWrapper>
       { children }
-      <_Bear>
+      <_Bear size={size}>
         <SpeechBubble>
           <Speech>
             Choose a question. Consider the data. Find the people and solutions that werk for you.

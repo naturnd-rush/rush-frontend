@@ -4,7 +4,7 @@ import MapControlOverlay, { MapControl } from '@/features/map/components/map-con
 import MapView from '@/features/map/components/map-view'
 import { useTopicLayers } from '@/features/map/hooks/use-topic-layers'
 import { byDisplayOrder } from '@/lib/GraphQLProvider'
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useParams } from '@tanstack/react-router'
 import LegendGroup from '@/features/map/components/legend-group'
 import LayerController from '@/features/map/components/layer-controller'
 import { PlacesAutocomplete } from '@/features/search/components/places-autocomplete'
@@ -13,6 +13,9 @@ import { useMediaQuery } from 'styled-breakpoints/use-media-query'
 import Control from 'react-leaflet-custom-control'
 import ShareModalButton from '@/features/map/components/share-modal-button'
 import { latLng } from 'leaflet'
+import { useTopic } from '@/features/topic/hooks/use-topic'
+import ContentContainer from '@/features/content/components/content-container'
+import { FaLink } from 'react-icons/fa'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
@@ -20,6 +23,7 @@ export const Route = createFileRoute('/app/$topicId')({
 
 function RouteComponent() {
   const { topicId } = Route.useParams()
+  let { tabId } = useParams({ strict: false }) // Get child tabId from loose params for setting active tab
   const { zoom, lat, lng, activeLayers } = Route.useSearch()
   const center = latLng(lat, lng)
   const searchHasActiveLayers = activeLayers.length > 0
@@ -34,13 +38,13 @@ function RouteComponent() {
           const { layers, ...groupDetails } = group
 
           return (
-            <LegendGroup {...groupDetails}>
+            <LegendGroup key={group.groupName} {...groupDetails}>
               { [...layers].sort(byDisplayOrder).map((layer) => {
                 const activeByDefault = searchHasActiveLayers
                   ? activeLayers.includes(layer.layerId)
                   : layer.activeByDefault
                 return (
-                  <LayerController {...layer} activeByDefault={activeByDefault} />
+                  <LayerController key={layer.layerId} {...layer} activeByDefault={activeByDefault} />
                 )
               })}
             </LegendGroup>
@@ -50,6 +54,30 @@ function RouteComponent() {
 
   const { down } = useTheme().breakpoints
   const isMobileOrTablet = useMediaQuery(down('lg'))
+
+  const [ loadingTopic, errorTopic, topic ] = useTopic(topicId)
+  const { hasInitiatives, ...topicContent } = { hasInitiatives: false, tabs: [], title: '', ...topic }
+  topicContent.tabs.sort((a, b) => a.displayOrder - b.displayOrder)
+  // Add the initiatives tab to the end
+  if (hasInitiatives) {
+    topicContent.tabs.push({
+      id: 'initiatives',
+      title: 'Check Out',
+      displayOrder: topicContent.tabs.length,
+      icon: <FaLink />,
+    })
+  }
+  // Determine hardcoded tabIds
+  if (!tabId) {
+    const pathParts = location.pathname
+      .split('/')
+      .filter(Boolean)
+    const pathTabId = pathParts
+      .findIndex((pathPart) => pathPart === topicId) + 1
+    if (pathTabId > 0) {
+      tabId = pathParts[pathTabId]
+    }
+  }
   
   // TODO: handle and display loading and error states.
 
@@ -67,18 +95,29 @@ function RouteComponent() {
     >
       <Control position='topleft'>
         <MapControlOverlay>
+          {/* ContentView */}
           <MapControl style={{
             minHeight: '30%',
-            maxHeight: isMobileOrTablet ? '40%' : undefined,
+            //maxHeight: isMobileOrTablet ? '40%' : undefined,
           }}>
-            <Outlet />
+            <ContentContainer
+              activeTabId={tabId}
+              isTopicLoading={loadingTopic}
+              {...topicContent}
+            >
+              <Outlet />
+              { errorTopic?.message }
+            </ContentContainer>
           </MapControl>
           <Spacer />
+
+          {/* LegendView */}
           <MapControl style={{
             minWidth: 'min(24rem, 100%)',
             maxWidth: '100%',
             alignSelf: isMobileOrTablet ? 'flex-end' : 'unset',
-            alignItems: 'flex-end'
+            alignItems: 'flex-end',
+            paddingLeft: '3rem',
           }}>
             <PlacesAutocomplete />
             <Legend loading={loading}>

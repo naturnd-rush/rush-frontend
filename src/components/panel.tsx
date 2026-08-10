@@ -5,6 +5,7 @@ import Scrollable from "./scrollable";
 import Button from "./button";
 import { FaX } from "react-icons/fa6";
 import { TbRadiusBottomRight } from "react-icons/tb"
+import { Skeleton } from "@chakra-ui/react";
 
 const PanelResizeHandle = styled.div`
   position: absolute;
@@ -65,19 +66,18 @@ const PanelLoading = styled.div`
 
 type PanelProps = PropsWithChildren<
   HTMLAttributes<HTMLElement>
-  & { title?: string, resize?: boolean }
+  & { title?: string, titleLoading?: boolean, resize?: boolean }
 >
-export default function Panel({children, title, ...props}: PanelProps) {
+export default function Panel({children, title, titleLoading = false, ...props}: PanelProps) {
   return (
     <StyledPanel {...props}>
       { props.resize
         ? <PanelResizeHandle><TbRadiusBottomRight /></PanelResizeHandle>
         : null
       }
-      { title
-        ? <PanelTitle>{title}</PanelTitle>
-        : null
-      }
+      <Skeleton asChild loading={titleLoading}>
+        <PanelTitle>{title}</PanelTitle>
+      </Skeleton>
       { children }
     </StyledPanel>
   )
@@ -93,11 +93,10 @@ export function PanelContent({loading, children, ...props}: PropsWithChildren<Pa
   return loading
     ? <PanelLoading><Spinner size='2rem' /></PanelLoading>
     : (
-    <>
       <Scrollable {...props} style={{
+        height: '100%',
         //marginRight: '-0.75rem',
       }}>{children}</Scrollable>
-    </>
     )
 }
 

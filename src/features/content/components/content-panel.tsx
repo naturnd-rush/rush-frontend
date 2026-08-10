@@ -1,39 +1,31 @@
-import type { PropsWithChildren, ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
-import { styled } from "@linaria/react";
-import Panel, { PanelCloseButton, PanelContent } from "@/components/panel";
-import type { TopicContent } from "@/types/topic";
-import Dropdown from "@/components/dropdown";
-import type { LoadingProps } from "@/types/backend";
-import { useTheme } from "@/theme";
-import { useMediaQuery } from "styled-breakpoints/use-media-query";
+import { Link } from "@tanstack/react-router"
+import { Spacer } from "@chakra-ui/react"
+import Panel, { PanelCloseButton, PanelContent } from "@/components/panel"
+import { ContentText, type ContentProps } from "./content-container"
+import ContentTabsMenu, { ContentTabsPrevNextFooter } from "./content-tabs-menu"
 
-const ContentText = styled.div`
-  color: black;
-  font-family: Bitter, sans-serif;
-  font-weight: 400;
-  padding-top: 0.5rem;
-`
-
-export default function Content({
-  children, title, tabs, loading, activeTab
-}: PropsWithChildren<TopicContent & LoadingProps & {activeTab?: { link: string, label: string, icon: ReactNode}}>) {
-  const { down } = useTheme().breakpoints
-  const isMobileOrTablet = useMediaQuery(down('lg'))
+export default function ContentPanel(props: ContentProps) {
 
   return (
-    <Panel id='content-panel' title={title} resize={!isMobileOrTablet} style={{ minHeight: '40%' }}>
+    <Panel
+      id='content-panel'
+      title={props.title}
+      resize
+      style={{ minHeight: '40%' }}
+      titleLoading={props.isTopicLoading}
+    >
       <Link to='/app'>
         <PanelCloseButton />
       </Link>
 
-      <Dropdown activeItem={activeTab} items={
-        tabs.map((tab) => {return { link: tab?.id, label: tab?.title, icon: tab?.icon}})
-      } />
-      <PanelContent loading={loading}>
-        <ContentText>
-          { children }
-        </ContentText>
+      <ContentTabsMenu tabs={props.tabs} activeTabId={props.activeTabId} />
+      
+      <PanelContent id='content-panel-scrollarea'>
+          <ContentText>
+            { props.children }
+            <Spacer />
+            <ContentTabsPrevNextFooter tabs={props.tabs} activeTabId={props.activeTabId} />
+          </ContentText>
       </PanelContent>
     </Panel>
   )
