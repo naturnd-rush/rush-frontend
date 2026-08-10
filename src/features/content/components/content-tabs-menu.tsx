@@ -68,7 +68,12 @@ export default function ContentTabsMenu(props: ContentTabsMenuProps) {
                 fontSize='1rem'
                 fontWeight='500'
               >
-                <span style={{ maxHeight: '2rem', maxWidth: '2rem' }}>{tab.icon}</span>
+                <span style={{
+                  maxHeight: '2rem',
+                  maxWidth: '2rem',
+                  minHeight: '1.25rem',
+                  minWidth: '1.25rem',
+                }}>{tab.icon}</span>
                 {tab.title}
               </ChakraLink>
             </Tabs.Trigger>
