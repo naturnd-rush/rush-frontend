@@ -16,6 +16,7 @@ import { latLng } from 'leaflet'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import ContentContainer from '@/features/content/components/content-container'
 import { FaLink } from 'react-icons/fa'
+import { useMapViewport } from '@/features/map/providers/MapViewportProvider'
 
 export const Route = createFileRoute('/app/$topicId')({
   component: RouteComponent,
@@ -24,9 +25,14 @@ export const Route = createFileRoute('/app/$topicId')({
 function RouteComponent() {
   const { topicId } = Route.useParams()
   let { tabId } = useParams({ strict: false }) // Get child tabId from loose params for setting active tab
-  const { zoom, lat, lng, activeLayers } = Route.useSearch()
-  const center = latLng(lat, lng)
+
+  // Search Params
+  const { activeLayers, ...searchParams } = Route.useSearch()
   const searchHasActiveLayers = activeLayers.length > 0
+  // Map Viewport State
+  const viewport = useMapViewport()
+  const center = viewport.center ?? latLng(searchParams.lat, searchParams.lng)
+  const zoom = viewport.zoom ?? searchParams.zoom
   
   // Map Layer API Call
   const [ loading, error, layerGroups ] = useTopicLayers(topicId)
