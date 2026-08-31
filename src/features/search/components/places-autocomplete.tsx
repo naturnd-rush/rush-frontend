@@ -56,8 +56,9 @@ export const PlacesAutocomplete = () => {
 
     // Current location control
     map.addControl(locateControl)
+    console.log('locate: ', locate)
     if (locate) locateControl.start();
-    const onLocateActivate = () => {setLocate(true); console.log('activate')}
+    const onLocateActivate = () => setLocate(true)
     map.on("locateactivate", onLocateActivate)
     const onLocateDeactivate = () => setLocate(false)
     map.on("locatedeactivate", onLocateDeactivate)
