@@ -3,6 +3,8 @@ import { useMap } from "react-leaflet";
 import { SearchBox } from "@mapbox/search-js-react";
 import { type SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
 import { divIcon, latLng, Marker, marker } from "leaflet";
+import { Flex, IconButton } from "@chakra-ui/react";
+import { FaLocationCrosshairs } from "react-icons/fa6";
 
 type PlacesAutocompleteApi = [
   Marker<any> | null,
@@ -78,7 +80,17 @@ export const PlacesAutocomplete = () => {
   };
 
   return (
-    <div style={{ pointerEvents: "auto", width: "100%" }}>
+    <Flex 
+      direction='row'
+      pointerEvents='auto'
+      width='100%'
+    >
+      <IconButton
+        aria-label="Use my current location"
+        onClick={() => map.locate({setView: true, maxZoom: 16})}
+      >
+        <FaLocationCrosshairs />
+      </IconButton>
       <SearchBox
         accessToken="pk.eyJ1IjoicnVzaGFkbWluIiwiYSI6ImNtYzJudWd6czBhNTkybHEzNHdpNGE1MTUifQ.T-8P_6hh3kai9tTzjtvcTQ"
         placeholder={placeholderText}
@@ -97,12 +109,13 @@ export const PlacesAutocomplete = () => {
             .SearchBox {
               width: ${inputWidth};
               border-radius: var(--panel-border-radius);
+              flex: 1;
             }
             .Results { left: auto !important; top: 46px !important; }
           `,
         }}
       />
-    </div>
+    </Flex>
   );
 };
 
