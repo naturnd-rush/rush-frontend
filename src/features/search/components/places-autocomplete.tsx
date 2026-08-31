@@ -3,8 +3,8 @@ import { useMap } from "react-leaflet";
 import { SearchBox } from "@mapbox/search-js-react";
 import { type SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
 import { divIcon, latLng, Marker, marker } from "leaflet";
-import { Flex, IconButton } from "@chakra-ui/react";
-import { FaLocationCrosshairs } from "react-icons/fa6";
+import { LocateControl } from "leaflet.locatecontrol";
+import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
 
 type PlacesAutocompleteApi = [
   Marker<any> | null,
@@ -24,6 +24,8 @@ export const PlacesAutocomplete = () => {
     lat: number;
     lng: number;
   } | null>(null);
+  
+  const locateControl = new LocateControl()
 
   useEffect(() => {
     if (map === undefined) return;
@@ -41,9 +43,12 @@ export const PlacesAutocomplete = () => {
     // Set bounds once on load
     onMoveOrZoom();
 
+    map.addControl(locateControl)
+
     return () => {
       if (placeMarker) map.removeLayer(placeMarker);
       map.off("moveend zoomend", onMoveOrZoom);
+      map.removeControl(locateControl)
     };
   }, [map, placeMarker, setMapCenter]);
 
@@ -79,18 +84,15 @@ export const PlacesAutocomplete = () => {
     }
   };
 
+
   return (
-    <Flex 
-      direction='row'
-      pointerEvents='auto'
-      width='100%'
+    <div 
+      style={{
+        pointerEvents: 'auto',
+        width: '100%',
+        marginRight: '50px'
+      }}
     >
-      <IconButton
-        aria-label="Use my current location"
-        onClick={() => map.locate({setView: true, maxZoom: 16})}
-      >
-        <FaLocationCrosshairs />
-      </IconButton>
       <SearchBox
         accessToken="pk.eyJ1IjoicnVzaGFkbWluIiwiYSI6ImNtYzJudWd6czBhNTkybHEzNHdpNGE1MTUifQ.T-8P_6hh3kai9tTzjtvcTQ"
         placeholder={placeholderText}
@@ -105,17 +107,19 @@ export const PlacesAutocomplete = () => {
           offset: 5,
         }}
         theme={{
+          variables: {
+            minWidth: '100%'
+          },
           cssText: `
             .SearchBox {
               width: ${inputWidth};
               border-radius: var(--panel-border-radius);
-              flex: 1;
             }
             .Results { left: auto !important; top: 46px !important; }
           `,
         }}
       />
-    </Flex>
+    </div>
   );
 };
 
