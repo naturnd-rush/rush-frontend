@@ -5,8 +5,8 @@ import { useMap } from 'react-leaflet'
 type MapViewportState = {
   center: LatLng | undefined,
   zoom: number | undefined,
-  setCenter: Dispatch<SetStateAction<LatLng>>,
-  setZoom: Dispatch<SetStateAction<number>>,
+  setCenter: Dispatch<SetStateAction<LatLng | undefined>>,
+  setZoom: Dispatch<SetStateAction<number | undefined>>,
 }
 
 const MapViewportContext = createContext<MapViewportState | null>(null)
@@ -14,9 +14,8 @@ const MapViewportContext = createContext<MapViewportState | null>(null)
 export const MapViewportProvider = (
   { children, map }: { children?: ReactNode, map?: Map }
 ) => {
-  if (!map) return;
-  const [center, setCenter] = useState(() => map.getCenter())
-  const [zoom, setZoom] = useState(() => map.getZoom())
+  const [center, setCenter] = useState(() => map?.getCenter())
+  const [zoom, setZoom] = useState(() => map?.getZoom())
   const viewport = {
     center: center,
     zoom: zoom,
