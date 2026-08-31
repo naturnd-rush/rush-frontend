@@ -25,7 +25,9 @@ export const PlacesAutocomplete = () => {
     lng: number;
   } | null>(null);
   
-  const locateControl = new LocateControl()
+  const locateControl = new LocateControl({
+    position: 'topright'
+  })
 
   useEffect(() => {
     if (map === undefined) return;
