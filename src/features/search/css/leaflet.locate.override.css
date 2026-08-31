@@ -1,18 +1,13 @@
-.leaflet-touch .leaflet-bar a {
-  width: 36px;
-  height: 36px;
+.leaflet-touch .leaflet-bar .leaflet-bar-part-single {
+  width:36px;
+  height:36px;
+  border-radius: 8px;
 }
-
-.leaflet-control-locate a .leaflet-control-locate-location-arrow {
-  width: 22px;
-  height: 22px;
-}
-
+.leaflet-control-locate a .leaflet-control-locate-location-arrow,
 .leaflet-control-locate a .leaflet-control-locate-spinner {
-  width: 22px;
-  height: 22px;
+  width:22px;
+  height:22px
 }
-
-.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
-  border: none;
+.leaflet-control-locate.leaflet-bar.leaflet-control {
+  border:none
 }
