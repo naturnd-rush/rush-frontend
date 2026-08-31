@@ -36,9 +36,33 @@ h1 {
   line-height: 1.1;
 }
 
-ol, ul {
+ul,
+ol,
+menu,
+dir {
+  display: block;
   margin-top: 0;
   margin-bottom: 0.625rem;
+  padding-inline-start: 40px;
+}
+
+ul,
+ol,
+menu {
+  counter-reset: list-item;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  display: list-item;
+  text-align: match-parent;
 }
 
 p {
