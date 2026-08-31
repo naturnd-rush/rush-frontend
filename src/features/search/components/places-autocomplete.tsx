@@ -7,10 +7,16 @@ import { LocateControl } from "leaflet.locatecontrol";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
 import "../css/leaflet.locate.override.css";
 
-type PlacesAutocompleteApi = [
-  Marker<any> | null,
-  Dispatch<SetStateAction<Marker<any> | null>>
-]
+type PlacesAutocompleteApi = {
+  placeApi: [
+    Marker<any> | null,
+    Dispatch<SetStateAction<Marker<any> | null>>
+  ],
+  locateApi: [
+    boolean,
+    Dispatch<SetStateAction<boolean>>
+  ],
+}
 
 const mapPinMarker = divIcon({
   className: "",
@@ -20,7 +26,9 @@ const mapPinMarker = divIcon({
 
 export const PlacesAutocomplete = () => {
   const map = useMap();
-  const [placeMarker, setPlaceMarker] = usePlacesAutocomplete();
+  const { placeApi, locateApi } = usePlacesAutocomplete();
+  const [placeMarker, setPlaceMarker] = placeApi;
+  const [locate, setLocate] = locateApi;
   const [mapCenter, setMapCenter] = useState<{
     lat: number;
     lng: number;
@@ -46,11 +54,19 @@ export const PlacesAutocomplete = () => {
     // Set bounds once on load
     onMoveOrZoom();
 
+    // Current location control
     map.addControl(locateControl)
+    if (locate) locateControl.start();
+    const onLocateActivate = () => setLocate(true)
+    map.on("locateactivate", onLocateActivate)
+    const onLocateDeactivate = () => setLocate(false)
+    map.on("locatedeactivate", onLocateDeactivate)
 
     return () => {
       if (placeMarker) map.removeLayer(placeMarker);
       map.off("moveend zoomend", onMoveOrZoom);
+      map.off("locateactivate", onLocateActivate)
+      map.off("locatedeactivate", onLocateDeactivate)
       map.removeControl(locateControl)
     };
   }, [map, placeMarker, setMapCenter]);
@@ -126,18 +142,19 @@ export const PlacesAutocompleteProvider = (
   { children }: { children?: ReactNode | undefined}
 ) => {
   const markerState = useState<Marker | null>(null);
+  const locateState = useState(false);
 
   return (
-    <PlacesAutocompleteContext.Provider value={markerState}>
+    <PlacesAutocompleteContext.Provider value={{placeApi: markerState, locateApi: locateState}}>
       {children}
     </PlacesAutocompleteContext.Provider>
   )
 }
 
 const usePlacesAutocomplete = () => {
-  const markerState = useContext(PlacesAutocompleteContext)
-  if (!markerState) {
+  const placesAutocompleteState = useContext(PlacesAutocompleteContext)
+  if (!placesAutocompleteState) {
     throw new Error('Missing PlacesAutocompleteContext')
   }
-  return markerState
+  return placesAutocompleteState
 }
