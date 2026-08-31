@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LbadminRouteImport } from './routes/lbadmin'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AppRouteRouteImport } from './routes/app/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppTopicIdRouteRouteImport } from './routes/app/$topicId/route'
@@ -31,20 +32,25 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
-  id: '/app/',
-  path: '/app/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppTopicIdRouteRoute = AppTopicIdRouteRouteImport.update({
-  id: '/app/$topicId',
-  path: '/app/$topicId',
-  getParentRoute: () => rootRouteImport,
+  id: '/$topicId',
+  path: '/$topicId',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppTopicIdIndexRoute = AppTopicIdIndexRouteImport.update({
   id: '/',
@@ -82,10 +88,11 @@ const AppTopicIdTabIdRoute = AppTopicIdTabIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/lbadmin': typeof LbadminRoute
   '/app/$topicId': typeof AppTopicIdRouteRouteWithChildren
-  '/app': typeof AppIndexRoute
+  '/app/': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
   '/app/$topicId/locals-in-the-naturehood': typeof AppTopicIdLocalsInTheNaturehoodRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/lbadmin': typeof LbadminRoute
   '/app/$topicId': typeof AppTopicIdRouteRouteWithChildren
@@ -123,10 +131,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/app'
     | '/about'
     | '/lbadmin'
     | '/app/$topicId'
-    | '/app'
+    | '/app/'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
     | '/app/$topicId/locals-in-the-naturehood'
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/app'
     | '/about'
     | '/lbadmin'
     | '/app/$topicId'
@@ -162,10 +172,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   LbadminRoute: typeof LbadminRoute
-  AppTopicIdRouteRoute: typeof AppTopicIdRouteRouteWithChildren
-  AppIndexRoute: typeof AppIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -184,6 +193,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -193,17 +209,17 @@ declare module '@tanstack/react-router' {
     }
     '/app/': {
       id: '/app/'
-      path: '/app'
-      fullPath: '/app'
+      path: '/'
+      fullPath: '/app/'
       preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/app/$topicId': {
       id: '/app/$topicId'
-      path: '/app/$topicId'
+      path: '/$topicId'
       fullPath: '/app/$topicId'
       preLoaderRoute: typeof AppTopicIdRouteRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/app/$topicId/': {
       id: '/app/$topicId/'
@@ -272,12 +288,25 @@ const AppTopicIdRouteRouteWithChildren = AppTopicIdRouteRoute._addFileChildren(
   AppTopicIdRouteRouteChildren,
 )
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  LbadminRoute: LbadminRoute,
+interface AppRouteRouteChildren {
+  AppTopicIdRouteRoute: typeof AppTopicIdRouteRouteWithChildren
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppTopicIdRouteRoute: AppTopicIdRouteRouteWithChildren,
   AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
+  LbadminRoute: LbadminRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

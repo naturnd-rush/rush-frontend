@@ -4,6 +4,7 @@ import { MapContainer } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import MapBasemap from "./map-basemap";
 import { GeoRasterContextProvider } from "./providers/georaster/georaster-context";
+import { MapViewportUpdater } from "../providers/MapViewportProvider";
 
 export const DEFAULT_CENTER = latLng([48.46557, -123.314736]);
 export const DEFAULT_ZOOM = 12;
@@ -29,6 +30,7 @@ export default function MapView(props: PropsWithChildren<MapViewOptions>) {
       {...initialMapOptions}
       {...otherProps}
     >
+      <MapViewportUpdater />
       <MapBasemap />
       <GeoRasterContextProvider>
         { children }
