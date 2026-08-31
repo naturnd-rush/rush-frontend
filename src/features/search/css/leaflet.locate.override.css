@@ -1,7 +1,10 @@
 .leaflet-touch .leaflet-bar .leaflet-bar-part-single {
   width:36px;
   height:36px;
-  border-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 .leaflet-control-locate a .leaflet-control-locate-location-arrow,
 .leaflet-control-locate a .leaflet-control-locate-spinner {
