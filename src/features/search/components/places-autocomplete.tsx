@@ -1,8 +1,13 @@
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, type Dispatch, type ReactNode, type SetStateAction } from "react";
 import { useMap } from "react-leaflet";
 import { SearchBox } from "@mapbox/search-js-react";
 import { type SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
 import { divIcon, latLng, Marker, marker } from "leaflet";
+
+type PlacesAutocompleteApi = [
+  Marker<any> | null,
+  Dispatch<SetStateAction<Marker<any> | null>>
+]
 
 const mapPinMarker = divIcon({
   className: "",
@@ -12,7 +17,7 @@ const mapPinMarker = divIcon({
 
 export const PlacesAutocomplete = () => {
   const map = useMap();
-  const [placeMarker, setPlaceMarker] = useState<Marker | null>(null);
+  const [placeMarker, setPlaceMarker] = usePlacesAutocomplete();
   const [mapCenter, setMapCenter] = useState<{
     lat: number;
     lng: number;
@@ -20,6 +25,9 @@ export const PlacesAutocomplete = () => {
 
   useEffect(() => {
     if (map === undefined) return;
+
+    // Restore placeMarker if exists from a previous page
+    if (placeMarker) map.addLayer(placeMarker);
 
     // Add leaflet onmove listener to update autocomplete viewport restrictions
     const onMoveOrZoom = () => {
@@ -97,3 +105,25 @@ export const PlacesAutocomplete = () => {
     </div>
   );
 };
+
+const PlacesAutocompleteContext = createContext<PlacesAutocompleteApi | null>(null)
+
+export const PlacesAutocompleteProvider = (
+  { children }: { children?: ReactNode | undefined}
+) => {
+  const markerState = useState<Marker | null>(null);
+
+  return (
+    <PlacesAutocompleteContext.Provider value={markerState}>
+      {children}
+    </PlacesAutocompleteContext.Provider>
+  )
+}
+
+const usePlacesAutocomplete = () => {
+  const markerState = useContext(PlacesAutocompleteContext)
+  if (!markerState) {
+    throw new Error('Missing PlacesAutocompleteContext')
+  }
+  return markerState
+}
