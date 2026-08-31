@@ -5,6 +5,7 @@ import { type SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
 import { divIcon, latLng, Marker, marker } from "leaflet";
 import { LocateControl } from "leaflet.locatecontrol";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
+import "../css/leaflet.locate.override.css";
 
 type PlacesAutocompleteApi = [
   Marker<any> | null,
@@ -56,11 +57,6 @@ export const PlacesAutocomplete = () => {
 
   const placeholderText = 'Search for an address, point of interest...'
 
-  const inputWidth = "100%";
-  // '27rem'
-
-  //const inputPosition = 'topleft'
-
   const onRetrieve = (res: SearchBoxRetrieveResponse) => {
     const place = res.features[0];
     if (place?.geometry.coordinates) {
@@ -92,7 +88,6 @@ export const PlacesAutocomplete = () => {
       style={{
         pointerEvents: 'auto',
         width: '100%',
-        marginRight: '50px'
       }}
     >
       <SearchBox
@@ -114,7 +109,7 @@ export const PlacesAutocomplete = () => {
           },
           cssText: `
             .SearchBox {
-              width: ${inputWidth};
+              width: calc(100% - 46px);
               border-radius: var(--panel-border-radius);
             }
             .Results { left: auto !important; top: 46px !important; }

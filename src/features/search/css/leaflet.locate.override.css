@@ -1,0 +1,18 @@
+.leaflet-touch .leaflet-bar a {
+  width: 36px;
+  height: 36px;
+}
+
+.leaflet-control-locate a .leaflet-control-locate-location-arrow {
+  width: 22px;
+  height: 22px;
+}
+
+.leaflet-control-locate a .leaflet-control-locate-spinner {
+  width: 22px;
+  height: 22px;
+}
+
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+  border: none;
+}
