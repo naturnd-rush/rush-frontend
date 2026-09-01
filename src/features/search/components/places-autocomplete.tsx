@@ -3,11 +3,14 @@ import { useMap } from "react-leaflet";
 import { SearchBox } from "@mapbox/search-js-react";
 import { type SearchBoxRetrieveResponse } from "@mapbox/search-js-core";
 import { divIcon, latLng, Marker, marker } from "leaflet";
+import { LocateControl } from "leaflet.locatecontrol";
+import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
+import "../css/leaflet.locate.override.css";
 
 type PlacesAutocompleteApi = [
-  Marker<any> | null,
-  Dispatch<SetStateAction<Marker<any> | null>>
-]
+    Marker<any> | null,
+    Dispatch<SetStateAction<Marker<any> | null>>
+  ]
 
 const mapPinMarker = divIcon({
   className: "",
@@ -22,6 +25,10 @@ export const PlacesAutocomplete = () => {
     lat: number;
     lng: number;
   } | null>(null);
+  
+  const locateControl = new LocateControl({
+    position: 'topright'
+  })
 
   useEffect(() => {
     if (map === undefined) return;
@@ -39,18 +46,17 @@ export const PlacesAutocomplete = () => {
     // Set bounds once on load
     onMoveOrZoom();
 
+    // Current location control
+    map.addControl(locateControl)
+
     return () => {
       if (placeMarker) map.removeLayer(placeMarker);
       map.off("moveend zoomend", onMoveOrZoom);
+      map.removeControl(locateControl)
     };
   }, [map, placeMarker, setMapCenter]);
 
   const placeholderText = 'Search for an address, point of interest...'
-
-  const inputWidth = "100%";
-  // '27rem'
-
-  //const inputPosition = 'topleft'
 
   const onRetrieve = (res: SearchBoxRetrieveResponse) => {
     const place = res.features[0];
@@ -77,8 +83,14 @@ export const PlacesAutocomplete = () => {
     }
   };
 
+
   return (
-    <div style={{ pointerEvents: "auto", width: "100%" }}>
+    <div 
+      style={{
+        pointerEvents: 'auto',
+        width: '100%',
+      }}
+    >
       <SearchBox
         accessToken="pk.eyJ1IjoicnVzaGFkbWluIiwiYSI6ImNtYzJudWd6czBhNTkybHEzNHdpNGE1MTUifQ.T-8P_6hh3kai9tTzjtvcTQ"
         placeholder={placeholderText}
@@ -93,9 +105,12 @@ export const PlacesAutocomplete = () => {
           offset: 5,
         }}
         theme={{
+          variables: {
+            minWidth: '100%'
+          },
           cssText: `
             .SearchBox {
-              width: ${inputWidth};
+              width: calc(100% - 46px);
               border-radius: var(--panel-border-radius);
             }
             .Results { left: auto !important; top: 46px !important; }
@@ -121,9 +136,9 @@ export const PlacesAutocompleteProvider = (
 }
 
 const usePlacesAutocomplete = () => {
-  const markerState = useContext(PlacesAutocompleteContext)
-  if (!markerState) {
+  const placesAutocompleteState = useContext(PlacesAutocompleteContext)
+  if (!placesAutocompleteState) {
     throw new Error('Missing PlacesAutocompleteContext')
   }
-  return markerState
+  return placesAutocompleteState
 }

@@ -6,7 +6,6 @@ import { fallback, zodSearchValidator } from '@tanstack/router-zod-adapter'
 import NavBar from '@/features/nav-bar/components/nav-bar'
 import AnalyticsPageView from '@/features/analytics/components/analytics-page-view'
 import { ActiveLayerProvider } from '@/features/map/providers/ActiveLayerProvider'
-import { PlacesAutocompleteProvider } from '@/features/search/components/places-autocomplete'
 
 const defaultMapSearchValues = {
   zoom: 12,
@@ -60,9 +59,7 @@ function RouteComponent() {
       <AnalyticsPageView />
       <ActiveLayerProvider initialActiveLayers={activeLayers}>
         <NavBar />
-        <PlacesAutocompleteProvider>
-          <Outlet />
-        </PlacesAutocompleteProvider>
+        <Outlet />
       </ActiveLayerProvider>
       <TanStackRouterDevtools />
       <Toaster />
