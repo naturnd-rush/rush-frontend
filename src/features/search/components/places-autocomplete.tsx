@@ -7,16 +7,10 @@ import { LocateControl } from "leaflet.locatecontrol";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
 import "../css/leaflet.locate.override.css";
 
-type PlacesAutocompleteApi = {
-  placeApi: [
+type PlacesAutocompleteApi = [
     Marker<any> | null,
     Dispatch<SetStateAction<Marker<any> | null>>
-  ],
-  locateApi: [
-    boolean,
-    Dispatch<SetStateAction<boolean>>
-  ],
-}
+  ]
 
 const mapPinMarker = divIcon({
   className: "",
@@ -26,9 +20,7 @@ const mapPinMarker = divIcon({
 
 export const PlacesAutocomplete = () => {
   const map = useMap();
-  const { placeApi, locateApi } = usePlacesAutocomplete();
-  const [placeMarker, setPlaceMarker] = placeApi;
-  const [locate, setLocate] = locateApi;
+  const [placeMarker, setPlaceMarker] = usePlacesAutocomplete();
   const [mapCenter, setMapCenter] = useState<{
     lat: number;
     lng: number;
@@ -56,17 +48,10 @@ export const PlacesAutocomplete = () => {
 
     // Current location control
     map.addControl(locateControl)
-    if (locate) locateControl.start();
-    const onLocateActivate = () => setLocate(true)
-    map.on("locateactivate", onLocateActivate)
-    const onLocateDeactivate = () => {setLocate(false); console.log('deactivate')}
-    map.on("locatedeactivate", onLocateDeactivate)
 
     return () => {
       if (placeMarker) map.removeLayer(placeMarker);
       map.off("moveend zoomend", onMoveOrZoom);
-      map.off("locateactivate", onLocateActivate)
-      map.off("locatedeactivate", onLocateDeactivate)
       map.removeControl(locateControl)
     };
   }, [map, placeMarker, setMapCenter]);
@@ -142,10 +127,9 @@ export const PlacesAutocompleteProvider = (
   { children }: { children?: ReactNode | undefined}
 ) => {
   const markerState = useState<Marker | null>(null);
-  const locateState = useState(false);
 
   return (
-    <PlacesAutocompleteContext.Provider value={{placeApi: markerState, locateApi: locateState}}>
+    <PlacesAutocompleteContext.Provider value={markerState}>
       {children}
     </PlacesAutocompleteContext.Provider>
   )
