@@ -1,12 +1,15 @@
 import { useEffect } from "react"
 import { useLayerGeoJSON } from "../../hooks/use-layer-geojson"
+import { useAdminChannels } from "@/lib/GraphQLProvider"
 
 type GeoJSONProps = {
-  layerId: string,
+  layerId: string
 }
 export default function GeoJSONProvider(props: GeoJSONProps) {
-    // GeoJSON
-  const geoJSONQuery = useLayerGeoJSON(props.layerId)
+  const channels = useAdminChannels()
+
+  // GeoJSON
+  const geoJSONQuery = useLayerGeoJSON(props.layerId, channels)
 
   useEffect(() => {
     if (
