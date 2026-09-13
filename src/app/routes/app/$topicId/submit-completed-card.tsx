@@ -35,7 +35,7 @@ function RouteComponent() {
   const [loadingIFrame, setLoadingIFrame] = useState(true)
 
   return topicId !== 'rush-to-play' ? (
-    <Navigate to="/app/$topicId" params={{ topicId: topicId }} />
+    <Navigate to="/app/$topicId" params={{ topicId: topicId }} search={true} />
   ) : (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
       {loadingIFrame ? (

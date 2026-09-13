@@ -272,7 +272,7 @@ function RouteComponent() {
   // TODO: handle and display loading and error states.
 
   return topicId !== 'nature-in-the-city-map' ? (
-    <Navigate to="/app/$topicId" params={{ topicId: topicId }} />
+    <Navigate to="/app/$topicId" params={{ topicId: topicId }} search={true} />
   ) : (
     <>
       <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: '500', lineHeight: '130%', textShadow: 'rgba(0,0,0,0.3) 1px 1px 4px', marginTop: '.25rem', marginBottom: '1rem'}}>

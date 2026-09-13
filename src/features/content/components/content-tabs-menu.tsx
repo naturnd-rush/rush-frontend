@@ -42,7 +42,7 @@ export default function ContentTabsMenu(props: ContentTabsMenuProps) {
       value={activeTab.id}
       onValueChange={({ value }) => {
         handleTabChange(value)
-        navigate({ to: '/app/$topicId/$tabId', params: { tabId: value }})
+        navigate({ to: '/app/$topicId/$tabId', params: { tabId: value }, search: true })
       }}
       variant='enclosed'
       display='inline-flex'

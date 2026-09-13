@@ -22,7 +22,7 @@ function RouteComponent() {
         ? <Spinner size='2rem' />
         : errorTopic
           ? errorTopic.message
-          : <Navigate to='/app/$topicId/$tabId' params={{ tabId: topic?.tabs[0].id }} />
+          : <Navigate to='/app/$topicId/$tabId' params={{ tabId: topic?.tabs[0].id }} search={true} />
       }
     </AbsoluteCenter>
   )

@@ -28,7 +28,7 @@ const lbContent: LeaderboardContent = {
 function RouteComponent() {
   const { topicId } = Route.useParams()
   if (topicId !== TOPIC_ID_TO_OVERRIDE) {
-    return <Navigate to="/app/$topicId" params={{ topicId: topicId }} />
+    return <Navigate to="/app/$topicId" params={{ topicId: topicId }} search={true} />
   }
 
   const channels = useAdminChannels()
