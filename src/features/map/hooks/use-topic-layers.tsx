@@ -3,7 +3,7 @@ import parse from 'html-react-parser';
 import type { OrderedLayerGroup } from "../../../types/layers";
 
 const GET_TOPIC_LAYERS = gql`
-  query TopicLayersQuery($slug: String!, $channels: String[]) {
+  query TopicLayersQuery($slug: String!, $channels: [String]) {
     questionBySlug(slug: $slug, channels: $channels) {
       id
       layerGroupsOnQuestion {

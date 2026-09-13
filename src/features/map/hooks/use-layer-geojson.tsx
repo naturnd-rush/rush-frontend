@@ -3,7 +3,7 @@ import { GeoJSON } from 'react-leaflet';
 import { onEachFeature, pointToLayer } from "../utils/leaflet-functions";
 
 const GET_LAYER_GEOJSON = gql`
-  query LayerQuery($id: UUID!, $channels: String[]) {
+  query LayerQuery($id: UUID!, $channels: [String]) {
     layer(id: $id, channels: $channels) {
       id
       serializedLeafletJson

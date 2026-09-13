@@ -42,7 +42,7 @@ const mapSearchSchema = z.object({
   lat: fallback(z.number().min(-90).max(90), defaultMapSearchValues.lat),
   lng: fallback(z.number().min(-180).max(180), defaultMapSearchValues.lng),
   activeLayers: makeFilteredSchema(z.uuid()),
-  channels: z.array(z.string())
+  channels: z.optional(z.array(z.string()))
 })
 
 export const Route = createRootRoute({

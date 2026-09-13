@@ -4,7 +4,7 @@ import type { Tab, TabQueryResult } from "../../../types/topic";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TAB = gql`
-  query TopicTabQuery($questionSlug: String!, $questionTabSlug: String!, $channels: String[]) {
+  query TopicTabQuery($questionSlug: String!, $questionTabSlug: String!, $channels: [String]) {
     questionTabBySlug(questionSlug: $questionSlug, questionTabSlug: $questionTabSlug, channels: $channels) {
       id
       slug
@@ -17,7 +17,7 @@ const GET_TAB = gql`
 `
 
 const GET_DEFAULT_TAB = gql`
-  query TopicTabQuery($questionSlug: String!, $channels: String[]) {
+  query TopicTabQuery($questionSlug: String!, $channels: [String]) {
     defaultQuestionTab(questionSlug: $questionSlug, channels: $channels) {
       id
       slug
