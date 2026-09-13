@@ -8,6 +8,7 @@ import OpenGreenMapProvider from "./providers/open-green-map";
 import LegendItemOGM from "./providers/open-green-map/legend-item";
 import { useActiveLayerActions } from "../providers/ActiveLayerProvider";
 import { useEffect } from "react";
+import { useAdminChannels } from "@/lib/GraphQLProvider";
 
 const MapProvider = {
   GeoJSON: "GEOJSON",
@@ -20,6 +21,8 @@ export type LayerControllerProps = {
   activeByDefault: boolean
 }
 export default function LayerController(props: LayerControllerProps) {
+  const channels = useAdminChannels()
+  console.log('Channels at LayerController: ', channels)
   const layerQuery = useLayer(props.layerId)
   
   const [on, toggle] = useToggle(props.activeByDefault);

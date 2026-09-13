@@ -7,6 +7,7 @@ type GeoJSONProps = {
 }
 export default function GeoJSONProvider(props: GeoJSONProps) {
   const channels = useAdminChannels()
+  console.log('Channels at GeoJSONProvider: ', channels)
 
   // GeoJSON
   const geoJSONQuery = useLayerGeoJSON(props.layerId, channels)
