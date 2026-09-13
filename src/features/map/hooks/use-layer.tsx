@@ -5,64 +5,64 @@ import type { StyleOnLayer } from "@/types/styles";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_LAYER = gql`
-  query LayerQuery($id: UUID!) {
-  layer(id: $id) {
-    id
-    name
-    description
-    stylesOnLayer {
+  query LayerQuery($id: UUID!, $channels: [String!]) {
+    layer(id: $id, channels: $channels) {
       id
-      legendDescription
-      displayOrder
-      style {
+      name
+      description
+      stylesOnLayer {
         id
-        circleFillColor
-        circleFillOpacity
-        circleRadius
-        circleStrokeColor
-        circleStrokeDashArray
-        circleStrokeDashOffset
-        circleStrokeLineCap
-        circleStrokeOpacity
-        circleStrokeWeight
-        drawCircle
-        drawFill
-        drawMarker
-        drawStroke
-        fillColor
-        fillOpacity
-        markerBackgroundColor
-        markerBackgroundOpacity
-        markerIcon
-        markerIconOpacity
-        markerSize
+        legendDescription
+        displayOrder
+        style {
+          id
+          circleFillColor
+          circleFillOpacity
+          circleRadius
+          circleStrokeColor
+          circleStrokeDashArray
+          circleStrokeDashOffset
+          circleStrokeLineCap
+          circleStrokeOpacity
+          circleStrokeWeight
+          drawCircle
+          drawFill
+          drawMarker
+          drawStroke
+          fillColor
+          fillOpacity
+          markerBackgroundColor
+          markerBackgroundOpacity
+          markerIcon
+          markerIconOpacity
+          markerSize
+          name
+          strokeColor
+          strokeDashArray
+          strokeDashOffset
+          strokeLineCap
+          strokeLineJoin
+          strokeOpacity
+          strokeWeight
+        }
+      }
+      mapData {
+        campaignLink
+        geotiffLink
+        ogmMapId
+        mapLink
         name
-        strokeColor
-        strokeDashArray
-        strokeDashOffset
-        strokeLineCap
-        strokeLineJoin
-        strokeOpacity
-        strokeWeight
+        providerState
       }
     }
-    mapData {
-      campaignLink
-      geotiffLink
-      ogmMapId
-      mapLink
-      name
-      providerState
-    }
   }
-}
 `
 type Layer = LayerDetails & { mapData: LayerMapData }
 type QUERY_RESULTS = { loading: boolean, error?: ApolloError, layer?: Layer }
-export function useLayer(id: string): QUERY_RESULTS {
+export function useLayer(id: string, channels?: string[]): QUERY_RESULTS {
   const { loading, error, data } = useQuery(
     GET_LAYER,
-    { variables: { id: id } }
+    { variables: { id: id, channels: channels ?? [] } }
   );
   
   if (loading || error) return { loading, error, layer: undefined }

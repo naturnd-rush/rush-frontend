@@ -6,12 +6,14 @@ import { fallback, zodSearchValidator } from '@tanstack/router-zod-adapter'
 import NavBar from '@/features/nav-bar/components/nav-bar'
 import AnalyticsPageView from '@/features/analytics/components/analytics-page-view'
 import { ActiveLayerProvider } from '@/features/map/providers/ActiveLayerProvider'
+import { AdminChannelsProvider } from '@/lib/GraphQLProvider'
 
 const defaultMapSearchValues = {
   zoom: 12,
   lat: 48.46557,
   lng: -123.314736,
   activeLayers: [] as string[],
+  channels: [] as string[],
 }
 
 // Function to omit invalid elements of an array in zod instead of 
@@ -40,6 +42,17 @@ const mapSearchSchema = z.object({
   lat: fallback(z.number().min(-90).max(90), defaultMapSearchValues.lat),
   lng: fallback(z.number().min(-180).max(180), defaultMapSearchValues.lng),
   activeLayers: makeFilteredSchema(z.uuid()),
+  channels: z.optional(z.array(z.string())),
+  channel: z.optional(z.string()),
+}).transform((o) => {
+  const channels = [] as string[]
+  channels.push(...(o.channels ?? []))
+  if (o.channel) channels.push(o.channel)
+  return {
+    ...o,
+    channels: channels,
+    channel: undefined,
+  }
 })
 
 export const Route = createRootRoute({
@@ -51,15 +64,17 @@ export const Route = createRootRoute({
 })
 
 function RouteComponent() {
-  const { activeLayers } = Route.useSearch()
+  const { activeLayers, channels } = Route.useSearch()
 
   return (
     // #root element is styled in index.css
     <>
       <AnalyticsPageView />
       <ActiveLayerProvider initialActiveLayers={activeLayers}>
-        <NavBar />
-        <Outlet />
+        <AdminChannelsProvider channels={channels}>
+          <NavBar />
+          <Outlet />
+        </AdminChannelsProvider>
       </ActiveLayerProvider>
       <TanStackRouterDevtools />
       <Toaster />

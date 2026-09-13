@@ -42,7 +42,7 @@ export default function ContentTabsMenu(props: ContentTabsMenuProps) {
       value={activeTab.id}
       onValueChange={({ value }) => {
         handleTabChange(value)
-        navigate({ to: '/app/$topicId/$tabId', params: { tabId: value }})
+        navigate({ to: '/app/$topicId/$tabId', params: { tabId: value }, search: true })
       }}
       variant='enclosed'
       display='inline-flex'
@@ -116,7 +116,7 @@ function PrevNextButton(props: { direction: 'prev' | 'next', tabId: string | nul
   return (
     props.tabId 
       ? (
-        <Link to='/app/$topicId/$tabId' params={{tabId: props.tabId}}>
+        <Link to='/app/$topicId/$tabId' params={{tabId: props.tabId}} search={true}>
           <IconButton
             onClick={() => handleTabChange(props.tabId)}
             aria-label={ariaLabel[props.direction]}

@@ -43,7 +43,7 @@ export default function ContentMobileSheet(props: ContentProps) {
 
   return (
     <>
-      <Link to='/app'>
+      <Link to='/app' search={true}>
         <IconButton
           position='absolute'
           top='0'

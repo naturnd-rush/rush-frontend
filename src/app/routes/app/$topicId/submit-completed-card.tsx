@@ -1,5 +1,6 @@
 import Spinner from '@/components/spinner'
 import { useTopic } from '@/features/topic/hooks/use-topic'
+import { useAdminChannels } from '@/lib/GraphQLProvider'
 import { createFileRoute, Navigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { FaLink } from 'react-icons/fa'
@@ -10,54 +11,56 @@ export const Route = createFileRoute('/app/$topicId/submit-completed-card')({
 
 function RouteComponent() {
   const { topicId } = Route.useParams()
-    
-    // TODO: Refactor to one API call, use future endpoint useTab(tabId)
-    const [_, errorTopic, topic] = useTopic(topicId)
-    
-    // Extract currently active tab from list of tabs for dropdown menu
-    let otherTabs = topic?.tabs.slice() ?? []
-    otherTabs.sort((a, b) => a.displayOrder - b.displayOrder)
-    // Add the initiatives tab to the end
-    if (topic?.hasInitiatives) {
-      otherTabs.push({
-        id: 'initiatives',
-        title: 'Check Out',
-        displayOrder: otherTabs.length,
-        icon: <FaLink />,
-      })
-    }
-  
-    // TODO: handle and display loading and error states.
 
-    const [loadingIFrame, setLoadingIFrame] = useState(true)
+  const channels = useAdminChannels()
+    
+  // TODO: Refactor to one API call, use future endpoint useTab(tabId)
+  const [_, errorTopic, topic] = useTopic(topicId, channels)
   
-    return topicId !== 'rush-to-play' ? (
-      <Navigate to="/app/$topicId" params={{ topicId: topicId }} />
-    ) : (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
-        {loadingIFrame ? (
-          <div style={{
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            right: '0',
-            bottom: '0',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-            <Spinner size='48px' />
-          </div>
-        ) : null}
-        <iframe
-          className="airtable-embed"
-          src="https://airtable.com/embed/appSyK9kuXYXioBev/pagselwpjp6kgeYjU/form"
-          width="100%"
-          height="533"
-          style={{ background: 'transparent', border: '1px solid #ccc'}}
-          onLoad={() => setLoadingIFrame(false)}
-        />
-        {errorTopic ? errorTopic.message : null}
-      </div>
-    )
+  // Extract currently active tab from list of tabs for dropdown menu
+  let otherTabs = topic?.tabs.slice() ?? []
+  otherTabs.sort((a, b) => a.displayOrder - b.displayOrder)
+  // Add the initiatives tab to the end
+  if (topic?.hasInitiatives) {
+    otherTabs.push({
+      id: 'initiatives',
+      title: 'Check Out',
+      displayOrder: otherTabs.length,
+      icon: <FaLink />,
+    })
+  }
+  
+  // TODO: handle and display loading and error states.
+
+  const [loadingIFrame, setLoadingIFrame] = useState(true)
+
+  return topicId !== 'rush-to-play' ? (
+    <Navigate to="/app/$topicId" params={{ topicId: topicId }} search={true} />
+  ) : (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+      {loadingIFrame ? (
+        <div style={{
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          right: '0',
+          bottom: '0',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <Spinner size='48px' />
+        </div>
+      ) : null}
+      <iframe
+        className="airtable-embed"
+        src="https://airtable.com/embed/appSyK9kuXYXioBev/pagselwpjp6kgeYjU/form"
+        width="100%"
+        height="533"
+        style={{ background: 'transparent', border: '1px solid #ccc'}}
+        onLoad={() => setLoadingIFrame(false)}
+      />
+      {errorTopic ? errorTopic.message : null}
+    </div>
+  )
 }

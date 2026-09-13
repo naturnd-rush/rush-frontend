@@ -3,8 +3,8 @@ import type { Topic, TabSlugs, TabIds, TopicSash } from "../../../types/topic";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPICS = gql`
-  query GetQuestions {
-    allQuestions {
+  query GetQuestions($channels: [String!]) {
+    allQuestions(channels: $channels) {
       id
       slug
       image
@@ -24,8 +24,11 @@ const GET_TOPICS = gql`
 
 type TopicData = Topic & TabIds & TopicSash
 type QueryResults = { loading: boolean, error?: ApolloError, topics?: TopicData[] }
-export function useAllTopics(): QueryResults {
-  const { loading, error, data } = useQuery(GET_TOPICS);
+export function useAllTopics(channels?: string[]): QueryResults {
+  const { loading, error, data } = useQuery(
+    GET_TOPICS,
+    { variables: { channels: channels ?? [] }}
+  );
 
   if (loading || error || data === undefined) return { loading, error, topics: undefined }
 
