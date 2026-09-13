@@ -3,6 +3,7 @@ import { ErrorBoundary, type FallbackProps } from 'react-error-boundary'
 import { useTopicTab } from '@/features/topic/hooks/use-topic-tab'
 import Content from '@/features/content/components/content-container'
 import { SkeletonText } from '@chakra-ui/react'
+import { useAdminChannels } from '@/lib/GraphQLProvider'
 
 export const Route = createFileRoute('/app/$topicId/$tabId')({
   component: RouteComponent,
@@ -24,7 +25,9 @@ function fallbackRenderer({ error }: FallbackProps) {
 function RouteComponent() {
   const { topicId, tabId } = Route.useParams()
 
-  const [loadingTab, errorTab, tab] = useTopicTab(topicId, tabId)
+  const channels = useAdminChannels()
+
+  const [loadingTab, errorTab, tab] = useTopicTab(topicId, tabId, channels)
 
   // TODO: handle and display loading and error states.
 

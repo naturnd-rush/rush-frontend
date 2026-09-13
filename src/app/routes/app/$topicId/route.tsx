@@ -3,7 +3,7 @@ import Legend from '@/features/map/components/legend'
 import MapControlOverlay, { MapControl } from '@/features/map/components/map-control-overlay'
 import MapView from '@/features/map/components/map-view'
 import { useTopicLayers } from '@/features/map/hooks/use-topic-layers'
-import { byDisplayOrder } from '@/lib/GraphQLProvider'
+import { byDisplayOrder, useAdminChannels } from '@/lib/GraphQLProvider'
 import { createFileRoute, Outlet, useParams } from '@tanstack/react-router'
 import LegendGroup from '@/features/map/components/legend-group'
 import LayerController from '@/features/map/components/layer-controller'
@@ -29,13 +29,16 @@ function RouteComponent() {
   // Search Params
   const { activeLayers, ...searchParams } = Route.useSearch()
   const searchHasActiveLayers = activeLayers.length > 0
+
+  const channels = useAdminChannels()
+
   // Map Viewport State
   const viewport = useMapViewport()
   const center = viewport.center ?? latLng(searchParams.lat, searchParams.lng)
   const zoom = viewport.zoom ?? searchParams.zoom
   
   // Map Layer API Call
-  const [ loading, error, layerGroups ] = useTopicLayers(topicId)
+  const [ loading, error, layerGroups ] = useTopicLayers(topicId, channels)
   
   const groups = layerGroups
     ? [...layerGroups]
@@ -61,7 +64,7 @@ function RouteComponent() {
   const { down } = useTheme().breakpoints
   const isMobileOrTablet = useMediaQuery(down('lg'))
 
-  const [ loadingTopic, errorTopic, topic ] = useTopic(topicId)
+  const [ loadingTopic, errorTopic, topic ] = useTopic(topicId, channels)
   const { hasInitiatives, ...topicContent } = { hasInitiatives: false, tabs: [], title: '', ...topic }
   topicContent.tabs.sort((a, b) => a.displayOrder - b.displayOrder)
   // Add the initiatives tab to the end

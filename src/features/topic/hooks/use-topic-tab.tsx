@@ -4,8 +4,8 @@ import type { Tab, TabQueryResult } from "../../../types/topic";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TAB = gql`
-  query TopicTabQuery($questionSlug: String!, $questionTabSlug: String!) {
-    questionTabBySlug(questionSlug: $questionSlug, questionTabSlug: $questionTabSlug) {
+  query TopicTabQuery($questionSlug: String!, $questionTabSlug: String!, $channels: String[]) {
+    questionTabBySlug(questionSlug: $questionSlug, questionTabSlug: $questionTabSlug, channels: $channels) {
       id
       slug
       title
@@ -17,8 +17,8 @@ const GET_TAB = gql`
 `
 
 const GET_DEFAULT_TAB = gql`
-  query TopicTabQuery($questionSlug: String!) {
-    defaultQuestionTab(questionSlug: $questionSlug) {
+  query TopicTabQuery($questionSlug: String!, $channels: String[]) {
+    defaultQuestionTab(questionSlug: $questionSlug, channels: $channels) {
       id
       slug
       title
@@ -41,18 +41,19 @@ const isDefaultTabQueryResult = (
 type UseTopicTabResults = [ loading: boolean, error: ApolloError | undefined, tab: Tab | undefined ]
 export function useTopicTab(
   questionSlug: string,
-  questionTabSlug: string | undefined
+  questionTabSlug: string | undefined,
+  channels?: string[],
 ): UseTopicTabResults {
   let useTab = undefined;
   if (questionTabSlug === undefined) {
     useTab = () => useQuery<DefaultTabQueryResult>(
       GET_DEFAULT_TAB,
-      {variables: { questionSlug: questionSlug }}
+      {variables: { questionSlug: questionSlug, channels: channels }}
     )
   } else {
     useTab = () => useQuery<TabBySlugQueryResult>(
       GET_TAB,
-      {variables: { questionSlug: questionSlug, questionTabSlug: questionTabSlug }}
+      {variables: { questionSlug: questionSlug, questionTabSlug: questionTabSlug, channels: channels }}
     )
   }
 

@@ -1,6 +1,6 @@
-import type { Orderable } from '@/types/backend';
+import { createContext, useContext, type PropsWithChildren } from 'react'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import type { PropsWithChildren } from 'react'
+import type { Orderable } from '@/types/backend';
 
 const client = new ApolloClient({
   uri: [
@@ -19,4 +19,23 @@ export default function GraphQLProvider({ children }: PropsWithChildren) {
 
 export function byDisplayOrder(a: Orderable, b: Orderable) {
   return a.displayOrder - b.displayOrder;
+}
+
+// GraphQL Channels Provider from Search Params
+const AdminChannelsContext = createContext<string[] | undefined>(undefined)
+
+type Channels = {
+  channels: string[] | undefined
+}
+
+export function AdminChannelsProvider({ children, channels }: PropsWithChildren<Channels>) {
+  return (
+    <AdminChannelsContext.Provider value={channels}>
+      { children }
+    </AdminChannelsContext.Provider>
+  )
+}
+
+export const useAdminChannels = () => {
+  return useContext(AdminChannelsContext)
 }

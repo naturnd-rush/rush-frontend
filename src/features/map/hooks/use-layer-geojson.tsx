@@ -3,12 +3,12 @@ import { GeoJSON } from 'react-leaflet';
 import { onEachFeature, pointToLayer } from "../utils/leaflet-functions";
 
 const GET_LAYER_GEOJSON = gql`
-  query LayerQuery($id: UUID!) {
-  layer(id: $id) {
-    id
-    serializedLeafletJson
+  query LayerQuery($id: UUID!, $channels: String[]) {
+    layer(id: $id, channels: $channels) {
+      id
+      serializedLeafletJson
+    }
   }
-}
 `
 
 type QUERY_RESULTS = {
@@ -18,10 +18,10 @@ type QUERY_RESULTS = {
   error?: ApolloError,
   geoJSON?: React.ReactElement
 }
-export function useLayerGeoJSON(id: string): QUERY_RESULTS {
+export function useLayerGeoJSON(id: string, channels?: string[]): QUERY_RESULTS {
   const [getGeoJSON, { called, loading, error, data }] = useLazyQuery(
     GET_LAYER_GEOJSON,
-    { variables: { id: id } }
+    { variables: { id: id, channels: channels } }
   );
 
   let geoJSON = undefined

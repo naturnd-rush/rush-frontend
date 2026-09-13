@@ -4,8 +4,8 @@ import type { Initiative } from "../../../types/topic";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPIC_INITIATIVES = gql`
-  query TopicTabsQuery($slug: String!) {
-    questionBySlug(slug: $slug) {
+  query TopicTabsQuery($slug: String!, $channels: String[]) {
+    questionBySlug(slug: $slug, channels: $channels) {
       id
       initiatives {
         content
@@ -25,10 +25,10 @@ const GET_TOPIC_INITIATIVES = gql`
 `
 
 type QueryResults = [ loading: boolean, error: ApolloError | undefined, initiatives: Initiative[] ]
-export function useTopicInitiatives(slug: string): QueryResults {
+export function useTopicInitiatives(slug: string, channels?: string[]): QueryResults {
   const { loading, error, data } = useQuery<{questionBySlug: { initiatives: Initiative[] }}>(
     GET_TOPIC_INITIATIVES,
-    { variables: { slug: slug }}
+    { variables: { slug: slug, channels: channels }}
   );
   
   if (loading || error || data === undefined) return [ loading, error, [] ]

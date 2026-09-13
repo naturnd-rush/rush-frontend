@@ -3,8 +3,8 @@ import type { TabQueryResult, TopicContent } from "../../../types/topic";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPIC = gql`
-  query TopicLayersQuery($slug: String!) {
-    questionBySlug(slug: $slug) {
+  query TopicLayersQuery($slug: String!, $channels: String[]) {
+    questionBySlug(slug: $slug, channels: $channels) {
       id
       slug
       image
@@ -25,12 +25,12 @@ const GET_TOPIC = gql`
 `
 
 type QueryResults = [ loading: boolean, error?: ApolloError, topic?: TopicContent & { hasInitiatives: boolean } ]
-export function useTopic(slug: string): QueryResults {
+export function useTopic(slug: string, channels?: string[]): QueryResults {
   const { loading, error, data } = useQuery<{
     questionBySlug: { title: string, tabs: TabQueryResult[], initiatives: { id: string }[] }
   }>(
     GET_TOPIC,
-    { variables: { slug: slug }}
+    { variables: { slug: slug, channels: channels }}
   );
   
   if (loading || error || data === undefined) return [ loading, error, undefined ]

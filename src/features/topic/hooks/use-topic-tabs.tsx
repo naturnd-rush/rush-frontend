@@ -3,8 +3,8 @@ import type { Tab, TabQueryResult } from "../../../types/topic";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPIC_TABS = gql`
-  query TopicTabsQuery($slug: String!) {
-    questionBySlug(slug: $slug) {
+  query TopicTabsQuery($slug: String!, $channels: String[]) {
+    questionBySlug(slug: $slug, channels: $channels) {
       id
       tabs {
         id
@@ -18,10 +18,10 @@ const GET_TOPIC_TABS = gql`
 `
 
 type QueryResults = [ loading: boolean, error: ApolloError | undefined, tabs: Omit<Tab,'content'>[] ]
-export function useTopicTabs(slug: string): QueryResults {
+export function useTopicTabs(slug: string, channels?: string[]): QueryResults {
   const { loading, error, data } = useQuery<{questionBySlug: { tabs: TabQueryResult[] }}>(
     GET_TOPIC_TABS,
-    { variables: { slug: slug }}
+    { variables: { slug: slug, channels: channels }}
   );
   
   if (loading || error || data === undefined) return [loading, error, []]
