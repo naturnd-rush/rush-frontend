@@ -14,7 +14,7 @@ export default function ContentPanel(props: ContentProps) {
       style={{ minHeight: '40%' }}
       titleLoading={props.isTopicLoading}
     >
-      <Link to='/app'>
+      <Link to='/app' search={true}>
         <PanelCloseButton />
       </Link>
 

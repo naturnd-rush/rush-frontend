@@ -43,7 +43,7 @@ export function useTopicTab(
   questionSlug: string,
   questionTabSlug: string | undefined,
   channels?: string[],
-): UseTopicTabResults {
+): UseTopicTabResults {    
   let useTab = undefined;
   if (questionTabSlug === undefined) {
     useTab = () => useQuery<DefaultTabQueryResult>(

@@ -148,7 +148,7 @@ export default function HomePage({ children }: PropsWithChildren) {
                 { children }
               </HomePageBody>
               <ButtonContainer size={size}>
-                <Link to='/app'>
+                <Link to='/app' search={true}>
                   <Button
                     bgColor='rgb(56,161,105)'
                     color='white'

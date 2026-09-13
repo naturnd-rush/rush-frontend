@@ -108,7 +108,7 @@ export default function NavBar() {
 
   return (
     <Nav>
-      <Link to="/">
+      <Link to="/" search={true}>
         <SiteTitle>
           <span className="full">[RUSH] Resilient Urban Systems & Habitat</span>
           <span className="short">[RUSH]</span>

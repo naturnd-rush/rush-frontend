@@ -83,7 +83,7 @@ export default function TopicCard({ topic }: { topic: TopicWithTabIds & TopicSas
     : '.'
 
   return (
-    <Link to={topicRoute}>
+    <Link to={topicRoute} search={true}>
       <Card>
         <BackgroundImage
           src={topic.image ?? fallbackImageUrl}
