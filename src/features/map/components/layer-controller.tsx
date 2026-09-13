@@ -22,8 +22,7 @@ export type LayerControllerProps = {
 }
 export default function LayerController(props: LayerControllerProps) {
   const channels = useAdminChannels()
-  console.log('Channels at LayerController: ', channels)
-  const layerQuery = useLayer(props.layerId)
+  const layerQuery = useLayer(props.layerId, channels)
   
   const [on, toggle] = useToggle(props.activeByDefault);
   const provider = layerQuery.layer?.mapData.providerState
