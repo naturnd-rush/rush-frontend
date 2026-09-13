@@ -28,7 +28,7 @@ type QueryResults = [ loading: boolean, error: ApolloError | undefined, initiati
 export function useTopicInitiatives(slug: string, channels?: string[]): QueryResults {
   const { loading, error, data } = useQuery<{questionBySlug: { initiatives: Initiative[] }}>(
     GET_TOPIC_INITIATIVES,
-    { variables: { slug: slug, channels: channels }}
+    { variables: { slug: slug, channels: channels ?? [] }}
   );
   
   if (loading || error || data === undefined) return [ loading, error, [] ]

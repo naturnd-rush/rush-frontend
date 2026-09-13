@@ -24,7 +24,7 @@ type QUERY_RESULTS = [ loading: boolean, error?: ApolloError, layers?: OrderedLa
 export function useTopicLayers(slug: string, channels?: string[]): QUERY_RESULTS {
   const { loading, error, data } = useQuery(
     GET_TOPIC_LAYERS,
-    { variables: { slug: slug, channels: channels }}
+    { variables: { slug: slug, channels: channels ?? [] }}
   );
   
   if (loading || error) return [ loading, error, undefined ]

@@ -30,7 +30,7 @@ export function useTopic(slug: string, channels?: string[]): QueryResults {
     questionBySlug: { title: string, tabs: TabQueryResult[], initiatives: { id: string }[] }
   }>(
     GET_TOPIC,
-    { variables: { slug: slug, channels: channels }}
+    { variables: { slug: slug, channels: channels ?? [] }}
   );
   
   if (loading || error || data === undefined) return [ loading, error, undefined ]

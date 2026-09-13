@@ -21,7 +21,7 @@ type QueryResults = [ loading: boolean, error: ApolloError | undefined, tabs: Om
 export function useTopicTabs(slug: string, channels?: string[]): QueryResults {
   const { loading, error, data } = useQuery<{questionBySlug: { tabs: TabQueryResult[] }}>(
     GET_TOPIC_TABS,
-    { variables: { slug: slug, channels: channels }}
+    { variables: { slug: slug, channels: channels ?? [] }}
   );
   
   if (loading || error || data === undefined) return [loading, error, []]

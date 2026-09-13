@@ -21,7 +21,7 @@ type QUERY_RESULTS = {
 export function useLayerGeoJSON(id: string, channels?: string[]): QUERY_RESULTS {
   const [getGeoJSON, { called, loading, error, data }] = useLazyQuery(
     GET_LAYER_GEOJSON,
-    { variables: { id: id, channels: channels } }
+    { variables: { id: id, channels: channels ?? [] } }
   );
 
   let geoJSON = undefined

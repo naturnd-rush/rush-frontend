@@ -62,7 +62,7 @@ type QUERY_RESULTS = { loading: boolean, error?: ApolloError, layer?: Layer }
 export function useLayer(id: string, channels?: string[]): QUERY_RESULTS {
   const { loading, error, data } = useQuery(
     GET_LAYER,
-    { variables: { id: id, channels: channels } }
+    { variables: { id: id, channels: channels ?? [] } }
   );
   
   if (loading || error) return { loading, error, layer: undefined }

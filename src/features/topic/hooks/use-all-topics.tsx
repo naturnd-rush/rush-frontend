@@ -27,7 +27,7 @@ type QueryResults = { loading: boolean, error?: ApolloError, topics?: TopicData[
 export function useAllTopics(channels?: string[]): QueryResults {
   const { loading, error, data } = useQuery(
     GET_TOPICS,
-    { variables: { channels: channels }}
+    { variables: { channels: channels ?? [] }}
   );
 
   if (loading || error || data === undefined) return { loading, error, topics: undefined }

@@ -48,12 +48,12 @@ export function useTopicTab(
   if (questionTabSlug === undefined) {
     useTab = () => useQuery<DefaultTabQueryResult>(
       GET_DEFAULT_TAB,
-      {variables: { questionSlug: questionSlug, channels: channels }}
+      {variables: { questionSlug: questionSlug, channels: channels ?? [] }}
     )
   } else {
     useTab = () => useQuery<TabBySlugQueryResult>(
       GET_TAB,
-      {variables: { questionSlug: questionSlug, questionTabSlug: questionTabSlug, channels: channels }}
+      {variables: { questionSlug: questionSlug, questionTabSlug: questionTabSlug, channels: channels ?? [] }}
     )
   }
 
