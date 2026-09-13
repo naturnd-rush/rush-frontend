@@ -5,7 +5,7 @@ import type { StyleOnLayer } from "@/types/styles";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_LAYER = gql`
-  query LayerQuery($id: UUID!, $channels: [String]) {
+  query LayerQuery($id: UUID!, $channels: [String!]) {
     layer(id: $id, channels: $channels) {
       id
       name

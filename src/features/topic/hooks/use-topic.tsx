@@ -3,7 +3,7 @@ import type { TabQueryResult, TopicContent } from "../../../types/topic";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPIC = gql`
-  query TopicLayersQuery($slug: String!, $channels: [String]) {
+  query TopicLayersQuery($slug: String!, $channels: [String!]) {
     questionBySlug(slug: $slug, channels: $channels) {
       id
       slug

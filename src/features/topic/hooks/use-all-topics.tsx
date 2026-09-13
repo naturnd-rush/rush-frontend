@@ -3,7 +3,7 @@ import type { Topic, TabSlugs, TabIds, TopicSash } from "../../../types/topic";
 import { expandBackendLink } from "@/utils/expand-backend-link";
 
 const GET_TOPICS = gql`
-  query GetQuestions($channels: [String]) {
+  query GetQuestions($channels: [String!]) {
     allQuestions(channels: $channels) {
       id
       slug
