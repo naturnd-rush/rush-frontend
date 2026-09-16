@@ -7,11 +7,15 @@ export function pointToLayer(feature: Feature<Point>, coords: LatLngExpression) 
 
     return circle(coords, circleOpts)
   }
-  
+
   const markerOpts = feature?.properties?.__pointDivIconStyleProps
     ? { icon: divIcon(feature.properties.__pointDivIconStyleProps) }
     : { opacity: 0 }
 
+  if (markerOpts.icon && feature?.properties?.__className) {
+    markerOpts.icon.options.className = feature.properties.__className
+  }
+  
   return marker(coords, markerOpts)
 }
 
