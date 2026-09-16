@@ -97,3 +97,13 @@ p {
   background: none;
   border: none;
 }
+
+/* To be added to rush.css on admin site then removed from here */
+.leaflet-tooltip.leaflet-label::before {
+  display: none !important;
+}
+.leaflet-tooltip.leaflet-label {
+  text-shadow: none !important;
+  -webkit-text-stroke: 4px black;
+  paint-order: stroke fill;
+}
