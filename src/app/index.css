@@ -94,8 +94,22 @@ p {
 }
 
 .leaflet-div-icon {
-  background: none;
-  border: none;
+  background: none !important;
+  border: none !important;
+}
+
+/* Custom Marker Hacks CSS*/
+.vote2026candidate {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  gap: 4px;
+  padding: 8px;
+  white-space: nowrap;
+  width: min-content;
+  color: #1E1E1E;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
 }
 
 /* To be added to rush.css on admin site then removed from here */
