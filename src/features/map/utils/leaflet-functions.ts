@@ -6,7 +6,7 @@ const CUSTOM_MARKER_MIGRATIONS: Record<string, (m: MarkerOptions, f: Feature<Poi
     const floatRight = f.properties?.bearing_deg as number > 180
     m.icon = divIcon({
       html: `<div class="vote2026candidate" style="
-        background-color: ${ f.properties?.PositionSought == 'Mayor' ? '#F2C719' : '#9CD8EA'};
+        background-color: ${ f.properties?.PositionSought == 'Mayor' ? '#F2C719' : '#38F2B6'};
         float: ${ floatRight ? 'right' : 'left'};
         position: relative;
         right: ${ floatRight ? '-19px' : '0'};
