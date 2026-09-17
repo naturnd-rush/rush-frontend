@@ -102,7 +102,7 @@ p {
 .vote2026candidate {
   display: flex;
   flex-direction: row;
-  align-content: center;
+  align-items: center;
   gap: 4px;
   padding: 8px;
   white-space: nowrap;
@@ -110,6 +110,7 @@ p {
   color: #1E1E1E;
   font-weight: 700;
   font-family: 'Inter', sans-serif;
+  border-radius: 8px;
 }
 
 /* To be added to rush.css on admin site then removed from here */

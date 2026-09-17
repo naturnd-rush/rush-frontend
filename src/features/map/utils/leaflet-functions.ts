@@ -3,9 +3,13 @@ import type { Feature, Point } from "geojson";
 
 const CUSTOM_MARKER_MIGRATIONS: Record<string, (m: MarkerOptions, f: Feature<Point>) => void > = {
   "vote2026candidate": (m, f) => {
+    const floatRight = f.properties?.bearing_deg as number > 180
     m.icon = divIcon({
       html: `<div class="vote2026candidate" style="
         background-color: ${ f.properties?.PositionSought == 'Mayor' ? '#F2C719' : '#9CD8EA'};
+        float: ${ floatRight ? 'right' : 'left'};
+        position: relative;
+        right: ${ floatRight ? '-19px' : '0'};
       "><img src="https://admin.whatstherush.earth/media/marker_icons/compressed_how_to_vote_24dp_000000_FILL0_wght400_GRAD0_opsz24_6zrz4Gb.webp" style="width: 22px; height: 22px;">${f.properties?.CandidateName ?? 'Candidate'}</div>`,
       iconAnchor: [19,19],
     })
