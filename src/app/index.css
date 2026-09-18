@@ -98,21 +98,6 @@ p {
   border: none !important;
 }
 
-/* Custom Marker Hacks CSS*/
-.vote2026candidate {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 4px;
-  padding: 8px;
-  white-space: nowrap;
-  width: min-content;
-  color: #1E1E1E;
-  font-weight: 700;
-  font-family: 'Inter', sans-serif;
-  border-radius: 8px;
-}
-
 /* To be added to rush.css on admin site then removed from here */
 .leaflet-tooltip.leaflet-label::before {
   display: none !important;

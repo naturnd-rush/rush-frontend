@@ -1,22 +1,6 @@
 import { circle, divIcon, Layer, marker, tooltip, type LatLngExpression, type MarkerOptions } from "leaflet";
 import type { Feature, Point } from "geojson";
 
-const CUSTOM_MARKER_MIGRATIONS: Record<string, (m: MarkerOptions, f: Feature<Point>) => void > = {
-  "vote2026candidate": (m, f) => {
-    const floatRight = f.properties?.bearing_deg as number > 180
-    m.icon = divIcon({
-      html: `<div class="vote2026candidate" style="
-        background-color: ${ f.properties?.PositionSought == 'Mayor' ? '#F2C719' : '#38F2B6'};
-        float: ${ floatRight ? 'right' : 'left'};
-        position: relative;
-        right: ${ floatRight ? '-19px' : '0'};
-      "><img src="https://admin.whatstherush.earth/media/marker_icons/compressed_how_to_vote_24dp_000000_FILL0_wght400_GRAD0_opsz24_6zrz4Gb.webp" style="width: 22px; height: 22px;">${f.properties?.CandidateName ?? 'Candidate'}</div>`,
-      iconAnchor: [19,19],
-    })
-    m.riseOnHover = true
-  },
-}
-
 export function pointToLayer(feature: Feature<Point>, coords: LatLngExpression) {
   if (feature?.properties?.__circleOptions) {
     const circleOpts = feature?.properties?.__circleOptions
@@ -27,16 +11,6 @@ export function pointToLayer(feature: Feature<Point>, coords: LatLngExpression) 
   const markerOpts: MarkerOptions = feature?.properties?.__pointDivIconStyleProps
     ? { icon: divIcon(feature.properties.__pointDivIconStyleProps) }
     : { opacity: 0 }
-
-  if (markerOpts.icon && feature?.properties?.__className) {
-    const markerClassName = feature.properties.__className as string
-    markerOpts.icon.options.className = markerClassName
-
-    // custom hack markers
-    if (CUSTOM_MARKER_MIGRATIONS.hasOwnProperty(markerClassName)) {
-      CUSTOM_MARKER_MIGRATIONS[markerClassName](markerOpts, feature)
-    }
-  }
   
   return marker(coords, markerOpts)
 }

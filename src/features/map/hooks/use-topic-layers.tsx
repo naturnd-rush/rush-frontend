@@ -33,7 +33,7 @@ export function useTopicLayers(slug: string, channels?: string[]): QUERY_RESULTS
     const { layersOnLayerGroup, groupDescription, ...groupDetails } = group
     return {
       ...groupDetails,
-      groupDescription: parse(groupDescription ?? ''),
+      groupDescription: groupDescription === '<p><br></p>' ? '' : parse(groupDescription ?? ''),
       layers: layersOnLayerGroup
     }
   })
