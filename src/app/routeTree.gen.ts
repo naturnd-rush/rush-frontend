@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as LbadminRouteImport } from './routes/lbadmin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AppRouteRouteImport } from './routes/app/route'
@@ -22,6 +23,11 @@ import { Route as AppTopicIdLocalsInTheNaturehoodRouteImport } from './routes/ap
 import { Route as AppTopicIdInitiativesRouteImport } from './routes/app/$topicId/initiatives'
 import { Route as AppTopicIdTabIdRouteImport } from './routes/app/$topicId/$tabId'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LbadminRoute = LbadminRouteImport.update({
   id: '/lbadmin',
   path: '/lbadmin',
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/lbadmin': typeof LbadminRoute
+  '/terms': typeof TermsRoute
   '/app/$topicId': typeof AppTopicIdRouteRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/lbadmin': typeof LbadminRoute
+  '/terms': typeof TermsRoute
   '/app': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
   '/app/$topicId/initiatives': typeof AppTopicIdInitiativesRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/lbadmin': typeof LbadminRoute
+  '/terms': typeof TermsRoute
   '/app/$topicId': typeof AppTopicIdRouteRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/app/$topicId/$tabId': typeof AppTopicIdTabIdRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/about'
     | '/lbadmin'
+    | '/terms'
     | '/app/$topicId'
     | '/app/'
     | '/app/$topicId/$tabId'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/lbadmin'
+    | '/terms'
     | '/app'
     | '/app/$topicId/$tabId'
     | '/app/$topicId/initiatives'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/about'
     | '/lbadmin'
+    | '/terms'
     | '/app/$topicId'
     | '/app/'
     | '/app/$topicId/$tabId'
@@ -175,10 +187,18 @@ export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   LbadminRoute: typeof LbadminRoute
+  TermsRoute: typeof TermsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lbadmin': {
       id: '/lbadmin'
       path: '/lbadmin'
@@ -307,6 +327,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   LbadminRoute: LbadminRoute,
+  TermsRoute: TermsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
