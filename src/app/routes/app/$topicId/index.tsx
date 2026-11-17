@@ -2,7 +2,7 @@ import Spinner from '@/components/spinner'
 import { useTopic } from '@/features/topic/hooks/use-topic'
 import { useAdminChannels } from '@/lib/GraphQLProvider'
 import { AbsoluteCenter } from '@chakra-ui/react'
-import { createFileRoute, Navigate } from '@tanstack/react-router'
+import { createFileRoute, Navigate, notFound } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/app/$topicId/')({
   component: RouteComponent,
@@ -13,6 +13,9 @@ function RouteComponent() {
   const channels = useAdminChannels()
   
   const [loadingTopic, errorTopic, topic] = useTopic(topicId, channels)
+  if (errorTopic) {
+    throw notFound({ data: errorTopic })
+  }
 
   // TODO: handle and display loading and error states.
 
@@ -20,9 +23,7 @@ function RouteComponent() {
     <AbsoluteCenter>
       { loadingTopic 
         ? <Spinner size='2rem' />
-        : errorTopic
-          ? errorTopic.message
-          : <Navigate to='/app/$topicId/$tabId' params={{ tabId: topic?.tabs[0].id }} search={true} />
+        : <Navigate to='/app/$topicId/$tabId' params={{ tabId: topic?.tabs[0].id }} search={true} />
       }
     </AbsoluteCenter>
   )
