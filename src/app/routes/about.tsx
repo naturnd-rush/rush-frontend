@@ -40,6 +40,7 @@ import vicdrains from '@/assets/logos/21. Victoria Drains.png'
 import powertobe from '@/assets/logos/PTB_HorizontalTagline_Blue_HighRes.png'
 import uvicsustain from '@/assets/logos/UVic Sustainability Project.png'
 import Scrollable from '@/components/scrollable'
+import { PageBackground } from '@/components/page-background'
 
 export const Route = createFileRoute('/about')({
   component: About,
@@ -291,69 +292,66 @@ const contributors = [
 ))
 
 function About() {
-  const { background, breakpoints: { down } } = useTheme()
+  const { breakpoints: { down } } = useTheme()
   const downLg = useMediaQuery(down('lg'))
   const downXl = useMediaQuery(down('xl'))
   const down2xl = useMediaQuery(down('xxl'))
 
   return (
-    <Scrollable style={{
-      backgroundImage: `linear-gradient(rgba(42, 42, 42, 0.7), rgba(42, 42, 42, 0.7)), url(${background})`,
-      backgroundSize: 'cover',
-      // display backgroundImage and center topic cards when height not filled
-      height: 'calc(100% - var(--nav-height))',
-    }}>
-      <AboutContainer>
-        <AboutPageContent
-          style={{
-            marginBottom: '1.5rem',
-            maxWidth: downLg ? '64ch' : downXl ? '84ch' : down2xl ? '96ch' : '120ch',
-          }}
-        >
-          <AboutPageTitle>About</AboutPageTitle>
-          <List key='pre-list-paragraphs'>
-            { PreListParagraphs }
-          </List>
-          <ul key='bullet-list' style={{ paddingInlineStart: '2em', listStyle: 'disc' }}>
-            { BulletList }
-          </ul>
-          <List key='post-list-paragraphs'>
-            { PostListParagraphs }
-            <ListItem>
-              Please contact us at <a href='mailto:rushinitiative.earth@gmail.com'>rushinitiative.earth@gmail.com</a> or use the feedback button at the top to let us know what you think or any suggestions you have.
-            </ListItem>
-            <ListItem>
-              Keep up to date with RUSH by joining <a href='http://eepurl.com/jAqKjg'>our mailing list</a>. If you see an opportunity for RUSH to support your community, please get in touch at <a href='mailto:rushinitiativeoutreach@gmail.com'>rushinitiativeoutreach@gmail.com</a>.
-            </ListItem>
-          </List> 
-          <AboutPageLogoContainer key='logos'>
-            { LogoComponents }
-          </AboutPageLogoContainer>
-          <AboutPageHighSchoolsContainer key='high-schools'>
-            <AboutPageHighSchoolHeader>
-              Participating High Schools
-            </AboutPageHighSchoolHeader>
-          </AboutPageHighSchoolsContainer>
-          <AboutPageHighSchoolLogos
-            key='logosHighSchools'
+    <PageBackground>
+      <Scrollable>
+        <AboutContainer>
+          <AboutPageContent
+            style={{
+              marginBottom: '1.5rem',
+              maxWidth: downLg ? '64ch' : downXl ? '84ch' : down2xl ? '96ch' : '120ch',
+            }}
           >
-            { LogoComponentsHighSchool }
-          </AboutPageHighSchoolLogos>
-          <AboutPageStudentContributorsHeader
-            key='student-contributors'
-          >
-            University of Victoria - Community Mapping & Community Based Participatory Research
-            <br />
-            Student Contributors
-          </AboutPageStudentContributorsHeader>
-          <AboutPageStudentContributors
-            key='contributors'
-          >
-            { contributors }
-          </AboutPageStudentContributors>
-        </AboutPageContent>
-      </AboutContainer>
-    </Scrollable>
+            <AboutPageTitle>About</AboutPageTitle>
+            <List key='pre-list-paragraphs'>
+              { PreListParagraphs }
+            </List>
+            <ul key='bullet-list' style={{ paddingInlineStart: '2em', listStyle: 'disc' }}>
+              { BulletList }
+            </ul>
+            <List key='post-list-paragraphs'>
+              { PostListParagraphs }
+              <ListItem>
+                Please contact us at <a href='mailto:rushinitiative.earth@gmail.com'>rushinitiative.earth@gmail.com</a> or use the feedback button at the top to let us know what you think or any suggestions you have.
+              </ListItem>
+              <ListItem>
+                Keep up to date with RUSH by joining <a href='http://eepurl.com/jAqKjg'>our mailing list</a>. If you see an opportunity for RUSH to support your community, please get in touch at <a href='mailto:rushinitiativeoutreach@gmail.com'>rushinitiativeoutreach@gmail.com</a>.
+              </ListItem>
+            </List> 
+            <AboutPageLogoContainer key='logos'>
+              { LogoComponents }
+            </AboutPageLogoContainer>
+            <AboutPageHighSchoolsContainer key='high-schools'>
+              <AboutPageHighSchoolHeader>
+                Participating High Schools
+              </AboutPageHighSchoolHeader>
+            </AboutPageHighSchoolsContainer>
+            <AboutPageHighSchoolLogos
+              key='logosHighSchools'
+            >
+              { LogoComponentsHighSchool }
+            </AboutPageHighSchoolLogos>
+            <AboutPageStudentContributorsHeader
+              key='student-contributors'
+            >
+              University of Victoria - Community Mapping & Community Based Participatory Research
+              <br />
+              Student Contributors
+            </AboutPageStudentContributorsHeader>
+            <AboutPageStudentContributors
+              key='contributors'
+            >
+              { contributors }
+            </AboutPageStudentContributors>
+          </AboutPageContent>
+        </AboutContainer>
+      </Scrollable>
+    </PageBackground>
   )
 }
 
