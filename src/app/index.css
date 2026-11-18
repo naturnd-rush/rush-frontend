@@ -107,3 +107,40 @@ p {
   -webkit-text-stroke: 4px black;
   paint-order: stroke fill;
 }
+
+/* Terms Page */
+#terms-page {
+  --terms-font-family: Arial, sans-serif;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(26, 32, 44);
+}
+#terms-page > section {
+  width: 80%;
+  max-width: 1200px;
+  margin: 2% 10% 5% 10%;
+}
+#terms-page h1 {
+  font-size: 20pt;
+  font-family: var(--terms-font-family);
+}
+#terms-page h2 {
+  font-size: 16pt;
+  font-family: var(--terms-font-family);
+}
+#terms-page p {
+  font-size: 11pt;
+  font-family: var(--terms-font-family);
+}
+#terms-page a {
+  color: #1155cc;
+  font-size: 11pt;
+  font-family: var(--terms-font-family);
+}
+#terms-page li {
+  list-style-type: disc;
+  font-size: 11pt;
+  font-family: Arial, sans-serif;
+}
