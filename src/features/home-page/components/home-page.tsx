@@ -7,16 +7,7 @@ import { Link } from "@tanstack/react-router";
 import Bear from "./bear";
 import { useTheme } from "@/theme";
 import { useMediaQuery } from "styled-breakpoints/use-media-query";
-
-const HomePageBackground = styled.div`
-  background-image: linear-gradient(
-    rgba(42, 42, 42, 0.0),
-    rgba(42, 42, 42, 0.2)),
-      url('/src/assets/background.webp');
-  background-size: cover;
-  // display background-image and center topic cards when height not filled
-  height: calc(100% - var(--nav-height));
-`
+import { PageBackground } from "@/components/page-background";
 
 const HomePageContainer = styled.section<SizeProp>`
   display: flex;
@@ -133,7 +124,7 @@ export default function HomePage({ children }: PropsWithChildren) {
   }
 
   return (
-    <HomePageBackground>
+    <PageBackground>
       <Scrollable style={ScrollableStyle}>
         <HomePageContainer size={size}>
           <Bear size={size}>
@@ -160,6 +151,6 @@ export default function HomePage({ children }: PropsWithChildren) {
           </Bear>
         </HomePageContainer>
       </Scrollable>
-    </HomePageBackground>
+    </PageBackground>
   )
 }
